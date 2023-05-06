@@ -2,3 +2,103 @@
   padding: 0;
   margin: 0;
 }
+
+/* NAVBAR */
+
+nav {
+  height: 80px;
+}
+
+#mainNavbar {
+  padding: 0px;
+  width: 100%;
+  background-color: white;
+  position: fixed;
+  margin-top: -9px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+}
+
+.nav-link,
+.nav-item {
+  margin-top: 5px;
+  font-size: 12pt;
+}
+
+.navbar-brand img {
+  margin: 5px 10px 0px 15px;
+  height: 68px;
+  padding: 0px !important;
+  border-radius: 10px;
+}
+
+.dropdown-menu.profile {
+  width: min-content;
+}
+
+.dropdown-item:hover {
+  cursor: pointer;
+}
+
+.navbar-text {
+  font-size: 14pt;
+}
+
+.login {
+  margin-right: 25px;
+}
+
+/* LOGIN FORM */
+
+table#login {
+  margin: 10% 0 0 38%;
+  padding: 30px;
+}
+
+table#login tr {
+  margin: 10px;
+  text-align: center;
+}
+
+table#login td {
+  padding: 30px;
+  text-align: center;
+}
+
+table#login td input {
+  height: 40px;
+  width: 220px;
+}
+
+table#login button {
+  margin-left: 125%;
+  width: 100px;
+}
+
+#txtUser,
+#txtPassword {
+  text-align: center;
+}
+
+/* MEDIA QUERY */
+
+@media screen and (max-width: 992px) {
+  .navbar-brand img {
+    height: 75px;
+    margin-top: 0px;
+  }
+
+  .nav-link {
+    margin-right: 90%;
+    margin-right: 15px;
+    float: right;
+  }
+
+  .navbar-nav li a {
+    font-size: 18pt;
+  }
+}
