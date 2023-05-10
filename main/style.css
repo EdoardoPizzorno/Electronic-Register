@@ -53,35 +53,9 @@ nav {
 }
 
 /* LOGIN FORM */
-
-table#login {
+#frmLogin {
   margin: 10% 0 0 38%;
-  padding: 30px;
-}
-
-table#login tr {
-  margin: 10px;
-  text-align: center;
-}
-
-table#login td {
-  padding: 30px;
-  text-align: center;
-}
-
-table#login td input {
-  height: 40px;
-  width: 220px;
-}
-
-table#login button {
-  margin-left: 125%;
-  width: 100px;
-}
-
-#txtUser,
-#txtPassword {
-  text-align: center;
+  width: fit-content;
 }
 
 /* MEDIA QUERY */
