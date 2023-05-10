@@ -1,31 +1,38 @@
 "use strict"
 
-async function sendRequest(method, url, parameters = {}) {
-	let contentType;
-	if (method.toUpperCase() == "GET")
-		contentType = "application/x-www-form-urlencoded;charset=utf-8";
-	else {
-		contentType = "application/json; charset=utf-8"
-		parameters = JSON.stringify(parameters);
-	}
+const _URL = ""
 
-	return $.ajax({
+async function sendRequest(method, url, parameters = {}) {
+	let config = {
+		"baseURL": _URL,
 		"url": url,
-		"data": parameters,
-		"type": method,
-		"contentType": contentType,
-		"dataType": "json",   // default      
-		"timeout": 5000,      // default
-	});
+		"method": method.toUpperCase(),
+		"headers": {
+			"Accept": "application/json",
+		},
+		"timeout": 5000,
+		"responseType": "json",
+	}
+	if (parameters instanceof FormData) {
+		config.headers["Content-Type"] = 'multipart/form-data;'
+		config["data"] = parameters     // Accept FormData, File, Blob
+	}
+	else if (method.toUpperCase() == "GET") {
+		config.headers["Content-Type"] = 'application/x-www-form-urlencoded;charset=utf-8'
+		config["params"] = parameters
+	}
+	else {
+		//config.headers["Content-Type"] = 'application/json; charset=utf-8' 
+		config.headers["Content-Type"] = 'application/x-www-form-urlencoded;charset=utf-8'
+		config["data"] = parameters
+	}
+	return axios(config)
 }
 
-function error(jqXHR, text_status, string_error) {
-	if (jqXHR.status == 0)
+function error(err) {
+	if (!err["response"])
 		Swal.fire("Connection Refused or Server timeout");
-	else if (jqXHR.status == 200)
-		Swal.fire("Formato dei dati non corretto : " + jqXHR.responseText);
-	else
-		Swal.fire("Server Error: " + jqXHR.status + " - " + jqXHR.responseText);
+	else Swal.fire("Server Error: " + err["response"]["status"] + " - " + err["response"]["data"]);
 }
 
 function randomNumber(a, b) {

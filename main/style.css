@@ -31,7 +31,7 @@ nav {
 
 .navbar-brand img {
   margin: 5px 10px 0px 15px;
-  height: 68px;
+  height: 60px;
   padding: 0px !important;
   border-radius: 10px;
 }
@@ -54,8 +54,24 @@ nav {
 
 /* LOGIN FORM */
 #frmLogin {
-  margin: 10% 0 0 38%;
-  width: fit-content;
+  margin: 10% 0 0 40%;
+  width: 410px;
+}
+
+.red-icon {
+  color: #dc3545;
+}
+
+/* STUDENTS */
+
+div.students {
+  margin: 10% 0 0 10%;
+}
+
+/* TEACHERS */
+
+div.teachers {
+  margin: 10% 0 0 10%;
 }
 
 /* MEDIA QUERY */
