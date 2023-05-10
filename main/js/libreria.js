@@ -19,13 +19,16 @@ async function sendRequest(method, url, parameters = {}) {
 	});
 }
 
-function error(jqXHR, text_status, string_error) {
-	if (jqXHR.status == 0)
+function error(err) {
+	if (!err.response)
 		Swal.fire("Connection Refused or Server timeout");
-	else if (jqXHR.status == 200)
-		Swal.fire("Formato dei dati non corretto : " + jqXHR.responseText);
-	else
-		Swal.fire("Server Error: " + jqXHR.status + " - " + jqXHR.responseText);
+	else if (err.response.status == 200)
+		Swal.fire("Formato dei dati non corretto : " + err.response.data);
+	else if (err.response.status == 401) {
+		Swal.fire(err.response.data)
+		window.location.href = "index.html"
+	}
+	else Swal.fire("Server Error: " + err.response.status + " - " + err.response.data);
 }
 
 function randomNumber(a, b) {
