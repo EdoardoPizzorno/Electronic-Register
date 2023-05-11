@@ -39,11 +39,13 @@
       <span class="navbar-toggler-icon"></span>
     </button>-->
     <span class="navbar-text col-md-2"> Anno scolastico <b style="font-size: 17pt">2022/2023</b></span>
-    <button style="display: none;" class="btn nav-link dropdown-toggle profile" data-toggle="dropdown"
-      aria-haspopup="true" aria-expanded="false"> <i class="bi bi-person-fill"></i> &nbsp;Nome Cognome </button>
-    <div class="dropdown-menu profile">
-      <a class="dropdown-item profile"> <i class="bi bi-person-fill"></i> Profilo </a>
-      <a class="dropdown-item exit"> <i class="bi bi-box-arrow-left"></i> Esci </a>
+    <div class="dropdown">
+      <a class="btn dropdown-toggle profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+        style="display: none;"> <i class="bi bi-person-fill"></i> &nbsp;Nome Cognome </a>
+      <div class="dropdown-menu profile">
+        <a class="dropdown-item profile"> <i class="bi bi-person-fill"></i> Profilo </a>
+        <a class="dropdown-item exit"> <i class="bi bi-box-arrow-left"></i> Esci </a>
+      </div>
     </div>
   </nav>
 
@@ -80,67 +82,78 @@
         password?</button>
     </div>
   </form>
+
   <!-- STUDENTS -->
-  <div class="students container" style="display: none;">
-    <div class="col-md-4">
-      <div class="card">
-        <div class="card-header bg-info text-white">
-          Informazioni Studente
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">Nome Cognome</h5>
-          <p class="card-text">
-            <strong>Classe:</strong> 1A<br>
-            <strong>Indirizzo:</strong> Liceo Scientifico<br>
-            <strong>Anno Scolastico:</strong> 2022/2023<br>
-          </p>
-        </div>
+  <!-- DEFAULT OPTIONS -->
+  <div class="container col-md-8 options" style="display: none;">
+    <div class="col-md-8">
+      <button class="btn btn-info">Registro di Classe</button>
+      <button class="btn btn-info">Voti</button>
+      <button class="btn btn-info">Assenze</button>
+      <button class="btn btn-info">Anagrafica</button>
+    </div>
+  </div>
+
+  <!-- STUDENTS INFORMATIONS -->
+  <div class="col-md-4 informations" style="display: none;">
+    <div class="card">
+      <div class="card-header bg-info text-white">
+        Informazioni Studente
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Nome Cognome</h5>
+        <p class="card-text">
+          <strong>Classe:</strong> 1A<br>
+          <strong>Indirizzo:</strong> Liceo Scientifico<br>
+          <strong>Anno Scolastico:</strong> 2022/2023<br>
+        </p>
       </div>
     </div>
+  </div>
 
-    <div class="col-md-8">
-      <div class="card">
-        <div class="card-header bg-info text-white">
-          Registro Elettronico
-        </div>
-        <div class="card-body">
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Data</th>
-                <th>Lezione</th>
-                <th>Assenza</th>
-                <th>Nota</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>01/10/2022</td>
-                <td>Matematica</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>05/10/2022</td>
-                <td>Italiano</td>
-                <td>S</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>07/10/2022</td>
-                <td>Scienze</td>
-                <td></td>
-                <td>Compito in classe: 8</td>
-              </tr>
-              <tr>
-                <td>10/10/2022</td>
-                <td>Matematica</td>
-                <td></td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+  <!-- STUDENTS REGISTER -->
+  <div class="col-md-8 register container" style="display: none;">
+    <div class="card">
+      <div class="card-header bg-info text-white">
+        Registro Elettronico
+      </div>
+      <div class="card-body">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Lezione</th>
+              <th>Assenza</th>
+              <th>Nota</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>01/10/2022</td>
+              <td>Matematica</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>05/10/2022</td>
+              <td>Italiano</td>
+              <td>S</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>07/10/2022</td>
+              <td>Scienze</td>
+              <td></td>
+              <td>Compito in classe: 8</td>
+            </tr>
+            <tr>
+              <td>10/10/2022</td>
+              <td>Matematica</td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -200,8 +213,8 @@
       </form>
     </div>
   </div>
-  
-    
+
+
 </body>
 
 </html>

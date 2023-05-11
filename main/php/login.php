@@ -3,7 +3,7 @@
 header("content-type:application/json; charset=utf-8");
 require("MySQLi.php");
 
-define("TIMEOUT", 30); # 30sec Timeout
+define("TIMEOUT", 600); # 10min Timeout
 
 $connection = openConnection("registro");
 
@@ -43,7 +43,7 @@ if (count($data) != 0) {
     die("Username non esistente");
 }
 
-#echo (json_encode($data));
+echo (json_encode($data[0]));
 
 $connection->close();
 
