@@ -1,0 +1,79 @@
+<html>
+
+<head>
+    <title> Login </title>
+    <meta name="author" content="Edoardo Pizzorno" />
+    <link rel="icon" type="image/x-icon" href="assets/images/diary.png" />
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="lib/axios@1.1.2.min.js" type="application/javascript"></script>
+    <script src="js/libreria.js" type="application/javascript"></script>
+    <script src="js/login.js" type="application/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <!-- LIBRARIES -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.3.7/sweetalert2.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.0/chart.umd.min.js"></script>
+
+    <!--BOOTSTRAP-->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"> </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js" charset="utf8"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+</head>
+
+<body class="bg-light">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNavbar">
+        <a class="navbar-brand" href="#">
+            <img src="assets/images/diary.png" alt="Registro Elettronico">
+        </a>
+        <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navResponsive"
+      aria-controls="navResponsive" aria-expanded="false" aria-label="Toggle navigation" style="margin-right: 30px;">
+      <span class="navbar-toggler-icon"></span>
+    </button>-->
+        <span class="navbar-text col-md-2"> Anno scolastico <b style="font-size: 17pt">2022/2023</b></span>
+    </nav>
+
+    <!-- LOGIN -->
+    <form id="frmLogin" class="container">
+        <div class="form-group input-group">
+            <span class="input-group-text">
+                <i class="fas fa-user"> </i>
+            </span>
+            <input type="text" class="form-control" id="userCode" placeholder="Username o matricola">
+        </div>
+
+        <!-- password -->
+        <div class="form-group input-group">
+            <span class="input-group-text">
+                <i class="fas fa-lock"> </i>
+            </span>
+            <input type="password" class="form-control" id="pwd" placeholder="Password">
+        </div>
+
+
+        <!-- error message -->
+        <div class="alert alert-danger alert-dismissible" id="lblError">
+            <button type="button" class="close">&times;</button>
+            <strong>Attenzione!</strong> <span>Username o Password non validi</span>
+        </div>
+
+        <!-- buttons -->
+        <div class="form-group">
+            <button type="button" class="btn btn-primary form-control" id="btnLogin"> LOGIN </button>
+            <button type="button" class="btn btn-link" style="height:25px; text-decoration: none">Registrati</button>
+            <br>
+            <button type="button" class="btn btn-link" style="height:25px; text-decoration: none;">Hai dimenticato la
+                password?</button>
+        </div>
+    </form>
+</body>
+
+</html>

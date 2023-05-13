@@ -7,7 +7,7 @@
   <script src="http://code.jquery.com/jquery-latest.js"></script>
   <script src="lib/axios@1.1.2.min.js" type="application/javascript"></script>
   <script src="js/libreria.js" type="application/javascript"></script>
-  <script src="js/login.js" type="application/javascript"></script>
+  <script src="js/index.js" type="application/javascript"></script>
   <link rel="stylesheet" type="text/css" href="style.css">
 
   <!-- LIBRARIES -->
@@ -49,40 +49,6 @@
     </div>
   </nav>
 
-  <!-- LOGIN -->
-  <form id="frmLogin" class="container">
-    <div class="form-group input-group">
-      <span class="input-group-text">
-        <i class="fas fa-user"> </i>
-      </span>
-      <input type="text" class="form-control" id="userCode" placeholder="Username o matricola">
-    </div>
-
-    <!-- password -->
-    <div class="form-group input-group">
-      <span class="input-group-text">
-        <i class="fas fa-lock"> </i>
-      </span>
-      <input type="password" class="form-control" id="pwd" placeholder="Password">
-    </div>
-
-
-    <!-- error message -->
-    <div class="alert alert-danger alert-dismissible" id="lblError">
-      <button type="button" class="close">&times;</button>
-      <strong>Attenzione!</strong> <span>Username o Password non validi</span>
-    </div>
-
-    <!-- buttons -->
-    <div class="form-group">
-      <button type="button" class="btn btn-primary form-control" id="btnLogin"> LOGIN </button>
-      <button type="button" class="btn btn-link" style="height:25px; text-decoration: none">Registrati</button>
-      <br>
-      <button type="button" class="btn btn-link" style="height:25px; text-decoration: none;">Hai dimenticato la
-        password?</button>
-    </div>
-  </form>
-
   <!-- STUDENTS -->
   <!-- DEFAULT OPTIONS -->
   <div class="container col-md-8 options" style="display: none;">
@@ -98,7 +64,7 @@
   <div class="col-md-4 informations" style="display: none;">
     <div class="card">
       <div class="card-header bg-info text-white">
-        Informazioni Studente
+        Informazioni personali
       </div>
       <div class="card-body">
         <h5 class="card-title">Nome Cognome</h5>

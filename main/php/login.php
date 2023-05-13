@@ -27,7 +27,6 @@ $data = eseguiQuery($connection, $sql);
 if (count($data) != 0) {
     if ($data[0]["pass"] == $pass) {
         http_response_code(200);
-        #echo (json_encode("OK"));
 
         session_start();
         $_SESSION["user"] = $data[0]["user"];
@@ -43,7 +42,7 @@ if (count($data) != 0) {
     die("Username non esistente");
 }
 
-echo (json_encode($data[0]));
+#echo (json_encode($data[0]));
 
 $connection->close();
 
