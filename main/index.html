@@ -35,10 +35,6 @@
     <a class="navbar-brand" href="#">
       <img src="assets/images/diary.png" alt="Registro Elettronico">
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navResponsive"
-      aria-controls="navResponsive" aria-expanded="false" aria-label="Toggle navigation" style="margin-right: 30px;">
-      <span class="navbar-toggler-icon"></span>
-    </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
@@ -56,9 +52,13 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Anagrafica</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Pagella</a>
+        </li>
       </ul>
     </div>
-    <span class="navbar-text col-md-2"> Anno scolastico <b style="font-size: 17pt">2022/2023</b></span>
+    <span class="navbar-text col-md-5 mx-auto text-center"> Anno scolastico <b
+        style="font-size: 17pt">2022/2023</b></span>
     <div class="dropdown">
       <a class="btn dropdown-toggle profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i
           class="bi bi-person-fill"></i> &nbsp;Nome Cognome </a>
@@ -67,6 +67,10 @@
         <a class="dropdown-item exit"> <i class="bi bi-box-arrow-left"></i> Esci </a>
       </div>
     </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
   </nav>
 
   <!-- STUDENTS -->
@@ -75,7 +79,7 @@
     <div class="row">
       <div class="col-md-4 mb-4">
         <button class="btn btn-primary" id="studentsMessages">
-          <i class="bi bi-envelope-fill" style="position:absolute;"></i>
+          <i class="bi bi-chat"></i>
           <div class="card-body">
             <h5 class="card-title">Messaggi</h5>
             <p class="card-text">Visualizza le note e le comunicazioni dei professori</p>
@@ -83,36 +87,49 @@
         </button>
       </div>
       <div class="col-md-4 mb-4">
-        <button class="btn btn-danger" id="studentsRegister">
+        <button class="btn btn-warning" id="studentsRegister">
+          <i class="bi bi-book"></i>
           <div class="card-body">
-            <h5 class="card-title">Registro di classe<i class="bi bi-book"></i></h5>
-            <p class="card-text">Visualizza i compiti assegnati dai professori</p>
+            <h5 class="card-title">Registro di classe</h5>
+            <p class="card-text">Visualizza le note e i compiti assegnati dai professori</p>
           </div>
         </button>
       </div>
       <div class="col-md-4 mb-4">
         <button class="btn btn-success" id="studentsMarks">
+          <i class="bi bi-graph-up"></i>
           <div class="card-body">
-            <h5 class="card-title">Voti<i class="bi bi-graph-up"></i></h5>
-            <p class="card-text">Visualizza i voti assegnati dai professori</p>
+            <h5 class="card-title">Voti</h5>
+            <p class="card-text">Visualizza i voti assegnati dai tuoi professori</p>
           </div>
         </button>
       </div>
     </div>
     <div class="row">
       <div class="col-md-4 mb-4">
-        <button class="btn btn-warning" id="studentsAbsences">
+        <button class="btn btn-danger" id="studentsAbsences">
+          <i class="bi bi-calendar-event"></i>
           <div class="card-body">
-            <h5 class="card-title">Assenze<i class="bi bi-calendar-event"></i></h5>
-            <p class="card-text">Visualizza le note e le comunicazioni dei professori</p>
+            <h5 class="card-title">Assenze</h5>
+            <p class="card-text">Visualizza le comunicazioni dei professori</p>
           </div>
         </button>
       </div>
       <div class="col-md-4 mb-4">
         <button class="btn btn-info" id="studentsInformations">
+          <i class="bi bi-person"></i>
           <div class="card-body">
-            <h5 class="card-title">Anagrafica<i class="bi bi-person-circle"></i></h5>
-            <p class="card-text">Visualizza i tuoi dati personali</p>
+            <h5 class="card-title">Anagrafica</h5>
+            <p class="card-text">Visualizza i tuoi dati personali che ci sono stati forniti</p>
+          </div>
+        </button>
+      </div>
+      <div class="col-md-4 mb-4">
+        <button class="btn btn-light" style="border: 1px solid black;" id="schoolReport">
+          <i class="bi bi-journal"></i>
+          <div class="card-body">
+            <h5 class="card-title">Pronostico pagella</h5>
+            <p class="card-text">Visualizza il pronostico della tua pagella di quest'anno</p>
           </div>
         </button>
       </div>
@@ -272,6 +289,42 @@
 
   </div>
 
+  <!-- SCHOOL REPORT -->
+  <div class="col-md-8 school-report container spec-section">
+    <h2>Pagella</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Materia</th>
+          <th>Voto</th>
+          <th>Docente</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Matematica</td>
+          <td>8</td>
+          <td>Prof. Rossi</td>
+        </tr>
+        <tr>
+          <td>Italiano</td>
+          <td>7</td>
+          <td>Prof.ssa Bianchi</td>
+        </tr>
+        <tr>
+          <td>Storia</td>
+          <td>6</td>
+          <td>Prof. Verdi</td>
+        </tr>
+        <tr>
+          <td>Scienze</td>
+          <td>9</td>
+          <td>Prof.ssa Neri</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
   <!-- TEACHERS -->
   <div class="row container teachers spec-section">
     <div class="col-md-4">
@@ -331,16 +384,17 @@
   <footer class="bg-dark text-white py-3">
     <div class="container">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
           <p class="mb-0">&copy; 2023 Registro Elettronico</p>
         </div>
-        <div class="col-md-6 text-md-end">
-          <p class="mb-0">Sviluppato da <a href="https://github.com/EdoardoPizzorno/Electronic-Register" class="text-white">Edoardo Pizzorno</a></p>
+        <div class="col-md-4 text-md-end">
+          <p class="mb-0">Sviluppato da <a href="https://github.com/EdoardoPizzorno/Electronic-Register"
+              class="text-white">Edoardo Pizzorno</a></p>
         </div>
       </div>
     </div>
   </footer>
-  
+
 </body>
 
 </html>

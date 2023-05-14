@@ -12,6 +12,7 @@ window.onload = function () {
     let studentsMarksSection = $("div.student-marks").eq(0)
     let studentsAbsencesSection = $("div.student-absences").eq(0)
     let studentsInformations = $("div.informations").eq(0)
+    let studentsSchoolReport = $("div.school-report").eq(0)
 
     // Manage buttons click
     $("#studentsMessages").on("click", function () { showCurrentSection(studentsMessagesSection) })
@@ -19,12 +20,14 @@ window.onload = function () {
     $("#studentsMarks").on("click", function () { showCurrentSection(studentsMarksSection) })
     $("#studentsAbsences").on("click", function () { showCurrentSection(studentsAbsencesSection) })
     $("#studentsInformations").on("click", function () { showCurrentSection(studentsInformations) })
+    $("#schoolReport").on("click", function () { showCurrentSection(studentsSchoolReport) })
 
     $(".nav-link").eq(0).on("click", function () { showCurrentSection(studentsMessagesSection) })
     $(".nav-link").eq(1).on("click", function () { showCurrentSection(studentsRegisterSection) })
     $(".nav-link").eq(2).on("click", function () { showCurrentSection(studentsMarksSection) })
     $(".nav-link").eq(3).on("click", function () { showCurrentSection(studentsAbsencesSection) })
     $(".nav-link").eq(4).on("click", function () { showCurrentSection(studentsInformations) })
+    $(".nav-link").eq(5).on("click", function () { showCurrentSection(studentsSchoolReport) })
 
     sendRequest("GET", "php/studente.php").catch(error).then(function (response) {
         let user_data = response["data"]
