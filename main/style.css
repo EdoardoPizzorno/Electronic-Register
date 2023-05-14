@@ -56,6 +56,12 @@ nav {
   margin-right: 25px;
 }
 
+.user-profile {
+  height: 20px;
+  border-radius: 5px;
+  margin-bottom: 2px;
+}
+
 /* LOGIN FORM */
 #frmLogin {
   margin: 10% 0 0 40%;
@@ -68,10 +74,28 @@ nav {
 
 /* STUDENTS */
 
-div.register,
-div.informations,
-div.options {
-  margin: 10% 0 0 10%;
+div.spec-section {
+  margin: 10% 0 20% 10%;
+  display: none;
+}
+
+/* STUDENTS MESSAGES */
+
+div.student-messages {
+  text-align: center !important;
+}
+
+.options div {
+  padding: 20px;
+}
+
+h5.card-title {
+  text-transform: uppercase;
+}
+
+.options p.card-text {
+  padding: 5px;
+  opacity: 60%;
 }
 
 /* TEACHERS */

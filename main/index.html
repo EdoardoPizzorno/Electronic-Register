@@ -1,6 +1,7 @@
 <html>
 
 <head>
+  <meta charset="UTF-8" />
   <title> Registro Elettronico </title>
   <meta name="author" content="Edoardo Pizzorno" />
   <link rel="icon" type="image/x-icon" href="assets/images/diary.png" />
@@ -34,14 +35,33 @@
     <a class="navbar-brand" href="#">
       <img src="assets/images/diary.png" alt="Registro Elettronico">
     </a>
-    <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navResponsive"
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navResponsive"
       aria-controls="navResponsive" aria-expanded="false" aria-label="Toggle navigation" style="margin-right: 30px;">
       <span class="navbar-toggler-icon"></span>
-    </button>-->
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Messaggi</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Registro</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Voti</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Assenze</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Anagrafica</a>
+        </li>
+      </ul>
+    </div>
     <span class="navbar-text col-md-2"> Anno scolastico <b style="font-size: 17pt">2022/2023</b></span>
     <div class="dropdown">
-      <a class="btn dropdown-toggle profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-        style="display: none;"> <i class="bi bi-person-fill"></i> &nbsp;Nome Cognome </a>
+      <a class="btn dropdown-toggle profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i
+          class="bi bi-person-fill"></i> &nbsp;Nome Cognome </a>
       <div class="dropdown-menu profile">
         <a class="dropdown-item profile"> <i class="bi bi-person-fill"></i> Profilo </a>
         <a class="dropdown-item exit"> <i class="bi bi-box-arrow-left"></i> Esci </a>
@@ -51,34 +71,101 @@
 
   <!-- STUDENTS -->
   <!-- DEFAULT OPTIONS -->
-  <div class="container col-md-8 options" style="display: none;">
-    <div class="col-md-8">
-      <button class="btn btn-info">Registro di Classe</button>
-      <button class="btn btn-info">Voti</button>
-      <button class="btn btn-info">Assenze</button>
-      <button class="btn btn-info">Anagrafica</button>
+  <div class="options container spec-section">
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <button class="btn btn-primary" id="studentsMessages">
+          <i class="bi bi-envelope-fill" style="position:absolute;"></i>
+          <div class="card-body">
+            <h5 class="card-title">Messaggi</h5>
+            <p class="card-text">Visualizza le note e le comunicazioni dei professori</p>
+          </div>
+        </button>
+      </div>
+      <div class="col-md-4 mb-4">
+        <button class="btn btn-danger" id="studentsRegister">
+          <div class="card-body">
+            <h5 class="card-title">Registro di classe<i class="bi bi-book"></i></h5>
+            <p class="card-text">Visualizza i compiti assegnati dai professori</p>
+          </div>
+        </button>
+      </div>
+      <div class="col-md-4 mb-4">
+        <button class="btn btn-success" id="studentsMarks">
+          <div class="card-body">
+            <h5 class="card-title">Voti<i class="bi bi-graph-up"></i></h5>
+            <p class="card-text">Visualizza i voti assegnati dai professori</p>
+          </div>
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <button class="btn btn-warning" id="studentsAbsences">
+          <div class="card-body">
+            <h5 class="card-title">Assenze<i class="bi bi-calendar-event"></i></h5>
+            <p class="card-text">Visualizza le note e le comunicazioni dei professori</p>
+          </div>
+        </button>
+      </div>
+      <div class="col-md-4 mb-4">
+        <button class="btn btn-info" id="studentsInformations">
+          <div class="card-body">
+            <h5 class="card-title">Anagrafica<i class="bi bi-person-circle"></i></h5>
+            <p class="card-text">Visualizza i tuoi dati personali</p>
+          </div>
+        </button>
+      </div>
     </div>
   </div>
 
   <!-- STUDENTS INFORMATIONS -->
-  <div class="col-md-4 informations" style="display: none;">
+  <div class="col-md-4 informations container spec-section">
     <div class="card">
       <div class="card-header bg-info text-white">
         Informazioni personali
       </div>
       <div class="card-body">
-        <h5 class="card-title">Nome Cognome</h5>
+        <h5 class="card-title" id="nominative">Nome Cognome</h5>
         <p class="card-text">
-          <strong>Classe:</strong> 1A<br>
-          <strong>Indirizzo:</strong> Liceo Scientifico<br>
-          <strong>Anno Scolastico:</strong> 2022/2023<br>
+          <strong>Ruolo: </strong><span id="role">Studente</span><br>
+          <strong>Classe: </strong><span id="classroom">1A</span><br>
+          <strong>Indirizzo: </strong>Informatica<br>
+          <strong>Residenza: </strong><span id="residence">Fossano</span><br>
+          <strong>Anno Scolastico: </strong>2022/2023<br>
         </p>
       </div>
     </div>
   </div>
 
+  <!-- STUDENTS MESSAGES -->
+  <div class="col-md-4 student-messages container spec-section">
+    <h2>Messaggi</h2>
+    <hr>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <h4 class="list-group-item-heading">Oggetto del messaggio</h4>
+        <p class="list-group-item-text">Testo del messaggio</p>
+        <p class="list-group-item-text text-muted">Data e ora del messaggio</p>
+        <button type="button" class="btn btn-secondary btn-sm">Segna come già letto</button>
+      </li>
+      <li class="list-group-item">
+        <h4 class="list-group-item-heading">Oggetto del messaggio</h4>
+        <p class="list-group-item-text">Testo del messaggio</p>
+        <p class="list-group-item-text text-muted">Data e ora del messaggio</p>
+        <button type="button" class="btn btn-secondary btn-sm">Segna come già letto</button>
+      </li>
+      <li class="list-group-item">
+        <h4 class="list-group-item-heading">Oggetto del messaggio</h4>
+        <p class="list-group-item-text">Testo del messaggio</p>
+        <p class="list-group-item-text text-muted">Data e ora del messaggio</p>
+        <button type="button" class="btn btn-secondary btn-sm">Segna come già letto</button>
+      </li>
+    </ul>
+  </div>
+
   <!-- STUDENTS REGISTER -->
-  <div class="col-md-8 register container" style="display: none;">
+  <div class="col-md-8 student-register container spec-section">
     <div class="card">
       <div class="card-header bg-info text-white">
         Registro Elettronico
@@ -93,6 +180,7 @@
               <th>Nota</th>
             </tr>
           </thead>
+
           <tbody>
             <tr>
               <td>01/10/2022</td>
@@ -125,8 +213,67 @@
   </div>
   </div>
 
+  <!-- STUDENTS MARKS -->
+  <div class="col-md-8 student-marks container spec-section">
+    <h2>Voti</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Materia</th>
+          <th>Voto</th>
+          <th>Data</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Matematica</td>
+          <td>8</td>
+          <td>10/05/2023</td>
+        </tr>
+        <tr>
+          <td>Italiano</td>
+          <td>7</td>
+          <td>10/05/2023</td>
+        </tr>
+        <tr>
+          <td>Inglese</td>
+          <td>6</td>
+          <td>10/05/2023</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- STUDENTS ABSENCES -->
+  <div class="col-md-8 student-absences container spec-section">
+    <h2>Assenze</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Tipo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>01/05/2023</td>
+          <td>Assenza giustificata</td>
+        </tr>
+        <tr>
+          <td>03/05/2023</td>
+          <td>Assenza ingiustificata</td>
+        </tr>
+        <tr>
+          <td>05/05/2023</td>
+          <td>Assenza giustificata</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
   <!-- TEACHERS -->
-  <div class="teachers container row" style="display: none;">
+  <div class="row container teachers spec-section">
     <div class="col-md-4">
       <h4>Elenco studenti</h4>
       <ul class="list-group">
@@ -180,7 +327,20 @@
     </div>
   </div>
 
-
+  <!-- FOOTER -->
+  <footer class="bg-dark text-white py-3">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <p class="mb-0">&copy; 2023 Registro Elettronico</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <p class="mb-0">Sviluppato da <a href="https://github.com/EdoardoPizzorno/Electronic-Register" class="text-white">Edoardo Pizzorno</a></p>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
 </body>
 
 </html>
