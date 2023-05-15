@@ -15,6 +15,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.3.7/sweetalert2.all.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.0/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 
   <!--BOOTSTRAP-->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"> </script>
@@ -47,10 +48,10 @@
           <a class="nav-link" href="#">Voti</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Assenze</a>
+          <a class="nav-link" href="#">Anagrafica</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Anagrafica</a>
+          <a class="nav-link" href="#">Assenze</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Pagella</a>
@@ -75,7 +76,7 @@
 
   <!-- STUDENTS -->
   <!-- DEFAULT OPTIONS -->
-  <div class="options container spec-section">
+  <div class="student-options container spec-section">
     <div class="row">
       <div class="col-md-4 mb-4">
         <button class="btn btn-primary" id="studentsMessages">
@@ -107,20 +108,20 @@
     </div>
     <div class="row">
       <div class="col-md-4 mb-4">
-        <button class="btn btn-danger" id="studentsAbsences">
-          <i class="bi bi-calendar-event"></i>
-          <div class="card-body">
-            <h5 class="card-title">Assenze</h5>
-            <p class="card-text">Visualizza le comunicazioni dei professori</p>
-          </div>
-        </button>
-      </div>
-      <div class="col-md-4 mb-4">
         <button class="btn btn-info" id="studentsInformations">
           <i class="bi bi-person"></i>
           <div class="card-body">
             <h5 class="card-title">Anagrafica</h5>
             <p class="card-text">Visualizza i tuoi dati personali che ci sono stati forniti</p>
+          </div>
+        </button>
+      </div>
+      <div class="col-md-4 mb-4">
+        <button class="btn btn-danger" id="studentsAbsences">
+          <i class="bi bi-calendar-event"></i>
+          <div class="card-body">
+            <h5 class="card-title">Assenze</h5>
+            <p class="card-text">Visualizza le tue assenze o ritardi registrate dai professori</p>
           </div>
         </button>
       </div>
@@ -134,23 +135,15 @@
         </button>
       </div>
     </div>
-  </div>
-
-  <!-- STUDENTS INFORMATIONS -->
-  <div class="col-md-4 informations container spec-section">
-    <div class="card">
-      <div class="card-header bg-info text-white">
-        Informazioni personali
-      </div>
-      <div class="card-body">
-        <h5 class="card-title" id="nominative">Nome Cognome</h5>
-        <p class="card-text">
-          <strong>Ruolo: </strong><span id="role">Studente</span><br>
-          <strong>Classe: </strong><span id="classroom">1A</span><br>
-          <strong>Indirizzo: </strong>Informatica<br>
-          <strong>Residenza: </strong><span id="residence">Fossano</span><br>
-          <strong>Anno Scolastico: </strong>2022/2023<br>
-        </p>
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <button class="btn btn-dark" style="color: white" id="studentsInterviews">
+          <i class="bi bi-journal-check"></i>
+          <div class="card-body">
+            <h5 class="card-title">Colloqui</h5>
+            <p class="card-text">Prenota un colloquio con un insegnante a scelta</p>
+          </div>
+        </button>
       </div>
     </div>
   </div>
@@ -325,8 +318,214 @@
     </table>
   </div>
 
+  <!-- STUDENTS INTERVIEWS BOOKING -->
+  <div class="col-md-8 student-interviews-booking container spec-section">
+    <h2>Prenota un colloquio</h2>
+    <form>
+      <div class="form-group">
+        <label for="nome">Nome</label>
+        <input type="text" class="form-control" id="nome" placeholder="Inserisci il tuo nome">
+      </div>
+      <div class="form-group">
+        <label for="cognome">Cognome</label>
+        <input type="text" class="form-control" id="cognome" placeholder="Inserisci il tuo cognome">
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" placeholder="Inserisci la tua email">
+      </div>
+      <div class="form-group">
+        <label for="data">Data del colloquio</label>
+        <input type="date" class="form-control" id="data">
+      </div>
+      <div class="form-group">
+        <label for="ora">Ora del colloquio</label>
+        <input type="time" class="form-control" id="ora">
+      </div>
+      <button type="submit" class="btn btn-primary">Prenota</button>
+    </form>
+  </div>
+
   <!-- TEACHERS -->
-  <div class="row container teachers spec-section">
+  <!-- DEFAULT OPTIONS -->
+  <div class="row container teacher-options spec-section">
+    <div class="dropdown">
+      <a class="btn dropdown-toggle class" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Seleziona
+        classe </a>
+      <div class="dropdown-menu classes">
+        <!-- classes -->
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <button class="btn btn-primary" id="teachersMessages">
+          <i class="bi bi-chat"></i>
+          <div class="card-body">
+            <h5 class="card-title">Messaggi</h5>
+            <p class="card-text">Invia le note e le comunicazioni agli studenti della classe selezionata</p>
+          </div>
+        </button>
+      </div>
+      <div class="col-md-4 mb-4">
+        <button class="btn btn-warning" id="teachersRegister">
+          <i class="bi bi-book"></i>
+          <div class="card-body">
+            <h5 class="card-title">Registro classe</h5>
+            <p class="card-text">Inserisci i compiti agli studenti della classe selezionata</p>
+          </div>
+        </button>
+      </div>
+      <div class="col-md-4 mb-4">
+        <button class="btn btn-success" id="teachersList">
+          <i class="bi bi-graph-up"></i>
+          <div class="card-body">
+            <h5 class="card-title">Elenco classe</h5>
+            <p class="card-text">Inserisci voti e assenze agli alunni della classe selezionata</p>
+          </div>
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <button class="btn btn-info" id="personalInformations">
+          <i class="bi bi-person"></i>
+          <div class="card-body">
+            <h5 class="card-title">Anagrafica</h5>
+            <p class="card-text">Visualizza i tuoi dati personali che ci sono stati forniti</p>
+          </div>
+        </button>
+      </div>
+      <div class="col-md-4 mb-4">
+        <button class="btn btn-info" id="teachersInterviews">
+          <i class="bi bi-journal-check"></i>
+          <div class="card-body">
+            <h5 class="card-title">Colloqui</h5>
+            <p class="card-text">Visualizza i colloqui prenotati dagli studenti della classe selezionata</p>
+          </div>
+        </button>
+      </div>
+      <div class="col-md-4 mb-4">
+        <button class="btn btn-light" style="border: 1px solid black;" id="averages">
+          <i class="bi bi-journal"></i>
+          <div class="card-body">
+            <h5 class="card-title">Media classe</h5>
+            <p class="card-text">Visualizza la media della classe selezionata</p>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TEACHERS MESSAGES -->
+  <div class="col-md-4 teacher-messages container spec-section">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header bg-dark text-light">
+            <span class="font-weight-bold">Chat con classe selezionata</span>
+          </div>
+          <div class="card-body">
+            <div class="d-flex justify-content-start mb-4 message">
+              <div class="img_cont_msg">
+                <img src="assets/images/user.jpg" style="height: 26px; padding: 3px;">
+              </div>
+              <div class="msg_container">
+                Ciao Mario, come stai?
+                <span class="msg_time">8:40 AM</span>
+              </div>
+            </div>
+            <hr class="divider">
+
+            <div class="d-flex justify-content-start mb-4 message">
+              <div class="img_cont_msg">
+                <img src="assets/images/user.jpg" style="height: 26px; padding: 3px;">
+              </div>
+              <div class="msg_container">
+                Ciao Mario, come stai?
+                <span class="msg_time">8:40 AM</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="input-group">
+              <input class="form-control" type="text" placeholder="Invia comunicazione...">
+              <div class="input-group-append">
+                <button type="button" class="btn btn-dark"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TEACHERS REGISTER -->
+  <div class="row container teacher-register spec-section">
+    <h1>Calendario HTML</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Domenica</th>
+          <th>Lunedi</th>
+          <th>Martedi</th>
+          <th>Mercoledi</th>
+          <th>Giovedi</th>
+          <th>Venerdi</th>
+          <th>Sabato</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><button class="btn btn-light">1</button></td>
+          <td><button class="btn btn-light">2</button></td>
+          <td><button class="btn btn-light">3</button></td>
+          <td><button class="btn btn-light">4</button></td>
+          <td><button class="btn btn-light">5</button></td>
+          <td><button class="btn btn-light">6</button></td>
+          <td><button class="btn btn-light">7</button></td>
+        </tr>
+        <tr>
+          <td><button class="btn btn-light">8</button></td>
+          <td><button class="btn btn-light">9</button></td>
+          <td><button class="btn btn-light">10</button></td>
+          <td><button class="btn btn-light">11</button></td>
+          <td><button class="btn btn-light">12</button></td>
+          <td><button class="btn btn-light">13</button></td>
+          <td><button class="btn btn-light">14</button></td>
+        </tr>
+        <tr>
+          <td><button class="btn btn-light">15</button></td>
+          <td><button class="btn btn-light">16</button></td>
+          <td><button class="btn btn-light">17</button></td>
+          <td><button class="btn btn-light">18</button></td>
+          <td><button class="btn btn-light">19</button></td>
+          <td><button class="btn btn-light">20</button></td>
+          <td><button class="btn btn-light">21</button></td>
+        </tr>
+        <tr>
+          <td><button class="btn btn-light">22</button></td>
+          <td><button class="btn btn-light">23</button></td>
+          <td><button class="btn btn-light">24</button></td>
+          <td><button class="btn btn-light">25</button></td>
+          <td><button class="btn btn-light">26</button></td>
+          <td><button class="btn btn-light">27</button></td>
+          <td><button class="btn btn-light">28</button></td>
+        </tr>
+        <tr>
+          <td><button class="btn btn-light">29</button></td>
+          <td><button class="btn btn-light">30</button></td>
+          <td><button class="btn btn-light">31</button></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TEACHERS LIST -->
+  <div class="row container teacher-idk spec-section">
     <div class="col-md-4">
       <h4>Elenco studenti</h4>
       <ul class="list-group">
@@ -348,6 +547,10 @@
         </li>
       </ul>
     </div>
+  </div>
+
+  <!-- TEACHERS ABSENCES -->
+  <div class="row container teacher-absences spec-section">
     <div class="col-md-8">
       <h4>Gestione assenze e ritardi</h4>
       <form>
@@ -380,8 +583,124 @@
     </div>
   </div>
 
+  <!-- TEACHERS CLASS LIST -->
+  <div class="row container teacher-list spec-section">
+    <h2>Elenco alunni</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Cognome</th>
+          <th>Voti</th>
+          <th>Assenze</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Giovanni</td>
+          <td>Bianchi</td>
+          <td>
+            <button type="button" class="btn btn-light"><i class="bi bi-plus"></i></button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-light"><i class="bi bi-plus"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TEACHERS AVERAGES -->
+  <div class="row container teacher-averages spec-section">
+    <h2>Media degli alunni della classe</h2>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Cognome</th>
+          <th>Media</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Mario</td>
+          <td>Rossi</td>
+          <td>7.5</td>
+        </tr>
+        <tr>
+          <td>Giovanni</td>
+          <td>Bianchi</td>
+          <td>8.2</td>
+        </tr>
+        <tr>
+          <td>Paola</td>
+          <td>Verdi</td>
+          <td>9.0</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!--TEACHERS INTERVIEWS -->
+  <div class="row container teacher-interviews spec-section">
+    <h2>Colloqui prenotati</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Genitore</th>
+          <th>Data</th>
+          <th>Ora</th>
+          <th>Studente</th>
+          <th>Note</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Mario Rossi</td>
+          <td>10/05/2023</td>
+          <td>15:00</td>
+          <td>Giovanni Verdi</td>
+          <td>Problemi di comportamento</td>
+        </tr>
+        <tr>
+          <td>Anna Bianchi</td>
+          <td>12/05/2023</td>
+          <td>16:30</td>
+          <td>Luca Neri</td>
+          <td>Difficoltà in matematica</td>
+        </tr>
+        <tr>
+          <td>Carla Rossi</td>
+          <td>14/05/2023</td>
+          <td>14:00</td>
+          <td>Sara Rossi</td>
+          <td>Assenza ingiustificata</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- PERSONAL INFORMATIONS [STUDENTS AND TEACHERS] -->
+  <div class=" col-md-4 informations container spec-section">
+    <div class="card">
+      <div class="card-header bg-info text-white">
+        Informazioni personali
+      </div>
+      <div class="card-body">
+        <h5 class="card-title" id="nominative">Nome Cognome</h5>
+        <p class="card-text">
+          <strong>Ruolo: </strong><span id="role">Studente</span><br>
+          <strong>Classe: </strong><span id="classroom">1A</span><br>
+          <strong>Indirizzo: </strong>Informatica<br>
+          <strong>Residenza: </strong><span id="residence">Fossano</span><br>
+          <strong>Anno Scolastico: </strong>2022/2023<br>
+        </p>
+      </div>
+    </div>
+  </div>
+
   <!-- FOOTER -->
-  <footer class="bg-dark text-white py-3">
+  <footer class="bg-dark text-white py-4">
     <div class="container">
       <div class="row">
         <div class="col-md-4">

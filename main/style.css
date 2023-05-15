@@ -3,11 +3,6 @@
   margin: 0;
 }
 
-body, html {
-  height: 100%;
-  background-color: white;
-}
-
 /* NAVBAR */
 
 nav {
@@ -103,9 +98,10 @@ div.col-md-4.mb-4 button {
 div.col-md-4.mb-4 i {
   color: white;
   position: absolute;
-  opacity: 30%;
-  margin-left: -160px;
-  font-size: 70px;
+  opacity: 40%;
+  margin-left: 130px;
+  margin-top: -20px;
+  font-size: 30pt;
   z-index: 1;
 }
 
@@ -118,7 +114,7 @@ h5.card-title {
   z-index: 100;
 }
 
-.options p.card-text {
+.student-options p.card-text {
   padding: 5px;
   opacity: 60%;
   z-index: 100;
@@ -128,6 +124,55 @@ h5.card-title {
 
 div.teachers {
   margin: 10% 0 0 10%;
+}
+
+.dropdown-menu.classes {
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
+/* TEACHER MESSAGES */
+
+div.teacher-messages {
+  width: 80%;
+}
+
+div.msg_container {
+  width: 100%;
+  margin-bottom: -10px;
+}
+
+div.message {
+  margin: 0 !important;  
+}
+
+span.msg_time {
+  margin-top: 0px;
+  margin-left: 90%;
+  float: right;
+  font-size: 9pt;
+}
+
+/* TEACHER REGISTER */
+
+table {
+  border-collapse: collapse;
+  margin: auto;
+}
+
+th, td {
+  border: 1px solid black;
+  padding: 10px;
+  margin-left: 5px;
+  text-align: left;
+}
+
+th {
+  background-color: lightgray;
+}
+
+.dropdown-menu.classes a.dropdown-item {
+  user-select: none;
 }
 
 /* MEDIA QUERY */
