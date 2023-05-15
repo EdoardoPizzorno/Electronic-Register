@@ -74,6 +74,10 @@ nav {
 
 /* STUDENTS */
 
+.student-register div.card {
+  width: 90%;
+}
+
 div.spec-section {
   margin: 10% 0 20% 10%;
   display: none;
@@ -159,7 +163,7 @@ span.msg_time {
 
 /* TEACHER REGISTER */
 
-table {
+div.teacher-register {
   border-collapse: collapse;
   margin: auto;
 }

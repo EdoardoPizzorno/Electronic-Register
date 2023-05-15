@@ -54,7 +54,31 @@ window.onload = function () {
         navAbsences.on("click", function () { showCurrentSection(studentsAbsencesSection) })
         navSchoolReport.on("click", function () { showCurrentSection(studentsSchoolReport) })
         navInterviews.on("click", function () { showCurrentSection(studentsInterviewsSection) })
+
+        // LOAD MAIN SECTIONS
+        loadRegister(user_data)
     })
+
+    //#region MAIN FUNCTIONS
+
+    function loadRegister(user_data) {
+        let table = $("div.student-register table.table tbody").eq(0)
+        sendRequest("GET", "php/register.php", { "class": user_data["classe"] }).catch(error).then(function (response) {
+            let topics = response["data"]
+            // Load using each record
+            for (let item of topics)
+                sendRequest("GET", "php/subjects.php", { "subjectId": item["materia"] }).catch(error).then(function (response) {
+                    let subject = response["data"][0]["materia"] // Get subject
+                    // Load table
+                    let tr = $("<tr>").appendTo(table)
+                    $("<td>").appendTo(tr).text(item["data"])
+                    $("<td>").appendTo(tr).html(`<b>${subject}</b>`)
+                    $("<td>").appendTo(tr).text(item["argomento"])
+                })
+        })
+    }
+
+    //#endregion
 
     //#region INTERNAL FUNCTIONS
     function NavbarManagement() {

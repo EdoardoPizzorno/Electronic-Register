@@ -37,7 +37,7 @@ window.onload = function () {
         // Disable teachers buttons
         buttonsEnabled(false)
         // Get all classes
-        sendRequest("GET", "php/classi.php").catch(error).then(function (response) {
+        sendRequest("GET", "php/classes.php").catch(error).then(function (response) {
             let classes = []
             for (let _class of response["data"]) {
                 classes.push(_class["nome"])
