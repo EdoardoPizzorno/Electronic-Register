@@ -42,3 +42,24 @@ function error(err) {
 function randomNumber(a, b) {
 	return Math.floor((b - a + 1) * Math.random()) + a;
 }
+
+function NavbarManagement() {
+	aProfile.on("click", function () { showCurrentSection(personalInformations) })
+
+	aExit.on("click", function () {
+		sendRequest("POST", "php/logout.php").catch(error).then(function () {
+			window.location.href = "login.html"
+		})
+	})
+
+	$(".navbar-brand").eq(0).on("click", function () { showCurrentSection($("div.student-options").eq(0)) })
+}
+
+function showCurrentSection(_section) {
+	let specific_sections = $(".spec-section")
+	// Hide all sections
+	for (let i = 0; i < specific_sections.length; i++)
+		specific_sections.eq(i).hide()
+	// Show specified section
+	_section.show()
+}

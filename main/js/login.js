@@ -46,26 +46,31 @@ $(document).ready(function () {
                 else
                     error(err)
             }).then(async function (response) {
-                window.location.href = "index.html"
+                sendRequest("GET", "php/utente.php").catch(error).then(function (response) {
+                    console.log(response["data"])
+                    if (response["data"]["docente"] == 0) // student
+                        window.location.href = "studente.html"
+                    else window.location.href = "docente.html" // teacher
+                })
             })
         }
-    }
 
-    function ClearErrors() {
-        txtUser.removeClass("is-invalid")
-        txtUser.prev().children("i").removeClass("red-icon")
-        txtPassword.removeClass("is-invalid")
-        txtPassword.prev().children("i").removeClass("red-icon")
-    }
+        function ClearErrors() {
+            txtUser.removeClass("is-invalid")
+            txtUser.prev().children("i").removeClass("red-icon")
+            txtPassword.removeClass("is-invalid")
+            txtPassword.prev().children("i").removeClass("red-icon")
+        }
 
-    function UsernameError() {
-        txtUser.addClass("is-invalid")
-        txtUser.prev().children("i").addClass("red-icon")
-    }
+        function UsernameError() {
+            txtUser.addClass("is-invalid")
+            txtUser.prev().children("i").addClass("red-icon")
+        }
 
-    function PasswordError() {
-        txtPassword.addClass("is-invalid")
-        txtPassword.prev().children("i").addClass("red-icon")
+        function PasswordError() {
+            txtPassword.addClass("is-invalid")
+            txtPassword.prev().children("i").addClass("red-icon")
+        }
+        //#endregion
     }
-    //#endregion
 })

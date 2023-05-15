@@ -131,6 +131,10 @@ div.teachers {
   overflow-y: scroll;
 }
 
+a.dropdown-toggle.class {
+  border: 1px solid black;
+}
+
 /* TEACHER MESSAGES */
 
 div.teacher-messages {
