@@ -74,26 +74,9 @@ nav {
 
 /* STUDENTS */
 
-.student-register div.card {
-  width: 100%;
-}
-
-td.mark {
-  font-weight: bold;
-}
-
 div.spec-section {
   margin: 10% 0 20% 10%;
   display: none;
-}
-
-td.regDate {
-  width: 150px;
-}
-
-td.regDate span {
-  font-size: 8pt;
-  text-decoration: italic;
 }
 
 /* STUDENTS MESSAGES */
@@ -136,6 +119,68 @@ h5.card-title {
   opacity: 60%;
   z-index: 100;
 }
+
+/* STUDENTS REGISTER */
+
+.student-register div.card {
+  width: 100%;
+  padding: 0px;
+}
+
+td.regDate {
+  width: 150px;
+  line-height: 40px;
+  user-select: none;
+}
+
+td.regDate span {
+  font-size: 10pt;
+  margin-top: 5px;
+  font-style: italic;
+}
+
+td.td-topic {
+  padding: 15px;
+}
+
+.card-body td {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+}
+
+div.student-register table.table tbody td {
+  border-bottom: 1px solid black !important;
+}
+
+span.line-span {
+  font-size: 10pt;
+  margin-top: 30px;
+}
+
+/* STUDENTS MARKS */
+
+td.mark {
+  font-weight: bold;
+}
+
+/* STUDENTS ABSENCES */
+
+div.student-absences table.table tbody td {
+  line-height: 47px;
+}
+
+div.student-absences table.table tbody td button {
+  margin-top: 8px;
+  border: 1px solid black;
+}
+
+div.student-absences table.table tbody tr {
+  border: 1px solid black;
+}
+
+/* STUDENTS SCHOOL REPORT */
+
+/* STUDENTS INTERVIEWS */
 
 /* TEACHERS */
 
