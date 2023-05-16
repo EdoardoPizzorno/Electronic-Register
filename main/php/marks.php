@@ -3,20 +3,18 @@
 header("content-type:application/json; charset=utf-8");
 require("MySQLi.php");
 
-if (isset($_GET["subjectId"])) {
-    $subjectId = $_GET["subjectId"];
+if (isset($_GET["user"])) {
+    $user = $_GET["user"];
 } else {
     http_response_code(400);
-    die("Manca parametro materia");
+    die("Manca parametro utente");
 }
 
 $connection = openConnection("registro");
-$sql = "SELECT materia FROM materie WHERE id='$subjectId'";
+$sql = "SELECT data,materia,voto from voti WHERE matricola='$user'";
 $data = eseguiQuery($connection, $sql);
 
 http_response_code(200);
-echo (json_encode($data[0]));
-
-$connection->close();
+echo(json_encode($data));
 
 ?>

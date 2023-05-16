@@ -23,7 +23,7 @@ window.onload = function () {
     let navInterviews = $(".nav-link").eq(4)
     let navAverages = $(".nav-link").eq(5)
 
-    sendRequest("GET", "php/utente.php").catch(error).then(function (response) {
+    sendRequest("GET", "php/user.php").catch(error).then(function (response) {
         let user_data = response["data"]
         console.log(user_data)
         //ClearErrors()
@@ -53,7 +53,6 @@ window.onload = function () {
             $("#nominative").text(nominative)
             $("#residence").text(`${user_data["residenza"]} (${user_data["indrizzo"]})`)
             $("#classroom").text(classes)
-            $("#role").text("Docente")
             // Manage homepage buttons
             $("#teachersMessages").on("click", function () { showCurrentSection(teachersMessagesSection) })
             $("#teachersRegister").on("click", function () { showCurrentSection(teachersRegisterSection) })
