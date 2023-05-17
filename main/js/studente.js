@@ -60,7 +60,7 @@ window.onload = function () {
         loadMarks(user_data)
         loadAbsences(user_data)
         //loadSchoolReport(user_data)
-        //loadInterviews(user_data)
+        loadInterviews(user_data)
     })
 
     //#region MAIN FUNCTIONS
@@ -107,14 +107,13 @@ window.onload = function () {
             let tdTopics = $(".td-topic")
 
             let j = 0
-            console.log(topics)
             for (let i = 0; i < topics.length; i++) {
                 let row_date = trTopics.eq(i).prop("id")
                 while (topics[j]["data"] == row_date) {
                     let lesson_topic = topics[j]["argomento"]
                     //console.log(topics[j])
                     //console.log("topics: " + row_date)
-                    sendRequest("GET", "php/subjects.php", { "subjectId": topics[j]["materia"] }).catch(error).then(function (response) {
+                    sendRequest("GET", "php/subject.php", { "subjectId": topics[j]["materia"] }).catch(error).then(function (response) {
                         let subject = response["data"]["materia"]
                         let prevSubjHtml = tdSubjects.eq(i).html()
                         let prevTopHtml = tdTopics.eq(i).html()
@@ -136,12 +135,6 @@ window.onload = function () {
                     j++
                     i--
                 }*/
-                /*if (topics[j]["data"] != row_date) {
-                    while (topics[j]["data"] == row_date) {
-                        i++
-                        j++
-                    }
-                }*/
             }
             table.DataTable()
         })
@@ -153,7 +146,7 @@ window.onload = function () {
             let marks = response["data"]
             marks.reverse()
             for (let mark of marks) {
-                sendRequest("GET", "php/subjects.php", { "subjectId": mark["materia"] }).catch(error).then(function (subjects) {
+                sendRequest("GET", "php/subject.php", { "subjectId": mark["materia"] }).catch(error).then(function (subjects) {
                     let tr = $("<tr>").appendTo(table.children("tbody"))
                     $("<td>").appendTo(tr).text(mark["data"])
                     $("<td>").appendTo(tr).text(subjects["data"]["materia"])
@@ -172,7 +165,6 @@ window.onload = function () {
         let table = $("div.student-absences table.table tbody").eq(0)
         sendRequest("GET", "php/absences.php", { "user": user_data["matricola"] }).catch(error).then(function (response) {
             let absences = response["data"]
-            console.log(absences)
             absences.reverse()
             for (let absence of absences) {
                 let tr = $("<tr>").appendTo(table)
@@ -193,9 +185,86 @@ window.onload = function () {
         })
     }
 
+    function loadSchoolReport(user_data) {
+        let table = $("div.school-report table.table tbody").eq(0)
+        let all_subjects = {}
+        let all_marks = []
+        sendRequest("GET", "php/marks.php", { "user": user_data["matricola"] }).catch(error).then(function (marks) {
+            marks = marks["data"]
+            console.log(marks)
+            for (let mark of marks) {
+                sendRequest("GET", "php/subject.php", { "subjectId": mark["materia"] }).catch(error).then(function (subjects) {
+                    for (let i = 0; i < marks.length; i++) {
+                        if (marks[i]["materia"] == mark["materia"]) {
+                            all_subjects[subjects["data"]["materia"]] = marks[i]["materia"]
+                            all_marks.push(marks[i]["voto"])
+                        }
+                    }
+                    console.log(all_marks)
+                })
+            }
+        })
+        console.log(all_marks)
+    }
+
+    function loadInterviews(user_data) {
+        let current_teacher = ""
+        sendRequest("GET", "php/peopleType_list.php", { "type": 1 }).catch(error).then(function (type_list) {
+            type_list = type_list["data"]
+
+            let dropdownMenu = $("div.dropdown-menu.teachers-list").eq(0)
+            for (let person of type_list) {
+                $("<a>").addClass("dropdown-item").appendTo(dropdownMenu).text(`${person["nome"]} ${person["cognome"]}`).on("click", function () {
+                    current_teacher = person["cognome"]
+                    $("#frmBookInterview").show()
+                    $("a.dropdown-toggle.teachers").eq(0).text(current_teacher)
+                })
+            }
+            getInterviews(user_data["matricola"])
+        })
+        // Manage the booking
+        $(".student-interviews-booking a.book").eq(0).on("click", function () {
+            let nome = $("#nome").val()
+            let cognome = $("#cognome").val()
+            let matricola = $("#matricola").val()
+            let data = $("#data").val()
+            let time = $("#ora").val()
+
+            data = data + " " + time
+
+            sendRequest("POST", "php/insertInterview.php", { nome, cognome, matricola, data, "docente": current_teacher }).catch(function (err) {
+                // Put cases
+                error(err)
+            }).then(function () {
+                getInterviews(user_data["matricola"])
+                Swal.fire({
+                    "text": "Colloquio prenotato con successo!",
+                    "icon": "success"
+                })
+            })
+        })
+    }
+
     //#endregion
 
     //#region INTERNAL FUNCTIONS
+
+    function getInterviews(matricola) {
+        let table = $("div.student-interviews-booking table.table tbody").eq(0)
+        table.empty()
+        sendRequest("GET", "php/interviews.php", { "user": matricola }).catch(error).then(function (interviews) {
+            for (let interview of interviews["data"]) {
+                let date = interview["ora"].split(" ")
+                let hour = date[1].split(":")
+
+                let tr = $("<tr>").appendTo(table)
+                $("<td>").appendTo(tr).text(date[0])
+                $("<td>").appendTo(tr).text(`${hour[0]}:${hour[1]}`)
+                $("<td>").appendTo(tr).text(interview["docente"])
+            }
+        })
+    }
+
     function NavbarManagement() {
         aProfile.on("click", function () { showCurrentSection(personalInformations) })
 

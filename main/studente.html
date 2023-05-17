@@ -213,7 +213,7 @@
                     <th>Voto</th>
                 </tr>
             </thead>
-            
+
             <tbody>
             </tbody>
         </table>
@@ -245,38 +245,37 @@
                 <tr>
                     <th>Materia</th>
                     <th>Voto</th>
-                    <th>Docente</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Matematica</td>
-                    <td>8</td>
-                    <td>Prof. Rossi</td>
-                </tr>
-                <tr>
-                    <td>Italiano</td>
-                    <td>7</td>
-                    <td>Prof.ssa Bianchi</td>
-                </tr>
-                <tr>
-                    <td>Storia</td>
-                    <td>6</td>
-                    <td>Prof. Verdi</td>
-                </tr>
-                <tr>
-                    <td>Scienze</td>
-                    <td>9</td>
-                    <td>Prof.ssa Neri</td>
-                </tr>
             </tbody>
         </table>
     </div>
 
     <!-- STUDENTS INTERVIEWS BOOKING -->
     <div class="row student-interviews-booking container spec-section">
+        <h2>Colloqui</h2>
+        <table id="interviewsTable" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Ora</th>
+                    <th>Docente</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <br>
         <h2>Prenota un colloquio</h2>
-        <form>
+        <div class="dropdown">
+            <a class="btn dropdown-toggle teachers" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Seleziona un
+                docente </a>
+            <div class="dropdown-menu teachers-list">
+            </div>
+        </div>
+        <div id="frmBookInterview" style="display: none;">
             <div class="form-group">
                 <label for="nome">Nome</label>
                 <input type="text" class="form-control" id="nome" placeholder="Inserisci il tuo nome">
@@ -286,8 +285,8 @@
                 <input type="text" class="form-control" id="cognome" placeholder="Inserisci il tuo cognome">
             </div>
             <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="Inserisci la tua email">
+                <label for="email">Matricola</label>
+                <input type="number" class="form-control" id="matricola" placeholder="Inserisci la tua matricola">
             </div>
             <div class="form-group">
                 <label for="data">Data del colloquio</label>
@@ -297,12 +296,12 @@
                 <label for="ora">Ora del colloquio</label>
                 <input type="time" class="form-control" id="ora">
             </div>
-            <button type="submit" class="btn btn-primary">Prenota</button>
-        </form>
+            <a href="#interviewsTable" class="btn btn-primary book">Prenota</a>
+        </div>
     </div>
 
     <!-- PERSONAL INFORMATIONS [STUDENTS AND TEACHERS] -->
-    <div class="row informations container spec-section">
+    <div class="col-md-4 informations container spec-section">
         <div class="card">
             <div class="card-header bg-info text-white">
                 Informazioni personali

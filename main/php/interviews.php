@@ -11,10 +11,10 @@ if (isset($_GET["user"])) {
 }
 
 $connection = openConnection("registro");
-$sql = "SELECT materia,data,voto from voti WHERE matricola='$user'";
+$sql = "SELECT ora,docente from colloqui WHERE matricola='$user'";
 $data = eseguiQuery($connection, $sql);
 
 http_response_code(200);
-echo(json_encode($data));
+echo (json_encode($data));
 
 ?>
