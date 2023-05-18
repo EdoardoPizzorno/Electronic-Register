@@ -208,6 +208,14 @@ window.onload = function () {
     }
 
     function loadInterviews(user_data) {
+        let txtName = $("#name")
+        let txtSurname = $("#surname")
+        let txtMatricola = $("#matricola")
+        // Set default fields
+        txtName.val(user_data["nome"])
+        txtSurname.val(user_data["cognome"])
+        txtMatricola.val(user_data["matricola"])
+        
         let current_teacher = ""
         sendRequest("GET", "php/peopleType_list.php", { "type": 1 }).catch(error).then(function (type_list) {
             type_list = type_list["data"]
@@ -224,11 +232,11 @@ window.onload = function () {
         })
         // Manage the booking
         $(".student-interviews-booking a.book").eq(0).on("click", function () {
-            let nome = $("#nome").val()
-            let cognome = $("#cognome").val()
-            let matricola = $("#matricola").val()
-            let data = $("#data").val()
-            let time = $("#ora").val()
+            let nome = txtName.val()
+            let cognome = txtSurname.val()
+            let matricola = txtMatricola.val()
+            let data = $("#date").val()
+            let time = $("#time").val()
 
             data = data + " " + time
 
