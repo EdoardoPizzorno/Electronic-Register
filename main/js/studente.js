@@ -77,10 +77,15 @@ window.onload = function () {
             // Start at 01/03/23
             for (let i = 0; i < month_days.length; i++) { // months' names
                 for (let j = 5; j < month_days[i]; j++) { // days number
-                    if (i < 9 && j < 9)
-                        calendar_days.push(`2023-0${(i + 3)}-0${j + 1}`)
-                    else calendar_days.push(`2023-${(i + 3)}-${j + 1}`)
-
+                    let date = ""
+                    if (i < 9 && j < 9) {
+                        date = `2023-0${(i + 3)}-0${j + 1}`
+                    } else if (i < 9 && j >= 9) {
+                        date = `2023-0${(i + 3)}-${j + 1}`
+                    } else if (i > 9 && j < 9)
+                        date = `2023-${(i + 3)}-0${j + 1}`
+                    else date = `2023-${(i + 3)}-${j + 1}`
+                    calendar_days.push(date)
                     week_days.push(days[days_index])
                     if (days_index == 6)
                         days_index = 0
@@ -109,32 +114,28 @@ window.onload = function () {
             let j = 0
             for (let i = 0; i < topics.length; i++) {
                 let row_date = trTopics.eq(i).prop("id")
-                while (topics[j]["data"] == row_date) {
-                    let lesson_topic = topics[j]["argomento"]
-                    //console.log(topics[j])
-                    //console.log("topics: " + row_date)
-                    sendRequest("GET", "php/subject.php", { "subjectId": topics[j]["materia"] }).catch(error).then(function (response) {
-                        let subject = response["data"]["materia"]
-                        let prevSubjHtml = tdSubjects.eq(i).html()
-                        let prevTopHtml = tdTopics.eq(i).html()
-                        let newSubjHtml = `${prevSubjHtml}<br><b>${subject}</b>`
-                        let newTopHtml = `${prevTopHtml}<br>${lesson_topic}`
-                        if (prevSubjHtml == "" && prevTopHtml == "") {
-                            newSubjHtml = `<span class='line-span'><b>${subject.toUpperCase()}</b></span>`
-                            newTopHtml = `<span class='line-span'>${lesson_topic}</span>`
-                        } else {
-                            newSubjHtml = `${prevSubjHtml}<br><br><span class='line-span'><b>${subject.toUpperCase()}</b></span>`
-                            newTopHtml = `${prevTopHtml}<br><br><span class='line-span'>${lesson_topic}</span>`
-                        }
-                        tdSubjects.eq(i).html(newSubjHtml)
-                        tdTopics.eq(i).html(newTopHtml)
-                    })
-                    j++
+                if (topics[j]["data"] != undefined) {
+                    while (topics[j]["data"] == row_date) {
+                        let lesson_topic = topics[j]["argomento"]
+                        sendRequest("GET", "php/subject.php", { "subjectId": topics[j]["materia"] }).catch(error).then(function (response) {
+                            let subject = response["data"]["materia"]
+                            let prevSubjHtml = tdSubjects.eq(i).html()
+                            let prevTopHtml = tdTopics.eq(i).html()
+                            let newSubjHtml = `${prevSubjHtml}<br><b>${subject}</b>`
+                            let newTopHtml = `${prevTopHtml}<br>${lesson_topic}`
+                            if (prevSubjHtml == "" && prevTopHtml == "") {
+                                newSubjHtml = `<span class='line-span'><b>${subject.toUpperCase()}</b></span>`
+                                newTopHtml = `<span class='line-span'>${lesson_topic}</span>`
+                            } else {
+                                newSubjHtml = `${prevSubjHtml}<br><br><span class='line-span'><b>${subject.toUpperCase()}</b></span>`
+                                newTopHtml = `${prevTopHtml}<br><br><span class='line-span'>${lesson_topic}</span>`
+                            }
+                            tdSubjects.eq(i).html(newSubjHtml)
+                            tdTopics.eq(i).html(newTopHtml)
+                        })
+                        j++
+                    }
                 }
-                /*if (topics[j]["data"] != row_date) {
-                    j++
-                    i--
-                }*/
             }
             table.DataTable()
         })
@@ -215,7 +216,7 @@ window.onload = function () {
         txtName.val(user_data["nome"])
         txtSurname.val(user_data["cognome"])
         txtMatricola.val(user_data["matricola"])
-        
+
         let current_teacher = ""
         sendRequest("GET", "php/peopleType_list.php", { "type": 1 }).catch(error).then(function (type_list) {
             type_list = type_list["data"]
