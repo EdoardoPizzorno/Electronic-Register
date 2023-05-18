@@ -55,7 +55,7 @@ window.onload = function () {
         navInterviews.on("click", function () { showCurrentSection(studentsInterviewsSection) })
 
         // LOAD MAIN SECTIONS
-        //loadMessages(user_data)
+        loadMessages(user_data)
         loadMarks(user_data)
         loadAbsences(user_data)
         loadSchoolReport(user_data)
@@ -64,6 +64,33 @@ window.onload = function () {
     })
 
     //#region MAIN FUNCTIONS
+
+    function loadMessages(user_data) {
+        let messagesList = $(".student-messages ul.list-group").eq(0)
+        sendRequest("GET", "php/messages.php", { "user": user_data["user"], "class": user_data["classe"] }).catch(error).then(function (messages) {
+            messages = messages["data"]
+            for (let message of messages) {
+                let li = $("<li>").appendTo(messagesList).addClass("list-group-item")
+                // Bell button
+                if (parseInt(message["visualizzato"]) == 0) {
+                    $("<button>").css("float", "right").prop("id", message["id"]).appendTo(li).addClass("btn btn-secondary btn-sm").html('<i class="bi bi-bell-fill"></i>').on("click", function () {
+                        let messageId = $(this).prop("id")
+                        $(this).hide()
+                        // Change column 'visualizzato' to 1 (default at 0)
+                        sendRequest("POST", "php/message_read.php", { messageId }).catch(error)
+                    })
+                }
+
+                $("<h4>").appendTo(li).addClass("list-group-item-heading").text(message["oggetto"]) // Message object
+                $("<p>").appendTo(li).text(message["testo"]) // Message text
+
+                let aux = message["orario"].split(" ")
+                let date = aux[0]
+                let hour = aux[1].split(".")[0]
+                $("<p>").appendTo(li).addClass("text-muted").css("float", "right").text(`${date} ${hour}`) // Message date
+            }
+        })
+    }
 
     function loadRegister(user_data) {
         let table = $("div.student-register table.table").eq(0)
@@ -167,7 +194,6 @@ window.onload = function () {
         table.empty()
         sendRequest("GET", "php/absences.php", { "user": user_data["matricola"] }).catch(error).then(function (response) {
             let absences = response["data"]
-            console.log(absences)
             absences.reverse()
             $(".student-absences h2").text(`Assenze: ${absences.length}`)
             if (absences.length == 0) {
@@ -214,7 +240,7 @@ window.onload = function () {
                                     // Check fields
                                     if ($("#customSwitches").prop("checked")) {
                                         let justification = $("#justification-reason").val()
-                                        if (justification == "")
+                                        if (justification.trim() == "")
                                             justification = "Salute"
                                         // Justify the absence
                                         sendRequest("POST", "php/updateAbsence.php", { id, justification }).catch(error).then(function () {
