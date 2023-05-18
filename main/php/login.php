@@ -3,8 +3,6 @@
 header("content-type:application/json; charset=utf-8");
 require("MySQLi.php");
 
-define("TIMEOUT", 600); # 10min Timeout
-
 $connection = openConnection("registro");
 
 if (isset($_REQUEST["user"])) {

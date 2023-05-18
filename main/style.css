@@ -165,7 +165,8 @@ td.mark {
 
 /* STUDENTS ABSENCES */
 
-div.student-absences table.table tbody td {
+div.student-absences table.table tbody td,
+div.student-absences table.table tbody tr {
   line-height: 47px;
 }
 
@@ -176,6 +177,15 @@ div.student-absences table.table tbody td button {
 
 div.student-absences table.table tbody tr {
   border: 1px solid black;
+  text-align: center;
+}
+
+#absenceJustify {
+  user-select: none;
+}
+
+#justificationReason {
+  font-size: 10pt;
 }
 
 /* STUDENTS SCHOOL REPORT */
@@ -184,7 +194,7 @@ div.student-absences table.table tbody tr {
 
 a.dropdown-toggle.teachers {
   border: 1px solid black;
-  margin: 0 20px 20px 0;
+  margin: 20px 0 20px 0;
 }
 
 /* TEACHERS */

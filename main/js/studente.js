@@ -56,11 +56,11 @@ window.onload = function () {
 
         // LOAD MAIN SECTIONS
         //loadMessages(user_data)
-        loadRegister(user_data)
         loadMarks(user_data)
         loadAbsences(user_data)
-        //loadSchoolReport(user_data)
+        loadSchoolReport(user_data)
         loadInterviews(user_data)
+        //loadRegister(user_data)
     })
 
     //#region MAIN FUNCTIONS
@@ -143,8 +143,8 @@ window.onload = function () {
 
     function loadMarks(user_data) {
         let table = $("div.student-marks table.table").eq(0)
-        sendRequest("GET", "php/marks.php", { "user": user_data["matricola"] }).catch(error).then(function (response) {
-            let marks = response["data"]
+        sendRequest("GET", "php/marks.php", { "user": user_data["matricola"] }).catch(error).then(function (marks) {
+            marks = marks["data"]
             marks.reverse()
             for (let mark of marks) {
                 sendRequest("GET", "php/subject.php", { "subjectId": mark["materia"] }).catch(error).then(function (subjects) {
@@ -164,23 +164,81 @@ window.onload = function () {
 
     function loadAbsences(user_data) {
         let table = $("div.student-absences table.table tbody").eq(0)
+        table.empty()
         sendRequest("GET", "php/absences.php", { "user": user_data["matricola"] }).catch(error).then(function (response) {
             let absences = response["data"]
+            console.log(absences)
             absences.reverse()
-            for (let absence of absences) {
+            $(".student-absences h2").text(`Assenze: ${absences.length}`)
+            if (absences.length == 0) {
                 let tr = $("<tr>").appendTo(table)
-                $("<td>").appendTo(tr).text(absence["data"])
+                $("<span>").appendTo(tr).text("Nessuna assenza registrata").addClass("text-muted")
+            } else {
+                for (let absence of absences) {
+                    let tr = $("<tr>").appendTo(table)
+                    $("<td>").appendTo(tr).text(absence["data"])
 
-                if (parseInt(absence["giustificato"]) == 1) {
-                    $("<td>").appendTo(tr).text("Assenza giustificata")
-                    $("<td>").appendTo(tr).append($("<button>").addClass("btn btn-light").html("<i class='bi bi-info-circle'></ i>"))
-                } else {
-                    tr.css({
-                        "color": "red",
-                        "border": "1px solid red"
-                    })
-                    $("<td>").css("color", "red").appendTo(tr).html("<b>Assenza NON giustificata</b>")
-                    $("<td>").appendTo(tr).append($("<button>").addClass("btn btn-danger").html("<i class='bi bi-info-circle'></ i>"))
+                    if (parseInt(absence["giustificato"]) == 1) {
+                        $("<td>").appendTo(tr).text("Assenza giustificata")
+                        $("<td>").appendTo(tr).append($("<button>").addClass("btn btn-light").html("<i class='bi bi-info-circle'></ i>"))
+                    } else {
+                        tr.css({
+                            "color": "red",
+                            "background-color": "rgba(255, 0, 0, 0.1)"
+                        })
+                        $("<td>").appendTo(tr).html("<b>Assenza non giustificata</b>")
+                        $("<td>").appendTo(tr).append($("<button>").prop("id", absence["id"]).addClass("btn btn-danger").html("<i class='bi bi-info-circle'></ i>").on("click", function () {
+                            let id = $(this).prop("id")
+                            Swal.fire({
+                                "width": "380px",
+                                "showCancelButton": true,
+                                "html": `
+                                <div id="absenceJustify">
+                                    <div class="form-group">
+                                        <label for="jSign">Nome e cognome</label>
+                                        <input id="jSign" type="text" class="form-control" placeholder="Inserisci nome e cognome per giustificare">
+                                    </div><br>
+                                    <div class="form-group">
+                                        <label for="justification-reason">Motivazione assenza</label>
+                                        <textarea id="justification-reason" name="justification-reason" rows="4" required></textarea>
+                                    </div><br>
+                                    <div class="form-group">
+                                        <div class="custom-control custom-switch">
+                                            <input type="checkbox" class="custom-control-input" id="customSwitches" name="customSwitches" disabled>
+                                            <label class="custom-control-label" for="customSwitches">Giustifica</label>
+                                        </div>
+                                    </div>
+                                </div>`
+                            }).then(function (value) {
+                                if (value["isConfirmed"]) { // 'OK' alert button
+                                    // Check fields
+                                    if ($("#customSwitches").prop("checked")) {
+                                        let justification = $("#justification-reason").val()
+                                        console.log(justification)
+                                        // Justify the absence
+                                        sendRequest("POST", "php/updateAbsence.php", { id, justification }).catch(error).then(function () {
+                                            loadAbsences(user_data)
+                                            Swal.fire({
+                                                "text": "Assenza giustificata con successo!",
+                                                "icon": "success"
+                                            })
+                                        })
+                                    }
+                                }
+                            })
+                            // Absence justifications' fields management
+                            $("input#jSign").on("input", function () {
+                                let inputSwitch = $("#customSwitches")
+                                let fullname = user_data["nome"] + " " + user_data["cognome"]
+                                if (this.value.toLowerCase() == fullname)
+                                    inputSwitch.prop("disabled", false)
+                                else {
+                                    inputSwitch.prop("disabled", true)
+                                    inputSwitch.prop("checked", false)
+                                }
+                            })
+                        }))
+                    }
                 }
             }
         })
@@ -189,23 +247,36 @@ window.onload = function () {
     function loadSchoolReport(user_data) {
         let table = $("div.school-report table.table tbody").eq(0)
         let all_subjects = {}
-        let all_marks = []
+        let promises = []
         sendRequest("GET", "php/marks.php", { "user": user_data["matricola"] }).catch(error).then(function (marks) {
             marks = marks["data"]
-            console.log(marks)
+            // Create JSON with all marks for each subject
             for (let mark of marks) {
-                sendRequest("GET", "php/subject.php", { "subjectId": mark["materia"] }).catch(error).then(function (subjects) {
-                    for (let i = 0; i < marks.length; i++) {
-                        if (marks[i]["materia"] == mark["materia"]) {
-                            all_subjects[subjects["data"]["materia"]] = marks[i]["materia"]
-                            all_marks.push(marks[i]["voto"])
-                        }
-                    }
-                    console.log(all_marks)
+                let request = sendRequest("GET", "php/subject.php", { "subjectId": mark["materia"] }).catch(error).then(function (subjects) {
+                    let subject = subjects["data"]["materia"];
+                    if (!all_subjects.hasOwnProperty(subject))
+                        all_subjects[subject] = [] // If there's no array, create it
+
+                    all_subjects[subject].push(parseInt(mark["voto"]))
                 })
+                promises.push(request);
             }
+
+            // Load table
+            Promise.all(promises).then(function () {
+                for (let subject in all_subjects) {
+                    let sum = 0
+                    // Calculate average for the current subject
+                    for (let mark of all_subjects[subject])
+                        sum += mark
+                    let average = Math.round(sum / all_subjects[subject].length)
+                    // Load table
+                    let tr = $("<tr>").appendTo(table)
+                    $("<td>").appendTo(tr).text(subject)
+                    $("<td>").appendTo(tr).text(average).css("background-color", average >= 6 ? "lightgreen" : "salmon")
+                }
+            })
         })
-        console.log(all_marks)
     }
 
     function loadInterviews(user_data) {
@@ -241,10 +312,7 @@ window.onload = function () {
 
             data = data + " " + time
 
-            sendRequest("POST", "php/insertInterview.php", { nome, cognome, matricola, data, "docente": current_teacher }).catch(function (err) {
-                // Put cases
-                error(err)
-            }).then(function () {
+            sendRequest("POST", "php/insertInterview.php", { nome, cognome, matricola, data, "docente": current_teacher }).catch(error).then(function () {
                 getInterviews(user_data["matricola"])
                 Swal.fire({
                     "text": "Colloquio prenotato con successo!",
