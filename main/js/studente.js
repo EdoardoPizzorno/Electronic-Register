@@ -60,7 +60,7 @@ window.onload = function () {
         loadAbsences(user_data)
         loadSchoolReport(user_data)
         loadInterviews(user_data)
-        //loadRegister(user_data)
+        loadRegister(user_data)
     })
 
     //#region MAIN FUNCTIONS
@@ -214,7 +214,8 @@ window.onload = function () {
                                     // Check fields
                                     if ($("#customSwitches").prop("checked")) {
                                         let justification = $("#justification-reason").val()
-                                        console.log(justification)
+                                        if (justification == "")
+                                            justification = "Salute"
                                         // Justify the absence
                                         sendRequest("POST", "php/updateAbsence.php", { id, justification }).catch(error).then(function () {
                                             loadAbsences(user_data)
