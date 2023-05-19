@@ -44,6 +44,10 @@ function randomNumber(a, b) {
 }
 
 function NavbarManagement() {
+	let aProfile = $(".dropdown-item.profile").eq(0)
+	let aExit = $(".dropdown-item.exit").eq(0)
+	let personalInformations = $("div.informations").eq(0)
+
 	aProfile.on("click", function () { showCurrentSection(personalInformations) })
 
 	aExit.on("click", function () {

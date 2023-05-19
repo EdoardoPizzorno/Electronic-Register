@@ -11,6 +11,7 @@ $(document).ready(function () {
     })
 
     $("#btnLogin").on("click", checkLogin)
+    $("#btnSignIn").on("click", function () { window.location.href = "signin.html" })
 
     // Check if ENTER is pressed
     $(document).on('keydown', function (event) {
@@ -45,7 +46,7 @@ $(document).ready(function () {
                 }
                 else
                     error(err)
-            }).then(async function (response) {
+            }).then(async function () {
                 sendRequest("GET", "php/user.php").catch(error).then(function (response) {
                     if (response["data"]["docente"] == 0) // student
                         window.location.href = "studente.html"

@@ -2,8 +2,6 @@
 
 window.onload = function () {
     let btnProfile = $(".dropdown-toggle.profile").eq(0)
-    let aProfile = $(".dropdown-item.profile").eq(0)
-    let aExit = $(".dropdown-item.exit").eq(0)
 
     let personalInformations = $("div.informations").eq(0)
 
@@ -69,25 +67,29 @@ window.onload = function () {
         let messagesList = $(".student-messages ul.list-group").eq(0)
         sendRequest("GET", "php/messages.php", { "user": user_data["user"], "class": user_data["classe"] }).catch(error).then(function (messages) {
             messages = messages["data"]
-            for (let message of messages) {
-                let li = $("<li>").appendTo(messagesList).addClass("list-group-item")
-                // Bell button
-                if (parseInt(message["visualizzato"]) == 0) {
-                    $("<button>").css("float", "right").prop("id", message["id"]).appendTo(li).addClass("btn btn-secondary btn-sm").html('<i class="bi bi-bell-fill"></i>').on("click", function () {
-                        let messageId = $(this).prop("id")
-                        $(this).hide()
-                        // Change column 'visualizzato' to 1 (default at 0)
-                        sendRequest("POST", "php/message_read.php", { messageId }).catch(error)
-                    })
+            if (messages.length == 0) {
+                $("<li>").appendTo(messagesList).addClass("list-group-item").text("Non ci sono messaggi da visualizzare")
+            } else {
+                for (let message of messages) {
+                    let li = $("<li>").appendTo(messagesList).addClass("list-group-item")
+                    // Bell button
+                    if (parseInt(message["visualizzato"]) == 0) {
+                        $("<button>").css("float", "right").prop("id", message["id"]).appendTo(li).addClass("btn btn-secondary btn-sm").html('<i class="bi bi-bell-fill"></i>').on("click", function () {
+                            let messageId = $(this).prop("id")
+                            $(this).hide()
+                            // Change column 'visualizzato' to 1 (default at 0)
+                            sendRequest("POST", "php/message_read.php", { messageId }).catch(error)
+                        })
+                    }
+
+                    $("<h4>").appendTo(li).addClass("list-group-item-heading").text(message["oggetto"]) // Message object
+                    $("<p>").appendTo(li).text(message["testo"]) // Message text
+
+                    let aux = message["orario"].split(" ")
+                    let date = aux[0]
+                    let hour = aux[1].split(".")[0]
+                    $("<p>").appendTo(li).addClass("text-muted").css("float", "right").text(`${date} ${hour}`) // Message date
                 }
-
-                $("<h4>").appendTo(li).addClass("list-group-item-heading").text(message["oggetto"]) // Message object
-                $("<p>").appendTo(li).text(message["testo"]) // Message text
-
-                let aux = message["orario"].split(" ")
-                let date = aux[0]
-                let hour = aux[1].split(".")[0]
-                $("<p>").appendTo(li).addClass("text-muted").css("float", "right").text(`${date} ${hour}`) // Message date
             }
         })
     }
@@ -369,25 +371,5 @@ window.onload = function () {
         })
     }
 
-    function NavbarManagement() {
-        aProfile.on("click", function () { showCurrentSection(personalInformations) })
-
-        aExit.on("click", function () {
-            sendRequest("POST", "php/logout.php").catch(error).then(function () {
-                window.location.href = "login.html"
-            })
-        })
-
-        $(".navbar-brand").eq(0).on("click", function () { showCurrentSection($("div.student-options").eq(0)) })
-    }
-
-    function showCurrentSection(_section) {
-        let specific_sections = $(".spec-section")
-        // Hide all sections
-        for (let i = 0; i < specific_sections.length; i++)
-            specific_sections.eq(i).hide()
-        // Show specified section
-        _section.show()
-    }
     //#endregion
 }

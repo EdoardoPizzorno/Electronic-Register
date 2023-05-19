@@ -15,6 +15,6 @@ $sql = "SELECT id,data,giustificato,motivazione from assenze WHERE matricola='$u
 $data = eseguiQuery($connection, $sql);
 
 http_response_code(200);
-echo(json_encode($data));
+echo (json_encode($data));
 
 ?>

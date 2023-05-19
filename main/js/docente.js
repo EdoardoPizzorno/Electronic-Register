@@ -2,8 +2,6 @@
 
 window.onload = function () {
     let btnProfile = $(".dropdown-toggle.profile").eq(0)
-    let aProfile = $(".dropdown-item.profile").eq(0)
-    let aExit = $(".dropdown-item.exit").eq(0)
 
     let personalInformations = $("div.informations").eq(0)
 
@@ -29,7 +27,6 @@ window.onload = function () {
         //ClearErrors()
         let nominative = `${user_data["nome"].toUpperCase()} ${user_data["cognome"].toUpperCase()}`
         // 'btnProfile' management
-        console.log(btnProfile)
         btnProfile.html(`<img src=assets/images/${user_data["immagine"]} class="user-profile">&nbsp;&nbsp;${nominative}`)
         NavbarManagement()
         // Show default homepage
@@ -75,26 +72,6 @@ window.onload = function () {
     function buttonsEnabled(flag) {
         $(".teacher-options button.btn").prop("disabled", !flag)
     }
-
-    function NavbarManagement() {
-        aProfile.on("click", function () { showCurrentSection(personalInformations) })
-
-        aExit.on("click", function () {
-            sendRequest("POST", "php/logout.php").catch(error).then(function () {
-                window.location.href = "login.html"
-            })
-        })
-
-        $(".navbar-brand").eq(0).on("click", function () { showCurrentSection(teachersDefaultView) })
-    }
-
-    function showCurrentSection(_section) {
-        let specific_sections = $(".spec-section")
-        // Hide all sections
-        for (let i = 0; i < specific_sections.length; i++)
-            specific_sections.eq(i).hide()
-        // Show specified section
-        _section.show()
-    }
+    
     //#endregion
 }

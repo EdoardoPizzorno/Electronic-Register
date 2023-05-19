@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Registrazione</title>
+    <link rel="icon" href="assets/images/diary.png" type="image/png" />
+
+    <!-- bootstrap 4 -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"> </script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <script src="js/libreria.js"></script>
+    <script src="js/signin.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <form class="form-group" style="padding-top:5%">
+            <div class="row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4">
+
+                    <h1>Registrati:</h1>
+                    </br>
+
+                    Cognome:
+                    <div class="form-group input-group">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        <input class="form-control" id="txtCognome" type="text" placeholder="Cognome">
+                    </div>
+
+                    Nome:
+                    <div class="form-group input-group">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        <input class="form-control" id="txtNome" type="text" placeholder="Nome">
+                    </div>
+
+                    Comune Residenza:
+                    <div class="form-group input-group">
+                        <span class="input-group-text"><i class="fas fa-map-marker"></i></span>
+                        <input class="form-control" id="txtResidenza" type="text" placeholder="Residenza">
+                    </div>
+
+                    Indirizzo:
+                    <div class="form-group input-group">
+                        <span class="input-group-text"><i class="fas fa-map-marker"></i></span>
+                        <input class="form-control" id="txtIndirizzo" type="text" placeholder="Indirizzo">
+                    </div>
+
+                    Classe:
+                    <div class="form-group input-group">
+                        <span class="input-group-text"><i class="fas fa-archive"></i></span>
+                        <select class="form-control" id="lstRuolo">
+                        </select>
+                    </div>
+
+                    Professione:
+                    <div class="form-group input-group">
+                        <span class="input-group-text"><i class="fas fa-book"></i></span>
+                        <select class="form-control" id="lstRuolo">
+                            <option>Studente</option>
+                            <option>Docente</option>
+                        </select>
+                    </div>
+
+                    Password:
+                    <div class="form-group input-group">
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        <input class="form-control" id="txtPassword" type="password" placeholder="Password">
+                    </div>
+
+                    Conferma password:
+                    <div class="form-group input-group">
+                        <span class="input-group-text"><i class="fas fa-lock"></i> </span>
+                        <input class="form-control" type="password" id="txtConfermaPassword" placeholder="Password">
+                    </div>
+
+                    </br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4">
+                    <button id="btnRegistrati" class="btn btn-lg btn-primary btn-block"
+                        type="submit">Registrati</button>
+                </div>
+                <div class="col-sm-4"></div>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
