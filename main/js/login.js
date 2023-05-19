@@ -21,14 +21,14 @@ $(document).ready(function () {
 
     //#region FUNCTIONS
     function checkLogin() {
-        ClearErrors()
+        ClearFieldErrors()
         lblError.hide()
 
         if (txtUser.val() == "") {
-            UsernameError()
+            FieldError(txtUser)
         }
         else if (txtPassword.val() == "") {
-            PasswordError()
+            FieldError(txtPassword)
         }
         else {
             let user = txtUser.val()
@@ -40,13 +40,13 @@ $(document).ready(function () {
                     lblError.show()
 
                     if ((err["response"]["data"]).includes("Password")) {
-                        PasswordError()
+                        FieldError(txtPassword)
                     } else if (err["response"]["data"].includes("Username"))
-                        UsernameError()
+                        FieldError(txtUser)
                 }
                 else
                     error(err)
-            }).then(async function () {
+            }).then(function () {
                 sendRequest("GET", "php/user.php").catch(error).then(function (response) {
                     if (response["data"]["docente"] == 0) // student
                         window.location.href = "studente.html"
@@ -55,22 +55,18 @@ $(document).ready(function () {
             })
         }
 
-        function ClearErrors() {
+        function ClearFieldErrors() {
             txtUser.removeClass("is-invalid")
             txtUser.prev().children("i").removeClass("red-icon")
             txtPassword.removeClass("is-invalid")
             txtPassword.prev().children("i").removeClass("red-icon")
         }
 
-        function UsernameError() {
-            txtUser.addClass("is-invalid")
-            txtUser.prev().children("i").addClass("red-icon")
+        function FieldError(_param) {
+            _param.addClass("is-invalid")
+            _param.prev().children("i").addClass("red-icon")
         }
 
-        function PasswordError() {
-            txtPassword.addClass("is-invalid")
-            txtPassword.prev().children("i").addClass("red-icon")
-        }
         //#endregion
     }
 })

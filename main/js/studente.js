@@ -324,9 +324,9 @@ window.onload = function () {
             let dropdownMenu = $("div.dropdown-menu.teachers-list").eq(0)
             for (let person of type_list) {
                 $("<a>").addClass("dropdown-item").appendTo(dropdownMenu).text(`${person["nome"]} ${person["cognome"]}`).on("click", function () {
-                    current_teacher = person["cognome"]
+                    current_teacher = $(this).text()
                     $("#frmBookInterview").show()
-                    $("a.dropdown-toggle.teachers").eq(0).text(current_teacher)
+                    $("a.dropdown-toggle.teachers").eq(0).text(current_teacher.toUpperCase())
                 })
             }
             getInterviews(user_data["matricola"])

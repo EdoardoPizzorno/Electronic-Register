@@ -7,24 +7,51 @@
     <title>Registrazione</title>
     <link rel="icon" href="assets/images/diary.png" type="image/png" />
 
+    <!-- LIBRARIES -->
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.3.7/sweetalert2.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.0/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css" />
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+
     <!-- bootstrap 4 -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"> </script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"> </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js" charset="utf8"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+    <script src="lib/axios@1.1.2.min.js" type="application/javascript"></script>
     <script src="js/libreria.js"></script>
     <script src="js/signin.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
     <div class="container">
-        <form class="form-group" style="padding-top:5%">
+        <div class="form-group" style="padding-top:5%">
             <div class="row">
                 <div class="col-sm-4"></div>
                 <div class="col-sm-4">
 
-                    <h1>Registrati:</h1>
+                    <h1>Registrazione</h1>
                     </br>
+
+                    Nome:
+                    <div class="form-group input-group">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        <input class="form-control" id="txtNome" type="text" placeholder="Nome">
+                    </div>
 
                     Cognome:
                     <div class="form-group input-group">
@@ -32,10 +59,10 @@
                         <input class="form-control" id="txtCognome" type="text" placeholder="Cognome">
                     </div>
 
-                    Nome:
+                    Username:
                     <div class="form-group input-group">
                         <span class="input-group-text"><i class="fas fa-user"></i></span>
-                        <input class="form-control" id="txtNome" type="text" placeholder="Nome">
+                        <input class="form-control" id="txtUsername" type="text" placeholder="Username">
                     </div>
 
                     Comune Residenza:
@@ -50,19 +77,19 @@
                         <input class="form-control" id="txtIndirizzo" type="text" placeholder="Indirizzo">
                     </div>
 
-                    Classe:
-                    <div class="form-group input-group">
-                        <span class="input-group-text"><i class="fas fa-archive"></i></span>
-                        <select class="form-control" id="lstRuolo">
-                        </select>
-                    </div>
-
                     Professione:
                     <div class="form-group input-group">
                         <span class="input-group-text"><i class="fas fa-book"></i></span>
                         <select class="form-control" id="lstRuolo">
-                            <option>Studente</option>
-                            <option>Docente</option>
+                            <option value="0">Studente</option>
+                            <option value="1">Docente</option>
+                        </select>
+                    </div>
+
+                    Classe:
+                    <div class="form-group input-group">
+                        <span class="input-group-text"><i class="fas fa-archive"></i></span>
+                        <select class="form-control" id="lstClassi">
                         </select>
                     </div>
 
@@ -79,18 +106,21 @@
                     </div>
 
                     </br>
+                    <div class="alert alert-danger alert-dismissible" id="lblError" style="display: none;">
+                        <button type="button" class="close">&times;</button>
+                        <strong>Attenzione!</strong> <span>Parametri errati</span>
+                    </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-4"></div>
                 <div class="col-sm-4">
-                    <button id="btnRegistrati" class="btn btn-lg btn-primary btn-block"
-                        type="submit">Registrati</button>
+                    <button id="btnRegistrati" class="btn btn-lg btn-primary btn-block">Registrati</button>
                 </div>
                 <div class="col-sm-4"></div>
             </div>
-        </form>
-    </div>
+            </form>
+        </div>
 </body>
 
 </html>
