@@ -206,9 +206,46 @@ window.onload = function () {
                     let tr = $("<tr>").appendTo(table)
                     $("<td>").appendTo(tr).text(absence["data"])
 
-                    if (parseInt(absence["giustificato"]) == 1) {
+                    if (parseInt(absence["giustificato"]) == 1) { // If justified 
                         $("<td>").appendTo(tr).text("Assenza giustificata")
-                        $("<td>").appendTo(tr).append($("<button>").addClass("btn btn-light").html("<i class='bi bi-info-circle'></ i>"))
+                        $("<td>").appendTo(tr).append($("<button>").addClass("btn btn-light").html("<i class='bi bi-info-circle'></ i>").on("click", function () {
+                            Swal.fire({
+                                "html": `<div style="height: 100%">
+                                <h2> Modifica assenza</h2>
+                                <table align="center">
+                                <tr>
+                                <td><label for="date-input">Data:</label></td>
+                                <td><input type="text" id="date-input" class="form-control" disabled></td>
+                                </tr>
+                                <tr>
+                                <td><label for="reason-input">Motivazione:</label></td>
+                                <td><input type="text" id="reason-input" class="form-control" disabled></td>
+                                </tr>
+                                </table>
+                                <button id="edit-button" class="btn btn-primary">Modifica</button>
+                              </div>
+                              `,
+                                "showCancelButton": true,
+                            }).then(function (value) {
+                                let reason = $("#reason-input").val()
+                                if (value["isConfirmed"] && reason.trim() != absence["motivazione"].trim()) { // if button 'OK' is pressed AND the previous reason is different to the new
+                                    sendRequest("POST", "php/editAbsence.php", { "id": absence["id"], reason }).catch(error).then(function () {
+                                        Swal.fire({
+                                            "text": "Assenza modificata con successo!",
+                                            "icon": "success"
+                                        })
+                                        loadAbsences(user_data)
+                                    })
+                                }
+                            })
+                            // Set previous absence values (the next fields are in the SweetAlert)
+                            let reasonInput = $("#reason-input")
+                            reasonInput.val(absence["motivazione"])
+                            $("#date-input").val(absence["data"])
+                            $("#edit-button").on("click", function () {
+                                reasonInput.prop("disabled", false)
+                            })
+                        }))
                     } else {
                         tr.css({
                             "color": "red",
@@ -241,11 +278,11 @@ window.onload = function () {
                                 if (value["isConfirmed"]) { // 'OK' alert button
                                     // Check fields
                                     if ($("#customSwitches").prop("checked")) {
-                                        let justification = $("#justification-reason").val()
-                                        if (justification.trim() == "")
-                                            justification = "Salute"
+                                        let reason = $("#justification-reason").val()
+                                        if (reason.trim() == "")
+                                            reason = "Salute"
                                         // Justify the absence
-                                        sendRequest("POST", "php/updateAbsence.php", { id, justification }).catch(error).then(function () {
+                                        sendRequest("POST", "php/justifyAbsence.php", { id, reason }).catch(error).then(function () {
                                             loadAbsences(user_data)
                                             Swal.fire({
                                                 "text": "Assenza giustificata con successo!",

@@ -94,7 +94,6 @@ window.onload = function () {
     function FieldError(_param, text = "Parametro troppo corto") {
         _param.addClass("is-invalid")
         _param.prev().children("i").addClass("red-icon")
-        console.log(_param)
         lblError.children("span").text(text)
         lblError.show()
     }

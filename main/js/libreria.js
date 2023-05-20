@@ -31,12 +31,12 @@ async function sendRequest(method, url, parameters = {}) {
 
 function error(err) {
 	if (!err.response)
-		alert("Connection Refused or Server timeout")
+		Swal.fire("Connection Refused or Server timeout")
 	else if (err.response.status == 200)
-		alert("Formato dei dati non corretto : " + err.response.data)
+		Swal.fire("Formato dei dati non corretto : " + err.response.data)
 	else if (err.response.status == 403)
 		window.location.href = "login.html"
-	else alert("Server Error: " + err.response.status + " - " + err.response.data)
+	else Swal.fire("Server Error: " + err.response.status + " - " + err.response.data)
 }
 
 function randomNumber(a, b) {
