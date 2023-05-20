@@ -55,12 +55,12 @@ window.onload = function () {
         navInterviews.on("click", function () { showCurrentSection(studentsInterviewsSection) })
 
         // LOAD MAIN SECTIONS
+        loadRegister(user_data)
         loadMessages(user_data)
         loadMarks(user_data)
         loadAbsences(user_data)
         loadSchoolReport(user_data)
         loadInterviews(user_data)
-        loadRegister(user_data)
     })
 
     //#region MAIN FUNCTIONS
@@ -145,7 +145,7 @@ window.onload = function () {
             let j = 0
             for (let i = 0; i < topics.length; i++) {
                 let row_date = trTopics.eq(i).prop("id")
-                if (topics[j]["data"] != undefined) {
+                if (j < topics.length - 3) {
                     while (topics[j]["data"] == row_date) {
                         let lesson_topic = topics[j]["argomento"]
                         sendRequest("GET", "php/subject.php", { "subjectId": topics[j]["materia"] }).catch(error).then(function (response) {
