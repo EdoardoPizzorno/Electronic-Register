@@ -50,6 +50,7 @@ window.onload = function () {
             $("#nominative").text(nominative)
             $("#residence").text(`${user_data["residenza"]} (${user_data["indrizzo"]})`)
             $("#classroom").text(classes)
+            $("span#matricola").text(user_data["matricola"])
             // Manage homepage buttons
             $("#teachersMessages").on("click", function () { showCurrentSection(teachersMessagesSection) })
             $("#teachersRegister").on("click", function () { showCurrentSection(teachersRegisterSection) })
@@ -72,6 +73,6 @@ window.onload = function () {
     function buttonsEnabled(flag) {
         $(".teacher-options button.btn").prop("disabled", !flag)
     }
-    
+
     //#endregion
 }

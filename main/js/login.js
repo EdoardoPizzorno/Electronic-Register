@@ -12,6 +12,7 @@ $(document).ready(function () {
 
     $("#btnLogin").on("click", checkLogin)
     $("#btnSignIn").on("click", function () { window.location.href = "signin.html" })
+    $("#btnPasswordLost").on("click", function () { window.location.href = "forgottenPassword.html" })
 
     // Check if ENTER is pressed
     $(document).on('keydown', function (event) {
@@ -24,13 +25,14 @@ $(document).ready(function () {
         ClearFieldErrors()
         lblError.hide()
 
-        if (txtUser.val() == "") {
+        if (txtUser.val().trim().length < 4) {
             FieldError(txtUser)
         }
-        else if (txtPassword.val() == "") {
+        else if (txtPassword.val().trim().length < 7) {
             FieldError(txtPassword)
         }
         else {
+            ClearFieldErrors()
             let user = txtUser.val()
             let pass = CryptoJS.MD5(txtPassword.val()).toString()
 
@@ -40,9 +42,9 @@ $(document).ready(function () {
                     lblError.show()
 
                     if ((err["response"]["data"]).includes("Password")) {
-                        FieldError(txtPassword)
+                        FieldError(txtPassword, "Password errata")
                     } else if (err["response"]["data"].includes("Username"))
-                        FieldError(txtUser)
+                        FieldError(txtUser, "Username errato")
                 }
                 else
                     error(err)
@@ -60,11 +62,6 @@ $(document).ready(function () {
             txtUser.prev().children("i").removeClass("red-icon")
             txtPassword.removeClass("is-invalid")
             txtPassword.prev().children("i").removeClass("red-icon")
-        }
-
-        function FieldError(_param) {
-            _param.addClass("is-invalid")
-            _param.prev().children("i").addClass("red-icon")
         }
 
         //#endregion

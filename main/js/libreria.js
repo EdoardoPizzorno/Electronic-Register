@@ -67,3 +67,11 @@ function showCurrentSection(_section) {
 	// Show specified section
 	_section.show()
 }
+
+function FieldError(_param, text = "Parametro troppo corto") {
+	let lblError = $("#lblError")
+	_param.addClass("is-invalid")
+	_param.prev().children("i").addClass("red-icon")
+	lblError.children("span").text(text)
+	lblError.show()
+}

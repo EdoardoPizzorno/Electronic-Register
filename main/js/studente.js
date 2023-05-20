@@ -31,8 +31,10 @@ window.onload = function () {
         NavbarManagement()
         // Personal informations
         $("#nominative").text(nominative)
+        $("#matricola").text(user_data["matricola"])
         $("#residence").text(`${user_data["residenza"]} (${user_data["indrizzo"]})`)
         $("#classroom").text(user_data["classe"])
+        $("span#matricola").text(user_data["matricola"])
         // Show default homepage
         studentsDefaultView.show()
         // Manage homepage buttons

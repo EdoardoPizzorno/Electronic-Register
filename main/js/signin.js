@@ -34,31 +34,31 @@ window.onload = function () {
     $("#btnRegistrati").on("click", checkSignIn)
 
     function checkSignIn() {
-        let name = $("#txtNome")
-        let surname = $("#txtCognome")
-        let username = $("#txtUsername")
-        let residence = $("#txtResidenza")
-        let address = $("#txtIndirizzo")
+        let txtName = $("#txtNome")
+        let txtSurname = $("#txtCognome")
+        let txtUsername = $("#txtUsername")
+        let txtResidence = $("#txtResidenza")
+        let txtAddress = $("#txtIndirizzo")
         let classroom = lstClass.val()
         let role = lstRole.val()
-        let password = $("#txtPassword")
-        let confirmPassword = $("#txtConfermaPassword")
+        let txtPassword = $("#txtPassword")
+        let txtConfirmPassword = $("#txtConfermaPassword")
 
-        if (name.val().length > 3) {
-            if (surname.val().length > 3) {
-                if (username.val().length > 5) {
-                    if (residence.val().length > 5) {
-                        if (address.val().length > 5) {
-                            if (password.val().length > 7) {
-                                if (password.val() == confirmPassword.val()) {
-                                    password = CryptoJS.MD5(password.val()).toString() // Crypt the password
+        if (txtName.val().length > 3) {
+            if (txtSurname.val().length > 3) {
+                if (txtUsername.val().length > 5) {
+                    if (txtResidence.val().length > 5) {
+                        if (txtAddress.val().length > 5) {
+                            if (txtPassword.val().length > 7) {
+                                if (txtPassword.val() == txtConfirmPassword.val()) {
+                                    let password = CryptoJS.MD5(txtPassword.val()).toString() // Crypt the password
                                     if (role == 0) {
                                         sendRequest("POST", "php/insertUser.php", {
-                                            "surname": surname.val(),
-                                            "name": name.val(),
-                                            "username": username.val(),
-                                            "residence": residence.val(),
-                                            "address": address.val(),
+                                            "surname": txtSurname.val(),
+                                            "name": txtName.val(),
+                                            "username": txtUsername.val(),
+                                            "residence": txtResidence.val(),
+                                            "address": txtAddress.val(),
                                             "password": password,
                                             "classroom": classroom,
                                             "role": role
@@ -69,11 +69,11 @@ window.onload = function () {
                                         })
                                     } else {
                                         sendRequest("POST", "php/insertUser.php", {
-                                            "surname": surname.val(),
-                                            "name": name.val(),
-                                            "username": username.val(),
-                                            "residence": residence.val(),
-                                            "address": address.val(),
+                                            "surname": txtSurname.val(),
+                                            "name": txtName.val(),
+                                            "username": txtUsername.val(),
+                                            "residence": txtResidence.val(),
+                                            "address": txtAddress.val(),
                                             "password": password,
                                             "role": role
                                         }).catch(function (err) {
@@ -82,20 +82,13 @@ window.onload = function () {
                                             window.location.href = "login.html"
                                         })
                                     }
-                                } else FieldError(confirmPassword, "Password non corrispondente")
-                            } else FieldError(password)
-                        } else FieldError(address)
-                    } else FieldError(residence)
-                } else FieldError(username)
-            } else FieldError(surname)
-        } else FieldError(name)
-    }
-
-    function FieldError(_param, text = "Parametro troppo corto") {
-        _param.addClass("is-invalid")
-        _param.prev().children("i").addClass("red-icon")
-        lblError.children("span").text(text)
-        lblError.show()
+                                } else FieldError(txtConfirmPassword, "Password non corrispondente")
+                            } else FieldError(txtPassword)
+                        } else FieldError(txtAddress)
+                    } else FieldError(txtResidence)
+                } else FieldError(txtUsername)
+            } else FieldError(txtSurname)
+        } else FieldError(txtName)
     }
 
     function ErrorSignIn(err) {
