@@ -275,7 +275,7 @@ window.onload = function () {
                                     </div><br>
                                     <div class="form-group">
                                         <label for="justification-reason">Motivazione assenza</label>
-                                        <textarea id="justification-reason" name="justification-reason" rows="4" required></textarea>
+                                        <input id="justification-reason" class="form-control" name="justification-reason" rows="4" required>
                                     </div><br>
                                     <div class="form-group">
                                         <div class="custom-control custom-switch">
@@ -329,13 +329,13 @@ window.onload = function () {
             // Create JSON with all marks for each subject
             for (let mark of marks) {
                 let request = sendRequest("GET", "php/getSubjectById.php", { "subjectId": mark["materia"] }).catch(error).then(function (subjects) {
-                    let subject = subjects["data"]["materia"];
+                    let subject = subjects["data"]["materia"]
                     if (!all_subjects.hasOwnProperty(subject))
                         all_subjects[subject] = [] // If there's no array, create it
 
                     all_subjects[subject].push(parseInt(mark["voto"]))
                 })
-                promises.push(request);
+                promises.push(request)
             }
 
             // Load table
