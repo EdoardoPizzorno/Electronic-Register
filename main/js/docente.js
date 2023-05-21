@@ -21,6 +21,8 @@ window.onload = function () {
     let navInterviews = $(".nav-link").eq(4)
     let navAverages = $(".nav-link").eq(5)
 
+    $(".navbar-brand").eq(0).on("click", function () { showCurrentSection(teachersDefaultView) })
+
     sendRequest("GET", "php/user.php").catch(error).then(function (response) {
         let user_data = response["data"]
         console.log(user_data)

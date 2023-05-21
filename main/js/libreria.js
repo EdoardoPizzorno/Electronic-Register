@@ -55,11 +55,6 @@ function NavbarManagement() {
 			window.location.href = "login.html"
 		})
 	})
-
-	$(".navbar-brand").eq(0).on("click", function () {
-		showCurrentSection($("div.student-options").eq(0))
-		showCurrentSection($("div.teacher-options").eq(0))
-	})
 }
 
 function showCurrentSection(_section) {

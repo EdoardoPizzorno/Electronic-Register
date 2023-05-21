@@ -1,6 +1,7 @@
 * {
   padding: 0;
   margin: 0;
+  user-select: none !important;
 }
 
 /* NAVBAR */
@@ -75,14 +76,25 @@ nav {
 /* STUDENTS */
 
 div.spec-section {
-  margin: 10% 0 20% 10%;
+  margin: 8% 10% 12% 12%;
   display: none;
+}
+
+div.spec-section h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+div.spec-section td {
+  width: min-content;
 }
 
 /* STUDENTS MESSAGES */
 
 div.student-messages {
   text-align: center !important;
+  margin-left: 30%;
 }
 
 div.col-md-4.mb-4 {
@@ -159,8 +171,20 @@ span.line-span {
 
 /* STUDENTS MARKS */
 
+.student-marks {
+  margin-left: 25% !important;
+}
+
 td.mark {
   font-weight: bold;
+}
+
+td.subject {
+  text-decoration: underline;
+}
+
+td.subject:hover {
+  cursor: pointer;
 }
 
 /* STUDENTS ABSENCES */
@@ -189,6 +213,12 @@ div.student-absences table.table tbody tr {
 }
 
 /* STUDENTS SCHOOL REPORT */
+
+.chart {
+  margin-left: 22%;
+  width: 800px !important;
+  height: 400px !important;
+}
 
 /* STUDENTS INTERVIEWS */
 

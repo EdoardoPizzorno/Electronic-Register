@@ -12,6 +12,7 @@ window.onload = function () {
     let studentsAbsencesSection = $("div.student-absences").eq(0)
     let studentsSchoolReport = $("div.school-report").eq(0)
     let studentsInterviewsSection = $("div.student-interviews-booking").eq(0)
+    let subjectDetails = $("div.subject-details").eq(0)
 
     let navMessages = $(".nav-link").eq(0)
     let navRegister = $(".nav-link").eq(1)
@@ -20,6 +21,10 @@ window.onload = function () {
     let navAbsences = $(".nav-link").eq(4)
     let navSchoolReport = $(".nav-link").eq(5)
     let navInterviews = $(".nav-link").eq(6)
+
+    $(".navbar-brand").eq(0).on("click", function () { showCurrentSection(studentsDefaultView) })
+
+    let subjectDetailsChart = ""
 
     sendRequest("GET", "php/user.php").catch(error).then(function (response) {
         let user_data = response["data"]
@@ -148,7 +153,7 @@ window.onload = function () {
                 if (j < topics.length - 3) {
                     while (topics[j]["data"] == row_date) {
                         let lesson_topic = topics[j]["argomento"]
-                        sendRequest("GET", "php/subject.php", { "subjectId": topics[j]["materia"] }).catch(error).then(function (response) {
+                        sendRequest("GET", "php/getSubjectById.php", { "subjectId": topics[j]["materia"] }).catch(error).then(function (response) {
                             let subject = response["data"]["materia"]
                             let prevSubjHtml = tdSubjects.eq(i).html()
                             let prevTopHtml = tdTopics.eq(i).html()
@@ -168,7 +173,7 @@ window.onload = function () {
                     }
                 }
             }
-            table.DataTable()
+            //table.DataTable()
         })
     }
 
@@ -178,10 +183,13 @@ window.onload = function () {
             marks = marks["data"]
             marks.reverse()
             for (let mark of marks) {
-                sendRequest("GET", "php/subject.php", { "subjectId": mark["materia"] }).catch(error).then(function (subjects) {
+                sendRequest("GET", "php/getSubjectById.php", { "subjectId": mark["materia"] }).catch(error).then(function (subjects) {
+                    let subject = subjects["data"]["materia"]
                     let tr = $("<tr>").appendTo(table.children("tbody"))
                     $("<td>").appendTo(tr).text(mark["data"])
-                    $("<td>").appendTo(tr).text(subjects["data"]["materia"])
+                    $("<td>").addClass("subject").appendTo(tr).text(subject).on("click", function() {
+                        loadSubjectDetails(user_data["matricola"], subject)
+                    })
 
                     let styleColor = "style='background-color: lightgreen'"
                     if (mark["voto"] < 6)
@@ -189,7 +197,7 @@ window.onload = function () {
                     $(`<td class='mark' ${styleColor}>`).appendTo(tr).text(mark["voto"])
                 })
             }
-            table.DataTable()
+            //table.DataTable()
         })
     }
 
@@ -320,7 +328,7 @@ window.onload = function () {
             marks = marks["data"]
             // Create JSON with all marks for each subject
             for (let mark of marks) {
-                let request = sendRequest("GET", "php/subject.php", { "subjectId": mark["materia"] }).catch(error).then(function (subjects) {
+                let request = sendRequest("GET", "php/getSubjectById.php", { "subjectId": mark["materia"] }).catch(error).then(function (subjects) {
                     let subject = subjects["data"]["materia"];
                     if (!all_subjects.hasOwnProperty(subject))
                         all_subjects[subject] = [] // If there's no array, create it
@@ -340,9 +348,70 @@ window.onload = function () {
                     let average = Math.round(sum / all_subjects[subject].length)
                     // Load table
                     let tr = $("<tr>").appendTo(table)
-                    $("<td>").appendTo(tr).text(subject)
-                    $("<td>").appendTo(tr).text(average).css("background-color", average >= 6 ? "lightgreen" : "salmon")
+                    $("<td>").addClass("subject").appendTo(tr).text(subject).on("click", function () {
+                        loadSubjectDetails(user_data["matricola"], subject)
+                    })
+                    $("<td>").appendTo(tr).html(`<b>${average}</b>`).css("background-color", average >= 6 ? "lightgreen" : "salmon")
                 }
+            })
+        })
+    }
+
+    function loadSubjectDetails(matricola, subjectName) {
+        showCurrentSection(subjectDetails)
+        let table = $("div.subject-details table.table tbody").eq(0)
+        table.empty().show()
+        sendRequest("GET", "php/getSubjectByName.php", { subjectName }).catch(error).then(function (subjectId) {
+            subjectId = subjectId["data"]["id"]
+            sendRequest("GET", "php/getSubjectDetails.php", { matricola, subjectId }).catch(error).then(function (marks) {
+                marks = marks["data"]
+                subjectDetails.children("h2").text(`VOTI di ${subjectName.toUpperCase()}`)
+                // Set data to load the chart
+                let all_marks = []
+                let all_dates = []
+                for (let mark of marks) {
+                    all_marks.push(parseFloat(mark["voto"]))
+                    all_dates.push(mark["data"])
+
+                    let tr = $("<tr>").prependTo(table)
+                    $("<td>").appendTo(tr).text(mark["data"])
+                    $("<td>").appendTo(tr).html(`<b>${mark["voto"]}</b>`).css("background-color", mark["voto"] >= 6 ? "lightgreen" : "salmon")
+                }
+                // Set chart data
+                let subjectDetailsChartOptions = {
+                    type: "line",
+                    data: {
+                        labels: all_dates,
+                        datasets: [{
+                            data: all_marks,
+                            backgroundColor: "black",
+                            borderColor: "black",
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                suggestedMin: 4,
+                                suggestedMax: 10
+                            }
+                        },
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: "Andamento voti"
+                            },
+                            legend: {
+                                display: false,
+                                position: "top",
+                            }
+                        }
+                    }
+                }
+                // Load chart
+                if (subjectDetailsChart)
+                    subjectDetailsChart.destroy()
+                subjectDetailsChart = new Chart($("#subjectDetailsChart").get(0), subjectDetailsChartOptions)
             })
         })
     }
