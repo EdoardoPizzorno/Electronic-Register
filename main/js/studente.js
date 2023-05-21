@@ -187,7 +187,7 @@ window.onload = function () {
                     let subject = subjects["data"]["materia"]
                     let tr = $("<tr>").appendTo(table.children("tbody"))
                     $("<td>").appendTo(tr).text(mark["data"])
-                    $("<td>").addClass("subject").appendTo(tr).text(subject).on("click", function() {
+                    $("<td>").addClass("subject").appendTo(tr).text(subject).on("click", function () {
                         loadSubjectDetails(user_data["matricola"], subject)
                     })
 
@@ -358,25 +358,29 @@ window.onload = function () {
     }
 
     function loadSubjectDetails(matricola, subjectName) {
-        showCurrentSection(subjectDetails)
         let table = $("div.subject-details table.table tbody").eq(0)
         table.empty().show()
         sendRequest("GET", "php/getSubjectByName.php", { subjectName }).catch(error).then(function (subjectId) {
             subjectId = subjectId["data"]["id"]
             sendRequest("GET", "php/getSubjectDetails.php", { matricola, subjectId }).catch(error).then(function (marks) {
                 marks = marks["data"]
-                subjectDetails.children("h2").text(`VOTI di ${subjectName.toUpperCase()}`)
-                // Set data to load the chart
+                // Set data to load the chart and Calculate subject average
                 let all_marks = []
                 let all_dates = []
+                let sum = 0
                 for (let mark of marks) {
-                    all_marks.push(parseFloat(mark["voto"]))
+                    let current_mark = parseFloat(mark["voto"])
+                    all_marks.push(current_mark)
                     all_dates.push(mark["data"])
-
+                    // Load table
                     let tr = $("<tr>").prependTo(table)
                     $("<td>").appendTo(tr).text(mark["data"])
-                    $("<td>").appendTo(tr).html(`<b>${mark["voto"]}</b>`).css("background-color", mark["voto"] >= 6 ? "lightgreen" : "salmon")
+                    $("<td>").appendTo(tr).html(`<b>${current_mark}</b>`).css("background-color", current_mark >= 6 ? "lightgreen" : "salmon")
+                    // For the average
+                    sum += current_mark
                 }
+                // Section title
+                subjectDetails.children("h2").html(`VOTI di ${subjectName.toUpperCase()} <b>[${(sum / all_marks.length).toFixed(2)}]</b`)
                 // Set chart data
                 let subjectDetailsChartOptions = {
                     type: "line",
@@ -393,7 +397,10 @@ window.onload = function () {
                         scales: {
                             y: {
                                 suggestedMin: 4,
-                                suggestedMax: 10
+                                suggestedMax: 10,
+                                /*ticks: {
+                                    stepSize: 0.5
+                                }*/
                             }
                         },
                         plugins: {
@@ -412,6 +419,7 @@ window.onload = function () {
                 if (subjectDetailsChart)
                     subjectDetailsChart.destroy()
                 subjectDetailsChart = new Chart($("#subjectDetailsChart").get(0), subjectDetailsChartOptions)
+                showCurrentSection(subjectDetails)
             })
         })
     }

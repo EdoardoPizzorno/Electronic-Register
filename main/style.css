@@ -76,7 +76,7 @@ nav {
 /* STUDENTS */
 
 div.spec-section {
-  margin: 8% 10% 12% 12%;
+  margin: 7% 10% 12% 12%;
   display: none;
 }
 
@@ -134,11 +134,6 @@ h5.card-title {
 
 /* STUDENTS REGISTER */
 
-.student-register div.card {
-  width: 100%;
-  padding: 0px;
-}
-
 td.regDate {
   width: 150px;
   line-height: 40px;
@@ -155,14 +150,13 @@ td.td-topic {
   padding: 15px;
 }
 
-.card-body td {
-  border-left: 1px solid black;
-  border-right: 1px solid black;
+table.table {
+  border-radius: 10px;
 }
 
-div.student-register table.table tbody td {
-  border-bottom: 1px solid black !important;
-}
+/*div.student-register table.table tbody td {
+  border: 1px solid black !important;
+}*/
 
 span.line-span {
   font-size: 10pt;
@@ -215,7 +209,7 @@ div.student-absences table.table tbody tr {
 /* STUDENTS SCHOOL REPORT */
 
 .chart {
-  margin-left: 22%;
+  margin-left: 20%;
   width: 800px !important;
   height: 400px !important;
 }
