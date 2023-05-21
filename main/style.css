@@ -94,7 +94,7 @@ div.spec-section td {
 
 div.student-messages {
   text-align: center !important;
-  margin-left: 30%;
+  margin-left: 12%;
 }
 
 div.col-md-4.mb-4 {
@@ -232,7 +232,8 @@ div.teachers {
   overflow-y: scroll;
 }
 
-a.dropdown-toggle.class {
+a.dropdown-toggle.class,
+a.dropdown-toggle.subject {
   border: 1px solid black;
 }
 
@@ -256,6 +257,13 @@ span.msg_time {
   margin-left: 90%;
   float: right;
   font-size: 9pt;
+  text-align: center !important;
+}
+
+div.dropdown-menu.class-students {
+  max-height: 300px;
+  width: fit-content;
+  overflow-y: scroll;
 }
 
 /* TEACHER REGISTER */

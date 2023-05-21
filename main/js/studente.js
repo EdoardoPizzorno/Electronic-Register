@@ -74,6 +74,7 @@ window.onload = function () {
         let messagesList = $(".student-messages ul.list-group").eq(0)
         sendRequest("GET", "php/messages.php", { "user": user_data["user"], "class": user_data["classe"] }).catch(error).then(function (messages) {
             messages = messages["data"]
+            messages.reverse() // From oldest to the newest
             if (messages.length == 0) {
                 $("<li>").appendTo(messagesList).addClass("list-group-item").text("Non ci sono messaggi da visualizzare")
             } else {
@@ -81,7 +82,10 @@ window.onload = function () {
                     let li = $("<li>").appendTo(messagesList).addClass("list-group-item")
                     // Bell button
                     if (parseInt(message["visualizzato"]) == 0) {
-                        $("<button>").css("float", "right").prop("id", message["id"]).appendTo(li).addClass("btn btn-secondary btn-sm").html('<i class="bi bi-bell-fill"></i>').on("click", function () {
+                        $("<button>").css({
+                            "position": "absolute",
+                            "margin-left": "46%"
+                        }).prop("id", message["id"]).appendTo(li).addClass("btn btn-secondary btn-sm").html('<i class="bi bi-bell-fill"></i>').on("click", function () {
                             let messageId = $(this).prop("id")
                             $(this).hide()
                             // Change column 'visualizzato' to 1 (default at 0)
@@ -89,13 +93,17 @@ window.onload = function () {
                         })
                     }
 
+                    $("<img>").appendTo(li).prop("src", "assets/images/user.jpg").css({
+                        "height": "52px",
+                        "padding": "6px"
+                    })
+                    $("<h2>").appendTo(li).addClass("list-group-item-heading").text(message["mittente"].toUpperCase()).append($("<br>")) // Message object
                     $("<h4>").appendTo(li).addClass("list-group-item-heading").text(message["oggetto"]) // Message object
                     $("<p>").appendTo(li).text(message["testo"]) // Message text
 
-                    let aux = message["orario"].split(" ")
-                    let date = aux[0]
-                    let hour = aux[1].split(".")[0]
-                    $("<p>").appendTo(li).addClass("text-muted").css("float", "right").text(`${date} ${hour}`) // Message date
+                    let time = message["orario"].split(".")[0]
+                    $("<p>").appendTo(li).addClass("text-muted").css("float", "right").text(`${time}`) // Message date
+                    $("<hr>").appendTo(messagesList)
                 }
             }
         })

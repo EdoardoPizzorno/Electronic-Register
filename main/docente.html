@@ -86,11 +86,14 @@
             <div class="dropdown-menu classes">
                 <!-- classes -->
             </div>
-            <a class="btn dropdown-toggle subject" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        </div>
+        <div class="dropdown">
+            <a class="btn dropdown-toggle subject" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                style="display: none;">
                 Seleziona
                 materia </a>
             <div class="dropdown-menu subjects">
-                <!-- classes -->
+                <!-- subjects -->
             </div>
         </div>
         <div class="row">
@@ -162,35 +165,29 @@
                         <span class="font-weight-bold">Chat con classe selezionata</span>
                     </div>
                     <div class="card-body">
-                        <div class="d-flex justify-content-start mb-4 message">
-                            <div class="img_cont_msg">
-                                <img src="assets/images/user.jpg" style="height: 26px; padding: 3px;">
-                            </div>
-                            <div class="msg_container">
-                                Ciao Mario, come stai?
-                                <span class="msg_time">8:40 AM</span>
-                            </div>
-                        </div>
-                        <hr class="divider">
-
-                        <div class="d-flex justify-content-start mb-4 message">
-                            <div class="img_cont_msg">
-                                <img src="assets/images/user.jpg" style="height: 26px; padding: 3px;">
-                            </div>
-                            <div class="msg_container">
-                                Ciao Mario, come stai?
-                                <span class="msg_time">8:40 AM</span>
-                            </div>
-                        </div>
+                        <!-- messages -->
                     </div>
                     <div class="card-footer">
-                        <div class="input-group">
-                            <input class="form-control" type="text" placeholder="Invia comunicazione...">
-                            <div class="input-group-append">
-                                <button type="button" class="btn btn-dark"><i class="fa fa-paper-plane"
-                                        aria-hidden="true"></i></button>
+                        <div class="form-group">
+                            <div class="dropdown">
+                                <label for="destinatario">Destinatario:</label>
+                                <a type="text" class="btn btn-light dropdown-toggle" id="destinatario"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Destinatario</a>
+                                <div class="dropdown-menu class-students">
+                                    <!-- class' students -->
+                                </div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="oggetto">Oggetto:</label>
+                            <input type="text" class="form-control" id="oggetto" placeholder="Inserisci l'oggetto...">
+                        </div>
+                        <div class="form-group">
+                            <label for="messaggio">Messaggio:</label>
+                            <input class="form-control" id="messaggio" placeholder="Inserisci il messaggio...">
+                        </div>
+                        <button type="button" class="btn btn-dark" id="btnInvia">Invia &nbsp;<i
+                                class="fa fa-paper-plane"></i></button>
                     </div>
                 </div>
             </div>
