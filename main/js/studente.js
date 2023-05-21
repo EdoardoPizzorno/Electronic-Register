@@ -340,19 +340,28 @@ window.onload = function () {
 
             // Load table
             Promise.all(promises).then(function () {
+                let all_averages = 0
+                let numSubjects = 0
                 for (let subject in all_subjects) {
                     let sum = 0
                     // Calculate average for the current subject
                     for (let mark of all_subjects[subject])
                         sum += mark
                     let average = Math.round(sum / all_subjects[subject].length)
+                    all_averages += average
                     // Load table
                     let tr = $("<tr>").appendTo(table)
                     $("<td>").addClass("subject").appendTo(tr).text(subject).on("click", function () {
                         loadSubjectDetails(user_data["matricola"], subject)
                     })
                     $("<td>").appendTo(tr).html(`<b>${average}</b>`).css("background-color", average >= 6 ? "lightgreen" : "salmon")
+                    numSubjects++ // Count how many subject there are (for the general school report average)
                 }
+                // General school report average
+                all_averages = (all_averages / numSubjects).toFixed(2) // Now it's the total average
+                let tr = $("<tr>").appendTo(table)
+                $("<td>").appendTo(tr).html("<i>Media pagella generale: </i>")
+                $("<td>").appendTo(tr).html(`<i><b>${all_averages}</b></i>`).css("background-color", all_averages >= 6 ? "#30da30" : "#ff3d3d")
             })
         })
     }
