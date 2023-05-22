@@ -72,6 +72,7 @@ window.onload = function () {
 
                         // LOAD MAIN SECTIONS
                         loadMessages(user_data, current_class)
+                        loadClassList(user_data, current_class)
                     })
                 })
             }
@@ -114,7 +115,7 @@ window.onload = function () {
             dropdownStudents.empty()
             btnDestinatario.text(current_receiver)
             $("<a>").appendTo(dropdownStudents).addClass("dropdown-item receiver").text($("a.dropdown-toggle.class").eq(0).text()) // The class by default
-            sendRequest("GET", "php/getStudentsByClass.php", { current_receiver }).catch(error).then(function (students) {
+            sendRequest("GET", "php/getStudentsByClass.php", { "class": current_receiver }).catch(error).then(function (students) {
                 students = students["data"]
                 for (let student of students) {
                     $("<a>").appendTo(dropdownStudents).addClass("dropdown-item receiver").text(student["user"])
@@ -146,6 +147,30 @@ window.onload = function () {
                     $("<span>").appendTo(messageContainer).text(`${dateSplit[0]} ${time[0]}:${time[1]}`).addClass("msg_time")
 
                     $("<hr>").appendTo(messagesWrapper).addClass("divider")
+                }
+            }
+        })
+    }
+
+    function loadClassList(user_data, current_class) {
+        let table = $("div.teacher-list table.table tbody").eq(0)
+        table.empty()
+        sendRequest("GET", "php/getStudentsByClass.php", { "class": current_class }).catch(error).then(function (students) {
+            students = students["data"]
+            console.log(students)
+            if (students.length == 0) {
+                $("<tr>").appendTo(table).html(`<br>Non ci sono studenti nella classe ${current_class}`).addClass("text-muted")
+            } else {
+                for (let student of students) {
+                    let tr = $("<tr>").appendTo(table)
+                    $("<td>").appendTo(tr).text(student["nome"].toUpperCase())
+                    $("<td>").appendTo(tr).text(student["cognome"].toUpperCase())
+                    $("<td>").appendTo(tr).append($("<button>").addClass("btn btn-light").append($("<i>").addClass("bi bi-plus")).on("click", function () {
+                        // ADD MARKS
+                    }))
+                    $("<td>").appendTo(tr).append($("<button>").addClass("btn btn-light").append($("<i>").addClass("bi bi-plus")).on("click", function () {
+                        // ADD ABSENCE
+                    }))
                 }
             }
         })

@@ -3,8 +3,8 @@
 header("content-type:application/json; charset=utf-8");
 require("MySQLi.php");
 
-if (isset($_GET["current_receiver"])) {
-    $class = $_GET["current_receiver"];
+if (isset($_GET["class"])) {
+    $class = $_GET["class"];
 } else {
     http_response_code(400);
     die("Manca parametro classe");
