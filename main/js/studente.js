@@ -277,31 +277,33 @@ window.onload = function () {
                                 "showCancelButton": true,
                                 "html": `
                                 <div id="absenceJustify">
-                                    <div class="form-group">
+                                    <!--<div class="form-group">
                                         <label for="jSign">Nome e cognome</label>
                                         <input id="jSign" type="text" class="form-control" placeholder="Inserisci nome e cognome per giustificare">
-                                    </div><br>
+                                    </div><br>-->
                                     <div class="form-group">
                                         <label for="justification-reason">Motivazione assenza</label>
                                         <input id="justification-reason" class="form-control" name="justification-reason" rows="4" required placeholder="Inserisci la motivazione...">
                                     </div><br>
-                                    <div id="canvas_div" style="overflow-x: auto;">
+                                    <div class="form-group" style="overflow-x: auto; margin-bottom: 20px">
+                                        <label for="canvasDraw">Inserisci la firma</label>
                                         <canvas id="canvasDraw" width="700" height="300" style="border:1px solid black;"></canvas>
-                                        <button onclick="clearArea();return false;">Clear Area</button>
+                                        <button id="btnClear" class="btn btn-primary" style="margin-top: 10px">Pulisci firma</button>
                                     </div>
-                                    <div class="form-group">
+                                    <!--<div class="form-group">
                                         <div class="custom-control custom-switch">
                                             <input type="checkbox" class="custom-control-input" id="customSwitches" name="customSwitches" disabled>
                                             <label class="custom-control-label" for="customSwitches">Giustifica</label>
                                         </div>
-                                    </div>
+                                    </div>-->
                                 </div>`
                             }).then(function (value) {
                                 if (value["isConfirmed"]) { // 'OK' alert button
                                     // Check fields
-                                    if ($("#customSwitches").prop("checked")) {
-                                        let sign = $("#canvasDraw").get(0).toDataURL()
-                                        console.log(sign)
+                                    //if ($("#customSwitches").prop("checked")) {
+                                    let sign = $("#canvasDraw").get(0).toDataURL()
+                                    console.log(sign.length)
+                                    if (sign.length > 5826) { // An all white canvas has a string length of 5826
                                         let reason = $("#justification-reason").val()
                                         if (reason.trim() == "")
                                             reason = "Salute"
@@ -314,11 +316,12 @@ window.onload = function () {
                                             })
                                         })
                                     }
+                                    //}
                                 }
                             })
                             LoadCanvasDraw()
                             // Absence justifications' fields management
-                            $("input#jSign").on("input", function () {
+                            /*$("input#jSign").on("input", function () {
                                 let inputSwitch = $("#customSwitches")
                                 let fullname = user_data["nome"] + " " + user_data["cognome"]
                                 if (this.value.toLowerCase() == fullname)
@@ -327,7 +330,7 @@ window.onload = function () {
                                     inputSwitch.prop("disabled", true)
                                     inputSwitch.prop("checked", false)
                                 }
-                            })
+                            })*/
                         }))
                     }
                 }
@@ -635,11 +638,13 @@ window.onload = function () {
             context.closePath();
             context.stroke();
         }
-    }
 
-    function clearArea() {
-        context.setTransform(1, 0, 0, 1, 0, 0);
-        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+        $("#btnClear").on("click", clearArea)
+
+        function clearArea() {
+            context.setTransform(1, 0, 0, 1, 0, 0);
+            context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+        }
     }
 
     //#endregion
