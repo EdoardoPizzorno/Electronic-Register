@@ -189,21 +189,25 @@ window.onload = function () {
         let table = $("div.student-marks table.table").eq(0)
         sendRequest("GET", "php/marks.php", { "user": user_data["matricola"] }).catch(error).then(function (marks) {
             marks = marks["data"]
-            marks.reverse()
-            for (let mark of marks) {
-                sendRequest("GET", "php/getSubjectById.php", { "subjectId": mark["materia"] }).catch(error).then(function (subjects) {
-                    let subject = subjects["data"]["materia"]
-                    let tr = $("<tr>").appendTo(table.children("tbody"))
-                    $("<td>").appendTo(tr).text(mark["data"])
-                    $("<td>").addClass("subject").appendTo(tr).text(subject).on("click", function () {
-                        loadSubjectDetails(user_data["matricola"], subject)
-                    })
+            if (marks.length == 0) {
+                $("<span>").appendTo(table.children("tbody")).text("Non ci sono voti da visualizzare").addClass("text-muted")
+            } else {
+                marks.reverse()
+                for (let mark of marks) {
+                    sendRequest("GET", "php/getSubjectById.php", { "subjectId": mark["materia"] }).catch(error).then(function (subjects) {
+                        let subject = subjects["data"]["materia"]
+                        let tr = $("<tr>").appendTo(table.children("tbody"))
+                        $("<td>").appendTo(tr).text(mark["data"])
+                        $("<td>").addClass("subject").appendTo(tr).text(subject).on("click", function () {
+                            loadSubjectDetails(user_data["matricola"], subject)
+                        })
 
-                    let styleColor = "style='background-color: lightgreen'"
-                    if (mark["voto"] < 6)
-                        styleColor = "style='background-color: salmon'"
-                    $(`<td class='mark' ${styleColor}>`).appendTo(tr).text(mark["voto"])
-                })
+                        let styleColor = "style='background-color: lightgreen'"
+                        if (mark["voto"] < 6)
+                            styleColor = "style='background-color: salmon'"
+                        $(`<td class='mark' ${styleColor}>`).appendTo(tr).text(mark["voto"])
+                    })
+                }
             }
             //table.DataTable()
         })
@@ -214,12 +218,12 @@ window.onload = function () {
         table.empty()
         sendRequest("GET", "php/absences.php", { "user": user_data["matricola"] }).catch(error).then(function (response) {
             let absences = response["data"]
-            absences.reverse()
             $(".student-absences h2").text(`Assenze: ${absences.length}`)
             if (absences.length == 0) {
                 let tr = $("<tr>").appendTo(table)
                 $("<span>").appendTo(tr).text("Nessuna assenza registrata").addClass("text-muted")
             } else {
+                absences.reverse()
                 for (let absence of absences) {
                     let tr = $("<tr>").appendTo(table)
                     $("<td>").appendTo(tr).text(absence["data"])
@@ -344,15 +348,19 @@ window.onload = function () {
         sendRequest("GET", "php/marks.php", { "user": user_data["matricola"] }).catch(error).then(function (marks) {
             marks = marks["data"]
             // Create JSON with all marks for each subject
-            for (let mark of marks) {
-                let request = sendRequest("GET", "php/getSubjectById.php", { "subjectId": mark["materia"] }).catch(error).then(function (subjects) {
-                    let subject = subjects["data"]["materia"]
-                    if (!all_subjects.hasOwnProperty(subject))
-                        all_subjects[subject] = [] // If there's no array, create it
+            if (marks.length == 0) {
+                $("<tr>").appendTo(table).text("Non ci sono voti da visualizzare").addClass("text-muted")
+            } else {
+                for (let mark of marks) {
+                    let request = sendRequest("GET", "php/getSubjectById.php", { "subjectId": mark["materia"] }).catch(error).then(function (subjects) {
+                        let subject = subjects["data"]["materia"]
+                        if (!all_subjects.hasOwnProperty(subject))
+                            all_subjects[subject] = [] // If there's no array, create it
 
-                    all_subjects[subject].push(parseInt(mark["voto"]))
-                })
-                promises.push(request)
+                        all_subjects[subject].push(parseInt(mark["voto"]))
+                    })
+                    promises.push(request)
+                }
             }
 
             // Load table
@@ -501,14 +509,19 @@ window.onload = function () {
         let table = $("div.student-interviews-booking table.table tbody").eq(0)
         table.empty()
         sendRequest("GET", "php/interviews.php", { "user": matricola }).catch(error).then(function (interviews) {
-            for (let interview of interviews["data"]) {
-                let date = interview["ora"].split(" ")
-                let hour = date[1].split(":")
+            interviews = interviews["data"]
+            if (interviews.length == 0) {
+                $("<span>").appendTo(table).addClass("text-muted").text("Non ci sono colloqui da visualizzare")
+            } else {
+                for (let interview of interviews) {
+                    let date = interview["ora"].split(" ")
+                    let hour = date[1].split(":")
 
-                let tr = $("<tr>").appendTo(table)
-                $("<td>").appendTo(tr).text(date[0])
-                $("<td>").appendTo(tr).text(`${hour[0]}:${hour[1]}`)
-                $("<td>").appendTo(tr).text(interview["docente"])
+                    let tr = $("<tr>").appendTo(table)
+                    $("<td>").appendTo(tr).text(date[0])
+                    $("<td>").appendTo(tr).text(`${hour[0]}:${hour[1]}`)
+                    $("<td>").appendTo(tr).text(interview["docente"])
+                }
             }
         })
     }
