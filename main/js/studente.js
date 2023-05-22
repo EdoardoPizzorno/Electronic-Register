@@ -302,7 +302,6 @@ window.onload = function () {
                                     // Check fields
                                     //if ($("#customSwitches").prop("checked")) {
                                     let sign = $("#canvasDraw").get(0).toDataURL()
-                                    console.log(sign.length)
                                     if (sign.length > 5826) { // An all white canvas has a string length of 5826
                                         let reason = $("#justification-reason").val()
                                         if (reason.trim() == "")

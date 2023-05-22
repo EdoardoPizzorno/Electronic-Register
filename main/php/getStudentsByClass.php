@@ -11,7 +11,7 @@ if (isset($_GET["class"])) {
 }
 
 $connection = openConnection("registro");
-$sql = "SELECT immagine,user,cognome,nome from studenti WHERE classe='$class'";
+$sql = "SELECT matricola,immagine,user,cognome,nome from studenti WHERE classe='$class'";
 $data = eseguiQuery($connection, $sql);
 
 http_response_code(200);
