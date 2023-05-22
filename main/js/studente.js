@@ -273,7 +273,7 @@ window.onload = function () {
                         $("<td>").appendTo(tr).append($("<button>").prop("id", absence["id"]).addClass("btn btn-danger").html("<i class='bi bi-info-circle'></ i>").on("click", function () {
                             let id = $(this).prop("id")
                             Swal.fire({
-                                "width": "380px",
+                                "width": "760px",
                                 "showCancelButton": true,
                                 "html": `
                                 <div id="absenceJustify">
@@ -283,8 +283,12 @@ window.onload = function () {
                                     </div><br>
                                     <div class="form-group">
                                         <label for="justification-reason">Motivazione assenza</label>
-                                        <input id="justification-reason" class="form-control" name="justification-reason" rows="4" required>
+                                        <input id="justification-reason" class="form-control" name="justification-reason" rows="4" required placeholder="Inserisci la motivazione...">
                                     </div><br>
+                                    <div id="canvas_div" style="overflow-x: auto;">
+                                        <canvas id="canvasDraw" width="700" height="300" style="border:1px solid black;"></canvas>
+                                        <button onclick="clearArea();return false;">Clear Area</button>
+                                    </div>
                                     <div class="form-group">
                                         <div class="custom-control custom-switch">
                                             <input type="checkbox" class="custom-control-input" id="customSwitches" name="customSwitches" disabled>
@@ -296,11 +300,13 @@ window.onload = function () {
                                 if (value["isConfirmed"]) { // 'OK' alert button
                                     // Check fields
                                     if ($("#customSwitches").prop("checked")) {
+                                        let sign = $("#canvasDraw").get(0).toDataURL()
+                                        console.log(sign)
                                         let reason = $("#justification-reason").val()
                                         if (reason.trim() == "")
                                             reason = "Salute"
                                         // Justify the absence
-                                        sendRequest("POST", "php/justifyAbsence.php", { id, reason }).catch(error).then(function () {
+                                        sendRequest("POST", "php/justifyAbsence.php", { id, reason, sign }).catch(error).then(function () {
                                             loadAbsences(user_data)
                                             Swal.fire({
                                                 "text": "Assenza giustificata con successo!",
@@ -310,6 +316,7 @@ window.onload = function () {
                                     }
                                 }
                             })
+                            LoadCanvasDraw()
                             // Absence justifications' fields management
                             $("input#jSign").on("input", function () {
                                 let inputSwitch = $("#customSwitches")
@@ -502,6 +509,137 @@ window.onload = function () {
                 $("<td>").appendTo(tr).text(interview["docente"])
             }
         })
+    }
+
+    //#endregion
+
+    //#region CANVAS DRAW
+
+    function LoadCanvasDraw() {
+        const canvas = document.getElementById("canvasDraw");
+        const context = canvas.getContext('2d');
+        let isDrawing = false;
+        let x = 0;
+        let y = 0;
+        var offsetX;
+        var offsetY;
+        startup()
+
+        function startup() {
+            canvas.addEventListener('touchstart', handleStart);
+            canvas.addEventListener('touchend', handleEnd);
+            canvas.addEventListener('touchcancel', handleCancel);
+            canvas.addEventListener('touchmove', handleMove);
+            canvas.addEventListener('mousedown', (e) => {
+                x = e.offsetX;
+                y = e.offsetY;
+                isDrawing = true;
+            });
+
+            canvas.addEventListener('mousemove', (e) => {
+                if (isDrawing) {
+                    drawLine(context, x, y, e.offsetX, e.offsetY);
+                    x = e.offsetX;
+                    y = e.offsetY;
+                }
+            });
+
+            canvas.addEventListener('mouseup', (e) => {
+                if (isDrawing) {
+                    drawLine(context, x, y, e.offsetX, e.offsetY);
+                    x = 0;
+                    y = 0;
+                    isDrawing = false;
+                }
+            });
+        }
+
+        //document.addEventListener("DOMContentLoaded", startup);
+
+        const ongoingTouches = [];
+
+        function handleStart(evt) {
+            evt.preventDefault();
+            const touches = evt.changedTouches;
+            offsetX = canvas.getBoundingClientRect().left;
+            offsetY = canvas.getBoundingClientRect().top;
+            for (let i = 0; i < touches.length; i++) {
+                ongoingTouches.push(copyTouch(touches[i]));
+            }
+        }
+
+        function handleMove(evt) {
+            evt.preventDefault();
+            const touches = evt.changedTouches;
+            for (let i = 0; i < touches.length; i++) {
+                const color = "black";
+                const idx = ongoingTouchIndexById(touches[i].identifier);
+                if (idx >= 0) {
+                    context.beginPath();
+                    context.moveTo(ongoingTouches[idx].clientX - offsetX, ongoingTouches[idx].clientY - offsetY);
+                    context.lineTo(touches[i].clientX - offsetX, touches[i].clientY - offsetY);
+                    context.lineWidth = 1;
+                    context.strokeStyle = color;
+                    context.lineJoin = "round";
+                    context.closePath();
+                    context.stroke();
+                    ongoingTouches.splice(idx, 1, copyTouch(touches[i]));  // Swap in the new touch record
+                }
+            }
+        }
+
+        function handleEnd(evt) {
+            evt.preventDefault();
+            const touches = evt.changedTouches;
+            for (let i = 0; i < touches.length; i++) {
+                const color = "black";
+                let idx = ongoingTouchIndexById(touches[i].identifier);
+                if (idx >= 0) {
+                    context.lineWidth = 1;
+                    context.fillStyle = color;
+                    ongoingTouches.splice(idx, 1);  // Remove it; we're done
+                }
+            }
+        }
+
+        function handleCancel(evt) {
+            evt.preventDefault();
+            const touches = evt.changedTouches;
+            for (let i = 0; i < touches.length; i++) {
+                let idx = ongoingTouchIndexById(touches[i].identifier);
+                ongoingTouches.splice(idx, 1);  // Remove it; we're done
+            }
+        }
+
+        function copyTouch({ identifier, clientX, clientY }) {
+            return { identifier, clientX, clientY };
+        }
+
+        function ongoingTouchIndexById(idToFind) {
+            for (let i = 0; i < ongoingTouches.length; i++) {
+                const id = ongoingTouches[i].identifier;
+                if (id === idToFind) {
+                    return i;
+                }
+            }
+            return -1;    // not found
+        }
+
+        function drawLine(context, x1, y1, x2, y2) {
+            context.beginPath();
+            context.strokeStyle = "black";
+            context.lineWidth = 11;
+            context.lineJoin = "round";
+            context.moveTo(x1, y1);
+            context.lineTo(x2, y2);
+            context.closePath();
+            context.stroke();
+        }
+    }
+
+    function clearArea() {
+        context.setTransform(1, 0, 0, 1, 0, 0);
+        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     }
 
     //#endregion

@@ -72,7 +72,7 @@ window.onload = function () {
 
                         // LOAD MAIN SECTIONS
                         loadMessages(user_data, current_class)
-                        loadClassList(user_data, current_class)
+                        loadClassList(current_class)
                     })
                 })
             }
@@ -152,12 +152,12 @@ window.onload = function () {
         })
     }
 
-    function loadClassList(user_data, current_class) {
+    function loadClassList(current_class) {
         let table = $("div.teacher-list table.table tbody").eq(0)
         table.empty()
         sendRequest("GET", "php/getStudentsByClass.php", { "class": current_class }).catch(error).then(function (students) {
             students = students["data"]
-            console.log(students)
+            // Load table
             if (students.length == 0) {
                 $("<tr>").appendTo(table).html(`<br>Non ci sono studenti nella classe ${current_class}`).addClass("text-muted")
             } else {
@@ -167,9 +167,11 @@ window.onload = function () {
                     $("<td>").appendTo(tr).text(student["cognome"].toUpperCase())
                     $("<td>").appendTo(tr).append($("<button>").addClass("btn btn-light").append($("<i>").addClass("bi bi-plus")).on("click", function () {
                         // ADD MARKS
+                        console.log(student)
                     }))
                     $("<td>").appendTo(tr).append($("<button>").addClass("btn btn-light").append($("<i>").addClass("bi bi-plus")).on("click", function () {
                         // ADD ABSENCE
+                        console.log(student)
                     }))
                 }
             }

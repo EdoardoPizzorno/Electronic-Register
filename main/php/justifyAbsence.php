@@ -17,8 +17,17 @@ if (isset($_REQUEST["reason"])) {
     die("Manca parametro motivazione");
 }
 
+if (isset($_REQUEST["sign"])) {
+    $sign = $_REQUEST["sign"];
+} else {
+    http_response_code(400);
+    die("Manca parametro firma");
+}
+
+$binary_data = base64_decode($sign);
+
 $connection = openConnection("registro");
-$sql = "UPDATE assenze SET motivazione='$reason',giustificato=1 WHERE id=$id";
+$sql = "UPDATE assenze SET motivazione='$reason',giustificato=1,firma='$binary_data' WHERE id=$id";
 $data = eseguiQuery($connection, $sql);
 
 http_response_code(200);
