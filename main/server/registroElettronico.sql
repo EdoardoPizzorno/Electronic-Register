@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 15, 2023 alle 22:07
+-- Creato il: Mag 23, 2023 alle 21:12
 -- Versione del server: 10.4.28-MariaDB
 -- Versione PHP: 8.2.4
 
@@ -152,56 +152,58 @@ CREATE TABLE `assenze` (
   `id` int(11) NOT NULL,
   `matricola` int(11) NOT NULL,
   `data` date NOT NULL,
-  `giustificato` tinyint(1) NOT NULL DEFAULT 0
+  `giustificato` tinyint(1) NOT NULL DEFAULT 0,
+  `motivazione` varchar(255) DEFAULT 'Salute',
+  `firma` blob DEFAULT 'data:image/png;base64,'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `assenze`
 --
 
-INSERT INTO `assenze` (`id`, `matricola`, `data`, `giustificato`) VALUES
-(1, 1001, '2023-02-11', 1),
-(2, 1001, '2023-02-12', 1),
-(3, 1001, '2023-02-13', 1),
-(4, 1002, '2023-02-07', 1),
-(5, 1002, '2023-02-18', 0),
-(6, 1002, '2023-02-26', 0),
-(7, 1003, '2023-02-05', 1),
-(8, 1003, '2023-02-15', 1),
-(9, 1003, '2023-02-25', 0),
-(10, 1003, '2023-02-26', 0),
-(11, 1004, '2023-02-01', 1),
-(12, 1004, '2023-02-14', 1),
-(13, 1005, '2023-02-11', 1),
-(14, 1005, '2023-02-12', 0),
-(15, 1001, '2023-03-10', 0),
-(16, 1001, '2023-03-16', 0),
-(17, 1001, '2023-03-29', 0),
-(18, 1002, '2023-03-17', 0),
-(19, 1002, '2023-03-18', 0),
-(20, 1002, '2023-03-19', 0),
-(21, 1002, '2023-03-20', 0),
-(22, 1003, '2023-03-24', 0),
-(23, 1004, '2023-03-06', 0),
-(24, 1004, '2023-03-20', 0),
-(25, 1005, '2023-03-10', 0),
-(26, 1005, '2023-03-27', 0),
-(27, 1005, '2023-03-28', 0),
-(28, 1001, '2023-04-20', 0),
-(29, 1001, '2023-04-21', 0),
-(30, 1001, '2023-04-23', 0),
-(31, 1001, '2023-04-24', 0),
-(32, 1001, '2023-04-28', 0),
-(33, 1002, '2023-04-06', 0),
-(34, 1002, '2023-04-10', 0),
-(35, 1002, '2023-04-19', 0),
-(36, 1003, '2023-04-27', 0),
-(37, 1003, '2023-04-28', 0),
-(38, 1003, '2023-04-29', 0),
-(39, 1004, '2023-04-06', 0),
-(40, 1004, '2023-04-07', 0),
-(41, 1005, '2023-04-09', 0),
-(42, 1005, '2023-04-25', 0);
+INSERT INTO `assenze` (`id`, `matricola`, `data`, `giustificato`, `motivazione`, `firma`) VALUES
+(1, 1001, '2023-02-11', 1, 'Salute', NULL),
+(2, 1001, '2023-02-12', 1, 'Famiglia', NULL),
+(3, 1001, '2023-02-13', 1, 'Salute', NULL),
+(4, 1002, '2023-02-07', 1, 'Salute', NULL),
+(5, 1002, '2023-02-18', 1, 'Famiglia', NULL),
+(6, 1002, '2023-02-26', 1, 'Altro', NULL),
+(7, 1003, '2023-02-05', 1, 'Salute', NULL),
+(8, 1003, '2023-02-15', 1, 'Salute', NULL),
+(9, 1003, '2023-02-25', 0, 'Salute', NULL),
+(10, 1003, '2023-02-26', 0, 'Salute', NULL),
+(11, 1004, '2023-02-01', 1, 'Salute', NULL),
+(12, 1004, '2023-02-14', 1, 'Salute', NULL),
+(13, 1005, '2023-02-11', 1, 'Salute', NULL),
+(14, 1005, '2023-02-12', 0, 'Salute', NULL),
+(15, 1001, '2023-03-10', 1, 'Altro', NULL),
+(16, 1001, '2023-03-16', 1, 'Famiglia', NULL),
+(17, 1001, '2023-03-29', 1, 'Altro', NULL),
+(18, 1002, '2023-03-17', 1, 'Famiglia', NULL),
+(19, 1002, '2023-03-18', 0, 'Salute', NULL),
+(20, 1002, '2023-03-19', 0, 'Salute', NULL),
+(21, 1002, '2023-03-20', 0, 'Salute', NULL),
+(22, 1003, '2023-03-24', 0, 'Salute', NULL),
+(23, 1004, '2023-03-06', 0, 'Salute', NULL),
+(24, 1004, '2023-03-20', 0, 'Salute', NULL),
+(25, 1005, '2023-03-10', 0, 'Salute', NULL),
+(26, 1005, '2023-03-27', 0, 'Salute', NULL),
+(27, 1005, '2023-03-28', 0, 'Salute', NULL),
+(28, 1001, '2023-04-20', 0, 'Salute', NULL),
+(29, 1001, '2023-04-21', 0, 'Salute', NULL),
+(30, 1001, '2023-04-23', 0, 'Salute', NULL),
+(31, 1001, '2023-04-24', 0, 'Salute', NULL),
+(32, 1001, '2023-04-28', 0, 'Salute', NULL),
+(33, 1002, '2023-04-06', 0, 'Salute', NULL),
+(34, 1002, '2023-04-10', 0, 'Salute', NULL),
+(35, 1002, '2023-04-19', 0, 'Salute', NULL),
+(36, 1003, '2023-04-27', 0, 'Salute', NULL),
+(37, 1003, '2023-04-28', 0, 'Salute', NULL),
+(38, 1003, '2023-04-29', 0, 'Salute', NULL),
+(39, 1004, '2023-04-06', 0, 'Salute', NULL),
+(40, 1004, '2023-04-07', 0, 'Salute', NULL),
+(41, 1005, '2023-04-09', 0, 'Salute', NULL),
+(42, 1005, '2023-04-25', 0, 'Salute', NULL);
 
 -- --------------------------------------------------------
 
@@ -253,10 +255,10 @@ INSERT INTO `classi` (`id`, `nome`, `materie`) VALUES
 --
 
 CREATE TABLE `colloqui` (
+  `id` int(11) NOT NULL,
   `nome` varchar(255) DEFAULT NULL,
   `cognome` varchar(255) DEFAULT NULL,
-  `user` varchar(255) DEFAULT NULL,
-  `data` date NOT NULL DEFAULT current_timestamp(),
+  `matricola` int(11) NOT NULL,
   `ora` datetime(6) NOT NULL DEFAULT current_timestamp(6),
   `docente` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -265,10 +267,16 @@ CREATE TABLE `colloqui` (
 -- Dump dei dati per la tabella `colloqui`
 --
 
-INSERT INTO `colloqui` (`nome`, `cognome`, `user`, `data`, `ora`, `docente`) VALUES
-('mario', 'rossi', 'rossi-1001', '2023-05-15', '0000-00-00 00:00:00.000000', 'docente'),
-('manlio', 'rossi', 'rossi-1002', '2023-05-15', '0000-00-00 00:00:00.000000', 'docente'),
-('marco', 'curti', 'curti-1012', '2023-05-15', '2023-05-15 22:05:30.000000', 'docente');
+INSERT INTO `colloqui` (`id`, `nome`, `cognome`, `matricola`, `ora`, `docente`) VALUES
+(1019, 'mario', 'rossi', 1001, '2023-11-24 14:50:00.000000', 'oscar cambieri'),
+(1020, 'mario', 'rossi', 1001, '2023-11-23 14:50:00.000000', 'alberto barbero'),
+(1021, 'mario', 'rossi', 1001, '2023-09-12 11:50:00.000000', 'alberto barbero'),
+(1022, 'manlio', 'rossi', 1002, '2024-05-22 15:20:00.000000', 'nicoletta boaglio'),
+(1023, 'mario', 'rossi', 1001, '2023-05-23 14:50:00.000000', 'sonia miglio'),
+(1024, 'mario', 'rossi', 1001, '2023-06-10 10:10:00.000000', 'debora servetti'),
+(1025, 'davide', 'garzino', 1081, '2023-06-15 16:00:00.000000', 'sonia miglio'),
+(1026, 'simone', 'verdi', 1006, '2023-05-25 12:40:00.000000', 'roberto mana'),
+(1027, 'Fabrizio', 'Pizzorno', 1082, '2023-10-10 10:20:00.000000', 'nicoletta boaglio');
 
 -- --------------------------------------------------------
 
@@ -314,21 +322,50 @@ CREATE TABLE `messaggi` (
   `testo` varchar(255) NOT NULL,
   `orario` datetime(6) NOT NULL DEFAULT current_timestamp(6),
   `mittente` varchar(255) NOT NULL,
-  `destinatario` varchar(255) DEFAULT NULL
+  `destinatario` varchar(255) DEFAULT NULL,
+  `visualizzato` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `messaggi`
 --
 
-INSERT INTO `messaggi` (`id`, `oggetto`, `testo`, `orario`, `mittente`, `destinatario`) VALUES
-(1, 'Materiale', 'Si comunica che questo messaggio è di prova', '2023-05-15 21:57:22.000000', 'docente', 'rossi-1001'),
-(3, 'Comunicazione', 'Si comunica che questo messaggio è di prova', '2023-05-15 21:57:22.000000', 'docente', 'rossi-1002'),
-(4, 'Comunicazione', 'Si comunica che questo messaggio è di prova', '2023-05-15 21:57:22.000000', 'docente', '1A INF'),
-(5, 'Comunicazione', 'Si comunica che questo messaggio è di prova', '2023-05-15 21:57:22.000000', 'docente', '4A INF'),
-(6, 'Comunicazione', 'Si comunica che questo messaggio è di prova', '2023-05-15 21:57:22.000000', 'docente', 'rossi-1014'),
-(7, 'Comunicazione', 'Si comunica che questo messaggio è di prova', '2023-05-15 21:57:22.000000', 'docente', '3A INF'),
-(8, 'Comunicazione', 'Si comunica che questo messaggio è di prova', '2023-05-15 21:57:22.000000', 'docente', '3B INF');
+INSERT INTO `messaggi` (`id`, `oggetto`, `testo`, `orario`, `mittente`, `destinatario`, `visualizzato`) VALUES
+(9, 'Importante', 'Portare libro di Italiano domani', '2023-05-21 18:58:26.877989', 'docente', '1C INF', 0),
+(10, 'Lezione di domani', 'Non portare il materiale', '2023-05-21 19:00:44.833731', 'docente', '1C INF', 0),
+(11, 'Lezione di domani', 'Non portare il libro, faremo ed. civica', '2023-05-21 19:06:20.191389', 'docente', '1D INF', 0),
+(12, 'Palestra', 'Domani saremo in comunale', '2023-05-21 19:09:41.676669', 'docente', '1B INF', 0),
+(13, 'Interrogazioni', 'Le interrogazioni inizieranno il 25/05.', '2023-05-21 19:11:40.119128', 'docente', '1B INF', 1),
+(14, 'Sostituzione', 'Domani sarò in gita con le terze.', '2023-05-21 19:12:14.881957', 'docente', '1B INF', 0),
+(17, 'Sostituzione', 'Domani sarò in gita con le terze', '2023-05-21 19:13:45.962317', 'docente', '2A INF', 0),
+(21, 'Compito', 'Per domani non c\'è compito', '2023-05-21 19:16:15.279059', 'docente', '2B INF', 0),
+(23, 'Compito', 'Es2 pg 184', '2023-05-21 19:17:33.133416', 'docente', '2D INF', 0),
+(24, 'Importante', 'Domani portatevi il vostro computer', '2023-05-21 19:21:02.615623', 'docente', '5B INF', 0),
+(26, 'Domani interrogazioni', 'Preparatevi sugli ultimi argomenti spiegati in classe.', '2023-05-21 19:22:11.995044', 'docente', '4B INF', 0),
+(30, 'Workbook', 'Fate esercizi pagina 190', '2023-05-21 19:23:35.230232', 'docente', '1A INF', 0),
+(32, 'Film', 'Non portare i libri, domani guarderemo un film', '2023-05-21 19:26:11.362929', 'docente', '1A INF', 0),
+(34, 'Progetto', 'Domani consegna del progetto', '2023-05-21 19:36:06.068143', 'docente', '4E INF', 0),
+(44, 'Test di Cooper', 'Settimana prossima faremo il test di Cooper', '2023-05-21 20:07:49.431030', 'docente', '3B INF', 0),
+(48, 'Interrogazioni', 'Prossimo Lunedì inizierò ad interrogare ', '2023-05-21 20:18:06.656364', 'docente', '1D INF', 0),
+(49, 'Gita', 'Giovedì prossimo saremo in gita, portatevi uno zaino con il cibo.', '2023-05-21 21:03:00.562524', 'docente', '1D INF', 0),
+(50, 'Film', 'Domani guarderemo un film, non portate i libri', '2023-05-21 21:03:55.455786', 'docente', '4B INF', 0),
+(56, 'Sostituzione', 'Domani non sarò presente', '2023-05-21 21:05:28.977946', 'docente', '5D INF', 0),
+(58, 'Palestra', 'Domani saremo in comunale', '2023-05-21 21:13:34.852485', 'docente', '2A INF', 0),
+(59, 'Domani interrogazioni', 'Vi comunico che domani interrogherò di Storia', '2023-05-21 21:31:45.986138', 'boaglio', '1B INF', 0),
+(62, 'Incontro con scrittrice', 'Vi comunico che il 31/05 ci sarà un incontro con una scrittrice.', '2023-05-21 21:40:41.827546', 'barbero', '1D INF', 0),
+(66, 'Gita', 'Domani gita Firenze', '2023-05-21 21:43:39.171853', 'barbero', '2D INF', 0),
+(67, 'Nota', 'Oggi non vi siete comportati bene in classe', '2023-05-21 21:44:26.063305', 'miglio', '4B INF', 0),
+(68, 'Verifica', 'Ricordatevi che mercoledì c\'è la verifica sull\'ultimo capitolo', '2023-05-21 21:45:06.732397', 'miglio', '5D INF', 0),
+(69, 'Gita', 'Gita alle carceri', '2023-05-21 21:46:09.509016', 'miglio', '3B INF', 0),
+(70, 'gita', 'Domani saremo in gita alle carceri di Fossano', '2023-05-21 21:53:43.601836', 'boaglio', '1B INF', 0),
+(71, 'Nota', 'Oggi l\'alunno non si è comportato adeguatamente', '2023-05-21 22:29:40.375811', 'boaglio', 'rossi-1001', 1),
+(72, 'Nota', 'L\'alunno ha lanciato una palla in classe', '2023-05-21 22:31:47.815593', 'cambieri', 'migo', 0),
+(73, 'Nota', 'L\'alunno ha bestemmiato durante la lezione', '2023-05-21 22:32:57.424542', 'mana', 'lazza', 0),
+(74, 'Gita', 'Domani gita ', '2023-05-21 22:34:26.441594', 'mana', '5E INF', 0),
+(77, 'Verifica', 'La verifica di recupero la svolgerai domani', '2023-05-21 22:38:30.705746', 'mana', 'rossi-1001', 0),
+(78, 'Consegna progetto', 'Il progetto sarà da consegnare entro il 30/05', '2023-05-21 22:49:06.774968', 'mana', '1B INF', 0),
+(80, 'Consegna progetto', 'Il progetto sarà da consegnare entro il 30/05', '2023-05-21 22:53:42.232677', 'mana', '4B INF', 1),
+(81, 'Gita', 'Prossima settimana andremo in gita a Roma', '2023-05-22 14:07:21.295769', 'servetti', 'sasso-1008', 0);
 
 -- --------------------------------------------------------
 
@@ -374,7 +411,18 @@ INSERT INTO `studenti` (`matricola`, `cognome`, `nome`, `user`, `pass`, `classe`
 (1017, 'mollo', 'danilo', 'mollo-1017', '5f4dcc3b5aa765d61d8327deb882cf99', '4B INF', 'Fossano', 'Via Roma, 13', 'user.jpg', 0),
 (1018, 'tosco', 'stelvio', 'tosco-1018', '5f4dcc3b5aa765d61d8327deb882cf99', '4B INF', 'Fossano', 'Via Roma, 13', 'user.jpg', 0),
 (1019, 'racca', 'elena', 'racca-1019', '5f4dcc3b5aa765d61d8327deb882cf99', '4B INF', 'Fossano', 'Via Roma, 13', 'user.jpg', 0),
-(1020, 'russo', 'flavio', 'russo-1020', '5f4dcc3b5aa765d61d8327deb882cf99', '4B INF', 'Fossano', 'Via Roma, 13', 'user.jpg', 0);
+(1020, 'russo', 'flavio', 'russo-1020', '5f4dcc3b5aa765d61d8327deb882cf99', '4B INF', 'Fossano', 'Via Roma, 13', 'user.jpg', 0),
+(1022, 'pizzorno', 'edoardo', 'edopiz', '5f4dcc3b5aa765d61d8327deb882cf99', '4B INF', 'Santa Vittoria d\'Alba', 'indirizzo', 'user.jpg', 0),
+(1023, 'mana', 'roberto', 'mana', '5f4dcc3b5aa765d61d8327deb882cf99', '', 'Fossano', 'indirizzo', 'user.jpg', 1),
+(1024, 'cambieri', 'oscar', 'cambieri', '5f4dcc3b5aa765d61d8327deb882cf99', '', 'Fossano', 'indirizzo', 'user.jpg', 1),
+(1025, 'migori', 'andrea', 'migo', '5f4dcc3b5aa765d61d8327deb882cf99', '2C INF', 'Sommariva Bosco', 'indirizzo', 'user.jpg', 0),
+(1026, 'boaglio', 'nicoletta', 'boaglio', '5f4dcc3b5aa765d61d8327deb882cf99', '', 'Fossano', 'indirizzo', 'user.jpg', 1),
+(1077, 'lazzarino', 'paolo', 'lazza', '5f4dcc3b5aa765d61d8327deb882cf99', '4C INF', 'Monteu', 'indirizzo', 'user.jpg', 0),
+(1078, 'servetti', 'debora', 'servetti', '5f4dcc3b5aa765d61d8327deb882cf99', '', 'Fossano', 'indirizzo', 'user.jpg', 1),
+(1079, 'barbero', 'alberto', 'barbero', '5f4dcc3b5aa765d61d8327deb882cf99', '', 'Mondovì', 'indirizzo', 'user.jpg', 1),
+(1080, 'miglio', 'sonia', 'miglio', '5f4dcc3b5aa765d61d8327deb882cf99', '', 'Fossano', 'Via Roma, 13', 'user.jpg', 1),
+(1081, 'garzino', 'davide', 'garzi05', '5f4dcc3b5aa765d61d8327deb882cf99', '5E INF', 'Paesana', 'indirizzo', 'user.jpg', 0),
+(1083, 'vaschetto', 'francesco', 'vaschetto', '5f4dcc3b5aa765d61d8327deb882cf99', '', 'Savigliano', 'indirizzo', 'user.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -385,7 +433,7 @@ INSERT INTO `studenti` (`matricola`, `cognome`, `nome`, `user`, `pass`, `classe`
 CREATE TABLE `voti` (
   `id` int(11) NOT NULL,
   `matricola` int(11) NOT NULL,
-  `data` date NOT NULL,
+  `data` date NOT NULL DEFAULT current_timestamp(),
   `materia` int(11) NOT NULL DEFAULT 0,
   `voto` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -544,7 +592,10 @@ INSERT INTO `voti` (`id`, `matricola`, `data`, `materia`, `voto`) VALUES
 (147, 1005, '2023-04-10', 21, 6),
 (148, 1005, '2023-04-25', 22, 8),
 (149, 1005, '2023-04-07', 23, 9.5),
-(150, 1005, '2023-04-25', 25, 7);
+(150, 1005, '2023-04-25', 25, 7),
+(152, 1025, '2023-05-22', 2, 8),
+(159, 1082, '2023-05-22', 2, 4),
+(160, 1006, '2023-05-22', 2, 9);
 
 --
 -- Indici per le tabelle scaricate
@@ -568,6 +619,12 @@ ALTER TABLE `assenze`
 ALTER TABLE `classi`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `nomeClasseIndex` (`nome`);
+
+--
+-- Indici per le tabelle `colloqui`
+--
+ALTER TABLE `colloqui`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indici per le tabelle `materie`
@@ -616,6 +673,12 @@ ALTER TABLE `classi`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
+-- AUTO_INCREMENT per la tabella `colloqui`
+--
+ALTER TABLE `colloqui`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1028;
+
+--
 -- AUTO_INCREMENT per la tabella `materie`
 --
 ALTER TABLE `materie`
@@ -625,19 +688,19 @@ ALTER TABLE `materie`
 -- AUTO_INCREMENT per la tabella `messaggi`
 --
 ALTER TABLE `messaggi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- AUTO_INCREMENT per la tabella `studenti`
 --
 ALTER TABLE `studenti`
-  MODIFY `matricola` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1021;
+  MODIFY `matricola` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1084;
 
 --
 -- AUTO_INCREMENT per la tabella `voti`
 --
 ALTER TABLE `voti`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=151;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=161;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
