@@ -117,9 +117,8 @@ window.onload = function () {
             $("<a>").appendTo(dropdownStudents).addClass("dropdown-item receiver").text($("a.dropdown-toggle.class").eq(0).text()) // The class by default
             sendRequest("GET", "php/getStudentsByClass.php", { "class": current_receiver }).catch(error).then(function (students) {
                 students = students["data"]
-                for (let student of students) {
+                for (let student of students)
                     $("<a>").appendTo(dropdownStudents).addClass("dropdown-item receiver").text(student["user"])
-                }
                 // Manage all receivers available
                 $("a.dropdown-item.receiver").on("click", function () {
                     let receiver = $(this).text()
@@ -197,7 +196,7 @@ window.onload = function () {
                         }).then(function (value) {
                             if (value["isConfirmed"]) { // OK button
                                 let mark = $("#grade").val()
-                                if (mark.length != 0) {
+                                if (mark >= 1 && mark <= 10) {
                                     sendRequest("GET", "php/getSubjectByName.php", { "subjectName": $("a.dropdown-toggle.subject").eq(0).text() }).catch(error).then(function (subject) {
                                         sendRequest("POST", "php/insertMark.php", { "matricola": student["matricola"], "subject": subject["data"]["id"], mark }).catch(error).then(function () {
                                             Swal.fire({
@@ -208,7 +207,7 @@ window.onload = function () {
                                     })
                                 } else {
                                     Swal.fire({
-                                        "text": "Devi inserire un voto!",
+                                        "text": "Inserisci un voto valido!",
                                         "icon": "error"
                                     })
                                 }
