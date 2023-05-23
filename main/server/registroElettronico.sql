@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 23, 2023 alle 21:12
+-- Creato il: Mag 23, 2023 alle 22:16
 -- Versione del server: 10.4.28-MariaDB
 -- Versione PHP: 8.2.4
 
@@ -178,7 +178,7 @@ INSERT INTO `assenze` (`id`, `matricola`, `data`, `giustificato`, `motivazione`,
 (14, 1005, '2023-02-12', 0, 'Salute', NULL),
 (15, 1001, '2023-03-10', 1, 'Altro', NULL),
 (16, 1001, '2023-03-16', 1, 'Famiglia', NULL),
-(17, 1001, '2023-03-29', 1, 'Altro', NULL),
+(17, 1001, '2023-03-29', 1, 'Famiglia', NULL),
 (18, 1002, '2023-03-17', 1, 'Famiglia', NULL),
 (19, 1002, '2023-03-18', 0, 'Salute', NULL),
 (20, 1002, '2023-03-19', 0, 'Salute', NULL),
@@ -276,7 +276,7 @@ INSERT INTO `colloqui` (`id`, `nome`, `cognome`, `matricola`, `ora`, `docente`) 
 (1024, 'mario', 'rossi', 1001, '2023-06-10 10:10:00.000000', 'debora servetti'),
 (1025, 'davide', 'garzino', 1081, '2023-06-15 16:00:00.000000', 'sonia miglio'),
 (1026, 'simone', 'verdi', 1006, '2023-05-25 12:40:00.000000', 'roberto mana'),
-(1027, 'Fabrizio', 'Pizzorno', 1082, '2023-10-10 10:20:00.000000', 'nicoletta boaglio');
+(1028, 'mario', 'rossi', 1001, '2023-06-09 15:50:00.000000', 'francesco vaschetto');
 
 -- --------------------------------------------------------
 
@@ -334,7 +334,7 @@ INSERT INTO `messaggi` (`id`, `oggetto`, `testo`, `orario`, `mittente`, `destina
 (9, 'Importante', 'Portare libro di Italiano domani', '2023-05-21 18:58:26.877989', 'docente', '1C INF', 0),
 (10, 'Lezione di domani', 'Non portare il materiale', '2023-05-21 19:00:44.833731', 'docente', '1C INF', 0),
 (11, 'Lezione di domani', 'Non portare il libro, faremo ed. civica', '2023-05-21 19:06:20.191389', 'docente', '1D INF', 0),
-(12, 'Palestra', 'Domani saremo in comunale', '2023-05-21 19:09:41.676669', 'docente', '1B INF', 0),
+(12, 'Palestra', 'Domani saremo in comunale', '2023-05-21 19:09:41.676669', 'docente', '1B INF', 1),
 (13, 'Interrogazioni', 'Le interrogazioni inizieranno il 25/05.', '2023-05-21 19:11:40.119128', 'docente', '1B INF', 1),
 (14, 'Sostituzione', 'Domani sarò in gita con le terze.', '2023-05-21 19:12:14.881957', 'docente', '1B INF', 0),
 (17, 'Sostituzione', 'Domani sarò in gita con le terze', '2023-05-21 19:13:45.962317', 'docente', '2A INF', 0),
@@ -362,10 +362,11 @@ INSERT INTO `messaggi` (`id`, `oggetto`, `testo`, `orario`, `mittente`, `destina
 (72, 'Nota', 'L\'alunno ha lanciato una palla in classe', '2023-05-21 22:31:47.815593', 'cambieri', 'migo', 0),
 (73, 'Nota', 'L\'alunno ha bestemmiato durante la lezione', '2023-05-21 22:32:57.424542', 'mana', 'lazza', 0),
 (74, 'Gita', 'Domani gita ', '2023-05-21 22:34:26.441594', 'mana', '5E INF', 0),
-(77, 'Verifica', 'La verifica di recupero la svolgerai domani', '2023-05-21 22:38:30.705746', 'mana', 'rossi-1001', 0),
+(77, 'Verifica', 'La verifica di recupero la svolgerai domani', '2023-05-21 22:38:30.705746', 'mana', 'rossi-1001', 1),
 (78, 'Consegna progetto', 'Il progetto sarà da consegnare entro il 30/05', '2023-05-21 22:49:06.774968', 'mana', '1B INF', 0),
 (80, 'Consegna progetto', 'Il progetto sarà da consegnare entro il 30/05', '2023-05-21 22:53:42.232677', 'mana', '4B INF', 1),
-(81, 'Gita', 'Prossima settimana andremo in gita a Roma', '2023-05-22 14:07:21.295769', 'servetti', 'sasso-1008', 0);
+(81, 'Gita', 'Prossima settimana andremo in gita a Roma', '2023-05-22 14:07:21.295769', 'servetti', 'sasso-1008', 0),
+(84, 'Palestra', 'Domani saremo in comunale', '2023-05-23 22:08:25.443525', 'miglio', 'marra-1009', 0);
 
 -- --------------------------------------------------------
 
@@ -595,7 +596,11 @@ INSERT INTO `voti` (`id`, `matricola`, `data`, `materia`, `voto`) VALUES
 (150, 1005, '2023-04-25', 25, 7),
 (152, 1025, '2023-05-22', 2, 8),
 (159, 1082, '2023-05-22', 2, 4),
-(160, 1006, '2023-05-22', 2, 9);
+(160, 1006, '2023-05-22', 2, 9),
+(163, 1001, '2023-05-23', 4, 1),
+(164, 1001, '2023-05-23', 6, 5.5),
+(165, 1025, '2023-05-23', 6, 5.5),
+(166, 1081, '2023-05-23', 6, 7);
 
 --
 -- Indici per le tabelle scaricate
@@ -676,7 +681,7 @@ ALTER TABLE `classi`
 -- AUTO_INCREMENT per la tabella `colloqui`
 --
 ALTER TABLE `colloqui`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1028;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1029;
 
 --
 -- AUTO_INCREMENT per la tabella `materie`
@@ -688,7 +693,7 @@ ALTER TABLE `materie`
 -- AUTO_INCREMENT per la tabella `messaggi`
 --
 ALTER TABLE `messaggi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT per la tabella `studenti`
@@ -700,7 +705,7 @@ ALTER TABLE `studenti`
 -- AUTO_INCREMENT per la tabella `voti`
 --
 ALTER TABLE `voti`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=161;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=167;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
