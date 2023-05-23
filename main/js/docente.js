@@ -71,6 +71,7 @@ window.onload = function () {
                         }
 
                         // LOAD MAIN SECTIONS
+                        loadReceivers(user_data, current_class) // Load all receivers
                         loadMessages(user_data, current_class)
                         loadClassList(current_class)
                     })
@@ -105,6 +106,22 @@ window.onload = function () {
 
     //#region MAIN FUNCTIONS
 
+    function loadReceivers(user_data, current_class) {
+        dropdownStudents.empty()
+        $("<a>").appendTo(dropdownStudents).addClass("dropdown-item receiver").text($("a.dropdown-toggle.class").eq(0).text()) // The class by default
+        sendRequest("GET", "php/getStudentsByClass.php", { "class": current_class }).catch(error).then(function (students) {
+            students = students["data"]
+            for (let student of students)
+                $("<a>").appendTo(dropdownStudents).addClass("dropdown-item receiver").text(student["user"])
+            // Manage all receivers available
+            $("a.dropdown-item.receiver").on("click", function () {
+                let receiver = $(this).text()
+                btnDestinatario.text(receiver)
+                loadMessages(user_data, receiver)
+            })
+        })
+    }
+
     function loadMessages(user_data, current_receiver) {
         sendRequest("GET", "php/getTeacherMessages.php", { "user": user_data["user"], current_receiver }).catch(error).then(function (messages) {
             messages = messages["data"]
@@ -112,20 +129,7 @@ window.onload = function () {
             let messagesWrapper = $("div.teacher-messages div.card-body").eq(0)
             messagesWrapper.empty()
             // Load all the receivers available
-            dropdownStudents.empty()
             btnDestinatario.text(current_receiver)
-            $("<a>").appendTo(dropdownStudents).addClass("dropdown-item receiver").text($("a.dropdown-toggle.class").eq(0).text()) // The class by default
-            sendRequest("GET", "php/getStudentsByClass.php", { "class": current_receiver }).catch(error).then(function (students) {
-                students = students["data"]
-                for (let student of students)
-                    $("<a>").appendTo(dropdownStudents).addClass("dropdown-item receiver").text(student["user"])
-                // Manage all receivers available
-                $("a.dropdown-item.receiver").on("click", function () {
-                    let receiver = $(this).text()
-                    btnDestinatario.text(receiver)
-                    loadMessages(user_data, receiver)
-                })
-            })
             // View messages
             if (messages.length == 0) {
                 $("<p>").text("Non ci sono messaggi da visualizzare").appendTo(messagesWrapper).addClass("text-muted")
