@@ -38,6 +38,8 @@ window.onload = function () {
         teachersDefaultView.show()
         // Disable teachers buttons
         buttonsEnabled(false)
+        // Load interviews (it doesn't need a specific class)
+        loadInterviews(user_data)
         // Get all classes
         sendRequest("GET", "php/classes.php").catch(error).then(function (all_classes) {
             let classes = []
@@ -171,7 +173,6 @@ window.onload = function () {
                     // Marks
                     $("<td>").appendTo(tr).append($("<button>").addClass("btn btn-light").append($("<i>").addClass("bi bi-plus")).on("click", function () {
                         // ADD MARKS
-                        console.log(student)
                         Swal.fire({
                             "html": `
                             <div>
@@ -221,8 +222,33 @@ window.onload = function () {
                     // Absences
                     $("<td>").appendTo(tr).append($("<button>").addClass("btn btn-light").append($("<i>").addClass("bi bi-plus")).on("click", function () {
                         // ADD ABSENCE
-                        console.log(student)
                     }))
+                }
+            }
+        })
+    }
+
+    function loadInterviews(user_data) {
+        let table = $("div.teacher-interviews table.table tbody").eq(0)
+        let teacher = `${user_data["nome"]} ${user_data["cognome"]}`
+        sendRequest("GET", "php/getInterviewsByTeacher.php", { teacher }).catch(error).then(function (interviews) {
+            interviews = interviews["data"]
+            if (interviews.length == 0) {
+                $("<span>").appendTo(table).text("Non ci sono colloqui da visualizzare").addClass("text-muted")
+            } else {
+                // Load table
+                for (let interview of interviews) {
+                    let tr = $("<tr>").appendTo(table)
+                    $("<td>").appendTo(tr).text(`${interview["nome"].toUpperCase()} ${interview["cognome"].toUpperCase()}`)
+                    // Get student's class
+                    sendRequest("GET", "php/getClassByMatricola.php", { "matricola": interview["matricola"] }).catch(error).then(function (_class) {
+                        $("<td>").appendTo(tr).text(`${_class["data"]["classe"]}`)
+                    })
+
+                    let date = interview["ora"].split(" ")
+                    let hour = date[1].split(":")
+                    $("<td>").appendTo(tr).text(date[0])
+                    $("<td>").appendTo(tr).text(`${hour[0]}:${hour[1]}`)
                 }
             }
         })

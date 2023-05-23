@@ -135,7 +135,7 @@ h5.card-title {
 /* STUDENTS REGISTER */
 
 td.regDate {
-  width: 150px;
+  width: 150px !important;
   line-height: 40px;
   user-select: none;
 }

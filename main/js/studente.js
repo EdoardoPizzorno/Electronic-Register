@@ -508,7 +508,7 @@ window.onload = function () {
     function getInterviews(matricola) {
         let table = $("div.student-interviews-booking table.table tbody").eq(0)
         table.empty()
-        sendRequest("GET", "php/interviews.php", { "user": matricola }).catch(error).then(function (interviews) {
+        sendRequest("GET", "php/getInterviewsByMatricola.php", { "user": matricola }).catch(error).then(function (interviews) {
             interviews = interviews["data"]
             if (interviews.length == 0) {
                 $("<span>").appendTo(table).addClass("text-muted").text("Non ci sono colloqui da visualizzare")
