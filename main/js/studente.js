@@ -231,8 +231,8 @@ window.onload = function () {
                 for (let absence of absences) {
                     let tr = $("<tr>").appendTo(table)
                     $("<td>").appendTo(tr).text(absence["data"])
-
-                    if (parseInt(absence["giustificato"]) == 1) { // If justified 
+                    console.log(absence["motivazione"], absence["data"])
+                    if (absence["motivazione"] != null) { // If justified 
                         $("<td>").appendTo(tr).text("Assenza giustificata")
                         $("<td>").appendTo(tr).append($("<button>").addClass("btn btn-light").html("<i class='bi bi-info-circle'></ i>").on("click", function () {
                             Swal.fire({

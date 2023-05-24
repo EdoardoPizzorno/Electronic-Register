@@ -27,7 +27,7 @@ if (isset($_REQUEST["sign"])) {
 $binary_data = base64_decode($sign);
 
 $connection = openConnection("registro");
-$sql = "UPDATE assenze SET motivazione='$reason',giustificato=1,firma='$binary_data' WHERE id=$id";
+$sql = "UPDATE assenze SET motivazione='$reason',firma='$binary_data' WHERE id=$id";
 $data = eseguiQuery($connection, $sql);
 
 http_response_code(200);

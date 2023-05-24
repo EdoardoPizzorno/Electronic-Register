@@ -174,6 +174,7 @@ window.onload = function () {
                     $("<td>").appendTo(tr).append($("<button>").addClass("btn btn-light").append($("<i>").addClass("bi bi-plus")).on("click", function () {
                         // ADD MARKS
                         Swal.fire({
+                            "showCancelButton": true,
                             "html": `
                             <div>
                                 <div>
@@ -221,7 +222,42 @@ window.onload = function () {
                     }))
                     // Absences
                     $("<td>").appendTo(tr).append($("<button>").addClass("btn btn-light").append($("<i>").addClass("bi bi-plus")).on("click", function () {
-                        // ADD ABSENCE
+                        Swal.fire({
+                            "showCancelButton": true,
+                            "html": `
+                            <div>
+                                <div>
+                                    <img src="assets/images/user.jpg" alt="Profilo studente">
+                                </div>
+                                <div style="text-align: center !important">
+                                    <div class="form-group">
+                                        <label for="name">Nome:</label>
+                                        <input class="form-control" type="text" id="name" name="name" value=${student["nome"].toUpperCase()} readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="surname">Cognome:</label>
+                                        <input class="form-control" type="text" id="surname" name="surname" value=${student["cognome"].toUpperCase()} readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="username">Username:</label>
+                                        <input class="form-control" type="text" id="username" name="username" value=${student["user"]} readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="username">Username:</label>
+                                        <input class="form-control" type="text" id="username" name="username" value=${(new Date()).toLocaleDateString()} readonly>
+                                    </div>
+                                </div>
+                            </div>`
+                        }).then(function (value) {
+                            if (value["isConfirmed"]) {
+                                sendRequest("POST", "php/insertAbsence.php", { "student": student["matricola"] }).catch(error).then(function () {
+                                    Swal.fire({
+                                        "text": "Assenza inserita con successo!",
+                                        "icon": "success"
+                                    })
+                                })
+                            }
+                        })
                     }))
                 }
             }
