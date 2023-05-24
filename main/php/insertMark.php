@@ -26,7 +26,14 @@ if (isset($_REQUEST["mark"])) {
     die("Manca parametro voto");
 }
 
-$sql = "INSERT INTO voti (matricola, materia, voto) VALUES ($matricola, '$subject', $mark)";
+if (isset($_REQUEST["teacher"])) {
+    $teacher = $connection->real_escape_string($_REQUEST["teacher"]);
+} else {
+    http_response_code(400);
+    die("Manca parametro docente");
+}
+
+$sql = "INSERT INTO voti (matricola, materia, voto, docente) VALUES ($matricola, '$subject', $mark, '$teacher')";
 $data = eseguiQuery($connection, $sql);
 
 http_response_code(200);

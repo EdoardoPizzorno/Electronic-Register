@@ -75,7 +75,7 @@ window.onload = function () {
                         // LOAD MAIN SECTIONS
                         loadReceivers(user_data, current_class) // Load all receivers
                         loadMessages(user_data, current_class)
-                        loadClassList(current_class)
+                        loadClassList(user_data, current_class)
                     })
                 })
             }
@@ -157,7 +157,7 @@ window.onload = function () {
         })
     }
 
-    function loadClassList(current_class) {
+    function loadClassList(user_data, current_class) {
         let table = $("div.teacher-list table.table tbody").eq(0)
         table.empty()
         sendRequest("GET", "php/getStudentsByClass.php", { "class": current_class }).catch(error).then(function (students) {
@@ -203,7 +203,7 @@ window.onload = function () {
                                 let mark = $("#grade").val()
                                 if (mark >= 1 && mark <= 10) {
                                     sendRequest("GET", "php/getSubjectByName.php", { "subjectName": $("a.dropdown-toggle.subject").eq(0).text() }).catch(error).then(function (subject) {
-                                        sendRequest("POST", "php/insertMark.php", { "matricola": student["matricola"], "subject": subject["data"]["id"], mark }).catch(error).then(function () {
+                                        sendRequest("POST", "php/insertMark.php", { "matricola": student["matricola"], "subject": subject["data"]["id"], mark, "teacher": user_data["matricola"] }).catch(error).then(function () {
                                             Swal.fire({
                                                 "text": "Voto inserito correttamente!",
                                                 "icon": "success"

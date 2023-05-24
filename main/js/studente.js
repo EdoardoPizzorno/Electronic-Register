@@ -206,6 +206,10 @@ window.onload = function () {
                         if (mark["voto"] < 6)
                             styleColor = "style='background-color: salmon'"
                         $(`<td class='mark' ${styleColor}>`).appendTo(tr).text(mark["voto"])
+                        // Load teacher who loaded the mark
+                        sendRequest("GET", "php/getTeacherByMatricola.php", { "teacher": mark["docente"] }).catch(error).then(function (teacher) {
+                            $("<td>").appendTo(tr).text(`${teacher["data"]["nome"].toUpperCase()} ${teacher["data"]["cognome"].toUpperCase()}`)
+                        })
                     })
                 }
             }
