@@ -76,6 +76,7 @@ window.onload = function () {
                         loadReceivers(user_data, current_class) // Load all receivers
                         loadMessages(user_data, current_class)
                         loadClassList(user_data, current_class)
+                        loadAverages(current_class)
                     })
                 })
             }
@@ -209,6 +210,7 @@ window.onload = function () {
                                                 "text": "Voto inserito correttamente!",
                                                 "icon": "success"
                                             })
+                                            loadAverages(current_class) // Update averages after inserting a new mark
                                         })
                                     })
                                 } else {
@@ -286,6 +288,34 @@ window.onload = function () {
                     $("<td>").appendTo(tr).text(date[0])
                     $("<td>").appendTo(tr).text(`${hour[0]}:${hour[1]}`)
                 }
+            }
+        })
+    }
+
+    function loadAverages(current_class) {
+        let table = $("div.teacher-averages table.table tbody").eq(0)
+        table.empty()
+        sendRequest("GET", "php/getStudentsByClass.php", { "class": current_class }).catch(error).then(function (students) {
+            students = students["data"]
+            if (students.length == 0) {
+
+            } else {
+                let all_sums = 0
+                for (let student of students) {
+                    let tr = $("<tr>").appendTo(table)
+                    $("<td>").appendTo(tr).text(`${student["nome"].toUpperCase()}`)
+                    $("<td>").appendTo(tr).text(`${student["cognome"].toUpperCase()}`)
+                    sendRequest("GET", "php/getMarksByMatricola.php", { "user": student["matricola"] }).catch(error).then(function (marks) {
+                        let sum = 0
+                        for (let mark of marks["data"])
+                            sum += parseFloat(mark["voto"])
+                        let average = sum / marks["data"].length
+                        $("<td>").appendTo(tr).html(`<b>${isNaN(average) ? 0 : average.toFixed(2)}</b>`).css("backgroundColor", average >= 6 ? "lightgreen" : "salmon")
+                        all_sums = all_sums + (isNaN(average) ? 0 : average)
+                    })
+                }
+                /*let generalAverage = (all_sums / students.length).toFixed(2)
+                $("#classAverage span").empty().html(`<i><b>${generalAverage}</b></i>`).css("color", generalAverage >= 6 ? "lightgreen" : "salmon")*/
             }
         })
     }

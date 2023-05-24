@@ -187,7 +187,7 @@ window.onload = function () {
 
     function loadMarks(user_data) {
         let table = $("div.student-marks table.table").eq(0)
-        sendRequest("GET", "php/marks.php", { "user": user_data["matricola"] }).catch(error).then(function (marks) {
+        sendRequest("GET", "php/getMarksByMatricola.php", { "user": user_data["matricola"] }).catch(error).then(function (marks) {
             marks = marks["data"]
             if (marks.length == 0) {
                 $("<span>").appendTo(table.children("tbody")).text("Non ci sono voti da visualizzare").addClass("text-muted")
@@ -231,7 +231,7 @@ window.onload = function () {
                 for (let absence of absences) {
                     let tr = $("<tr>").appendTo(table)
                     $("<td>").appendTo(tr).text(absence["data"])
-                    console.log(absence["motivazione"], absence["data"])
+
                     if (absence["motivazione"] != null) { // If justified 
                         $("<td>").appendTo(tr).text("Assenza giustificata")
                         $("<td>").appendTo(tr).append($("<button>").addClass("btn btn-light").html("<i class='bi bi-info-circle'></ i>").on("click", function () {
@@ -349,7 +349,7 @@ window.onload = function () {
         let table = $("div.school-report table.table tbody").eq(0)
         let all_subjects = {}
         let promises = []
-        sendRequest("GET", "php/marks.php", { "user": user_data["matricola"] }).catch(error).then(function (marks) {
+        sendRequest("GET", "php/getMarksByMatricola.php", { "user": user_data["matricola"] }).catch(error).then(function (marks) {
             marks = marks["data"]
             // Create JSON with all marks for each subject
             if (marks.length == 0) {
