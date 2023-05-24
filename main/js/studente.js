@@ -390,7 +390,7 @@ window.onload = function () {
                 all_averages = (all_averages / numSubjects).toFixed(2) // Now it's the total average
                 let tr = $("<tr>").appendTo(table)
                 $("<td>").appendTo(tr).html("<i>Media pagella generale: </i>")
-                $("<td>").appendTo(tr).html(`<i><b>${all_averages}</b></i>`).css("background-color", all_averages >= 6 ? "#30da30" : "#ff3d3d")
+                $("<td>").appendTo(tr).html(`<i><b>${isNaN(all_averages) ? 0 : all_averages}</b></i>`).css("background-color", all_averages >= 6 ? "#30da30" : "#ff3d3d")
             })
         })
     }
