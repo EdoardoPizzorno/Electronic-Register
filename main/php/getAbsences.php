@@ -11,7 +11,7 @@ if (isset($_GET["user"])) {
 }
 
 $connection = openConnection("registro");
-$sql = "SELECT id,data,motivazione from assenze WHERE matricola='$user'";
+$sql = "SELECT id,data,motivazione from assenze WHERE matricola='$user' ORDER BY data DESC";
 $data = eseguiQuery($connection, $sql);
 
 http_response_code(200);

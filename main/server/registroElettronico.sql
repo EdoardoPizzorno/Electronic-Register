@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 26, 2023 alle 11:22
+-- Creato il: Mag 26, 2023 alle 13:15
 -- Versione del server: 10.4.28-MariaDB
 -- Versione PHP: 8.2.4
 
@@ -140,7 +140,17 @@ INSERT INTO `argomenti` (`id`, `classe`, `data`, `materia`, `argomento`) VALUES
 (98, '4B INF', '2023-03-24', 23, 'php. Esercizio 03 \"Registrazione Utenti\". Caricamento dinamico dei due listbox. Connessione tra PHP e MySQL. L\'oggetto mysqli con realtive proprietà e metodi. Costruzione di una libreria di interfacciamento tra PHP e mySQL '),
 (99, '4B INF', '2023-03-24', 4, 'Derivata della somma di funzioni e di costante per funzione.(con dimostrazione) : esercizi. Vedere fiel 24.03 su classroom. Derivata di un prodotto'),
 (100, '4B INF', '2023-03-24', 21, 'Teoria dei casi d\'uso e dei diagrammi di sequenza'),
-(101, '4B INF', '2023-03-24', 1, 'Il romanzo storico e l\'autobiografia in Italia; \"Le confessioni di un italiano\" di Ippolito Nievo: trama, caratteristiche del romanzo, analisi del proemio.');
+(101, '4B INF', '2023-03-24', 1, 'Il romanzo storico e l\'autobiografia in Italia; \"Le confessioni di un italiano\" di Ippolito Nievo: trama, caratteristiche del romanzo, analisi del proemio.'),
+(102, '1A INF', '2023-03-06', 5, 'Test di Cooper'),
+(103, '1A INF', '2023-03-06', 1, 'Interrogazioni'),
+(104, '2C INF', '2023-03-06', 1, 'Interrogazioni'),
+(105, '1A INF', '2023-03-06', 14, 'Tavola4'),
+(106, '1A INF', '2023-03-06', 3, 'Listening'),
+(107, '5D INF', '2023-03-06', 21, 'C#'),
+(108, '5E INF', '2023-03-06', 21, 'Car Shop'),
+(109, '4B INF', '2023-05-26', 2, 'Interrogazione storia'),
+(110, '1D INF', '2023-03-08', 4, 'Verifica su funzioni'),
+(112, '3A INF', '2023-03-10', 4, 'Verifica');
 
 -- --------------------------------------------------------
 
@@ -668,7 +678,7 @@ ALTER TABLE `voti`
 -- AUTO_INCREMENT per la tabella `argomenti`
 --
 ALTER TABLE `argomenti`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
 
 --
 -- AUTO_INCREMENT per la tabella `assenze`

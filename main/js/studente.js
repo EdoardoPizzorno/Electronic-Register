@@ -25,6 +25,7 @@ window.onload = function () {
     $(".navbar-brand").eq(0).on("click", function () { showCurrentSection(studentsDefaultView) })
 
     let subjectDetailsChart = ""
+    let marksChart = ""
 
     sendRequest("GET", "php/user.php").catch(error).then(function (response) {
         let user_data = response["data"]
@@ -72,9 +73,8 @@ window.onload = function () {
 
     function loadMessages(user_data) {
         let messagesList = $(".student-messages ul.list-group").eq(0)
-        sendRequest("GET", "php/messages.php", { "user": user_data["user"], "class": user_data["classe"] }).catch(error).then(function (messages) {
+        sendRequest("GET", "php/getMessages.php", { "user": user_data["user"], "class": user_data["classe"] }).catch(error).then(function (messages) {
             messages = messages["data"]
-            messages.reverse() // From oldest to the newest
             if (messages.length == 0) {
                 $("<li>").appendTo(messagesList).addClass("list-group-item").text("Non ci sono messaggi da visualizzare")
             } else {
@@ -192,8 +192,13 @@ window.onload = function () {
             if (marks.length == 0) {
                 $("<span>").appendTo(table.children("tbody")).text("Non ci sono voti da visualizzare").addClass("text-muted")
             } else {
-                marks.reverse()
+                let all_dates = [] // Array with all dates
+                let all_marks = [] // Array with all marks
                 for (let mark of marks) {
+                    // Load arrays
+                    all_dates.push(mark["data"])
+                    all_marks.push(mark["voto"])
+                    // Get subject by Id
                     sendRequest("GET", "php/getSubjectById.php", { "subjectId": mark["materia"] }).catch(error).then(function (subjects) {
                         let subject = subjects["data"]["materia"]
                         let tr = $("<tr>").appendTo(table.children("tbody"))
@@ -212,6 +217,40 @@ window.onload = function () {
                         })
                     })
                 }
+                let marksChartOptions = {
+                    type: "line",
+                    data: {
+                        labels: all_dates,
+                        datasets: [{
+                            data: all_marks,
+                            backgroundColor: "black",
+                            borderColor: "black",
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                suggestedMin: 1,
+                                suggestedMax: 10,
+                                /*ticks: {
+                                    stepSize: 0.5
+                                }*/
+                            }
+                        },
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: "Andamento generale voti"
+                            },
+                            legend: {
+                                display: false,
+                                position: "top",
+                            }
+                        }
+                    }
+                }
+                marksChart = new Chart($("canvas#marksChart"), marksChartOptions)
             }
             //table.DataTable()
         })
@@ -220,14 +259,13 @@ window.onload = function () {
     function loadAbsences(user_data) {
         let table = $("div.student-absences table.table tbody").eq(0)
         table.empty()
-        sendRequest("GET", "php/absences.php", { "user": user_data["matricola"] }).catch(error).then(function (response) {
+        sendRequest("GET", "php/getAbsences.php", { "user": user_data["matricola"] }).catch(error).then(function (response) {
             let absences = response["data"]
             $(".student-absences h2").text(`Assenze: ${absences.length}`)
             if (absences.length == 0) {
                 let tr = $("<tr>").appendTo(table)
                 $("<span>").appendTo(tr).text("Nessuna assenza registrata").addClass("text-muted")
             } else {
-                absences.reverse()
                 for (let absence of absences) {
                     let tr = $("<tr>").appendTo(table)
                     $("<td>").appendTo(tr).text(absence["data"])
@@ -366,7 +404,6 @@ window.onload = function () {
                     promises.push(request)
                 }
             }
-
             // Load table
             Promise.all(promises).then(function () {
                 let all_averages = 0

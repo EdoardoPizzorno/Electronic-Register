@@ -51,8 +51,20 @@ function NavbarManagement() {
 	aProfile.on("click", function () { showCurrentSection(personalInformations) })
 
 	aExit.on("click", function () {
-		sendRequest("POST", "php/logout.php").catch(error).then(function () {
-			window.location.href = "login.html"
+		Swal.fire({
+			title: "Sei sicuro di voler uscire?",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: "SI",
+			cancelButtonText: "Annulla"
+		}).then((result) => {
+			if (result.isConfirmed) {
+				sendRequest("POST", "php/logout.php").catch(error).then(function () {
+					window.location.href = "login.html"
+				})
+			}
 		})
 	})
 }
@@ -110,8 +122,6 @@ function loadRegister(current_class, table, role = "0", current_subject = "") { 
 			$("<td>").appendTo(tr).addClass("regDate").html(`${calendar_days[i]}<br><span>${week_days[days_index]}</span>`) // Date
 			$("<td>").appendTo(tr).addClass("td-subject").html("") // Subject
 			$("<td>").appendTo(tr).addClass("td-topic").html("") // Topic
-			$("<td>").appendTo(tr) // Notes
-			$("<td>").appendTo(tr) // Absences
 			if (role == "1") // That's a teacher
 				$("<td>").appendTo(tr).append($("<button>").addClass("btn btn-light").append($("<i>").addClass("bi bi-plus")).on("click", function () {
 					// ADD TOPICS
@@ -141,7 +151,7 @@ function loadRegister(current_class, table, role = "0", current_subject = "") { 
 							let topic = $("input#description")
 							if (topic.val().length != 0) {
 								sendRequest("GET", "php/getSubjectByName.php", { "subjectName": current_subject }).catch(error).then(function (subject) {
-									sendRequest("POST", "php/insertLesson.php", { "topic": topic.val(), "date": $("input#date").val(), "class": current_class, "subject": subject["data"]["id"] }).catch(error).then(function() {
+									sendRequest("POST", "php/insertLesson.php", { "topic": topic.val(), "date": $("input#date").val(), "class": current_class, "subject": subject["data"]["id"] }).catch(error).then(function () {
 										Swal.fire({
 											"text": "Lezione inserita correttamente!",
 											"icon": "success"
@@ -163,32 +173,64 @@ function loadRegister(current_class, table, role = "0", current_subject = "") { 
 		let tdSubjects = $(".td-subject")
 		let tdTopics = $(".td-topic")
 
+		console.log(topics)
 		let j = 0
 		for (let i = 0; i < topics.length; i++) {
 			let row_date = trTopics.eq(i).prop("id")
-			if (j < topics.length) {
-				while (topics[j]["data"] == row_date) {
-					let lesson_topic = topics[j]["argomento"]
-					sendRequest("GET", "php/getSubjectById.php", { "subjectId": topics[j]["materia"] }).catch(error).then(function (response) {
-						let subject = response["data"]["materia"]
-						let prevSubjHtml = tdSubjects.eq(i).html()
-						let prevTopHtml = tdTopics.eq(i).html()
-						let newSubjHtml = `${prevSubjHtml}<br><b>${subject}</b>`
-						let newTopHtml = `${prevTopHtml}<br>${lesson_topic}`
-						if (prevSubjHtml == "" && prevTopHtml == "") {
-							newSubjHtml = `<span class='line-span'><b>${subject.toUpperCase()}</b></span>`
-							newTopHtml = `<span class='line-span'>${lesson_topic}</span>`
-						} else {
-							newSubjHtml = `${prevSubjHtml}<br><br><span class='line-span'><b>${subject.toUpperCase()}</b></span>`
-							newTopHtml = `${prevTopHtml}<br><br><span class='line-span'>${lesson_topic}</span>`
-						}
-						tdSubjects.eq(i).html(newSubjHtml)
-						tdTopics.eq(i).html(newTopHtml)
-					})
-					j++
-				}
+			console.log(i, j)
+			while (topics[j]["data"] == row_date) {
+				let lesson_topic = topics[j]["argomento"]
+				sendRequest("GET", "php/getSubjectById.php", { "subjectId": topics[j]["materia"] }).catch(error).then(function (response) {
+					let subject = response["data"]["materia"]
+					let prevSubjHtml = tdSubjects.eq(i).html()
+					let prevTopHtml = tdTopics.eq(i).html()
+					let newSubjHtml = `${prevSubjHtml}<br><b>${subject}</b>`
+					let newTopHtml = `${prevTopHtml}<br>${lesson_topic}`
+					if (prevSubjHtml == "" && prevTopHtml == "") {
+						newSubjHtml = `<span class='line-span'><b>${subject.toUpperCase()}</b></span>`
+						newTopHtml = `<span class='line-span'>${lesson_topic}</span>`
+					} else {
+						newSubjHtml = `${prevSubjHtml}<br><br><span class='line-span'><b>${subject.toUpperCase()}</b></span>`
+						newTopHtml = `${prevTopHtml}<br><br><span class='line-span'>${lesson_topic}</span>`
+					}
+					tdSubjects.eq(i).html(newSubjHtml)
+					tdTopics.eq(i).html(newTopHtml)
+				})
+				j++
 			}
 		}
+		/*let topicIndex = 0
+		let rowTable = 0
+		for (let i = 0; i < topics.length; i++) {
+			let row_date = trTopics.eq(rowTable).prop("id")
+			console.log(topics[topicIndex])
+			console.log(row_date, topics[topicIndex]["data"], rowTable, topicIndex)
+			while (topics[topicIndex]["data"] == row_date) {
+				let lesson_topic = topics[topicIndex]["argomento"]
+				sendRequest("GET", "php/getSubjectById.php", { "subjectId": topics[topicIndex]["materia"] }).catch(error).then(function (subject) {
+					subject = subject["data"]["materia"]
+
+					let prevSubjHtml = tdSubjects.eq(rowTable).html()
+					let prevTopHtml = tdTopics.eq(rowTable).html()
+					let newSubjHtml = `${prevSubjHtml}<br><b>${subject}</b>`
+					let newTopHtml = `${prevTopHtml}<br>${lesson_topic}`
+
+					if (prevSubjHtml == "" && prevTopHtml == "") {
+						newSubjHtml = `<span class='line-span'><b>${subject.toUpperCase()}</b></span>`
+						newTopHtml = `<span class='line-span'>${lesson_topic}</span>`
+					} else {
+						newSubjHtml = `${prevSubjHtml}<br><br><span class='line-span'><b>${subject.toUpperCase()}</b></span>`
+						newTopHtml = `${prevTopHtml}<br><br><span class='line-span'>${lesson_topic}</span>`
+					}
+
+					tdSubjects.eq(rowTable).html(newSubjHtml)
+					tdTopics.eq(rowTable).html(newTopHtml)
+					console.log("ciao")
+				})
+				topicIndex++
+			}
+			rowTable = trTopics.filter(`[id="${topics[topicIndex]["data"]}"]`).index()
+		}*/
 		//table.DataTable()
 	})
 }

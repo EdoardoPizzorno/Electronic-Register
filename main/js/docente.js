@@ -62,7 +62,6 @@ window.onload = function () {
                         let aux1 = aux[1].split("]")
                         let codes = aux1[0].split(", ")
                         // Now I have all subjects' ids --> get subjects names
-                        dropdownSubjects.empty()
                         for (let subjectId of codes) {
                             sendRequest("GET", "php/getSubjectById.php", { subjectId }).catch(error).then(function (subject) {
                                 $("<a>").addClass("dropdown-item").appendTo(dropdownSubjects).text(subject["data"]["materia"]).on("click", function () {

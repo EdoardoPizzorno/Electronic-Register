@@ -210,8 +210,6 @@ div.student-absences table.table tbody tr {
 
 .chart {
   margin-left: 20%;
-  width: 800px !important;
-  height: 400px !important;
 }
 
 /* STUDENTS INTERVIEWS */
@@ -288,8 +286,6 @@ th {
 .dropdown-menu.classes a.dropdown-item {
   user-select: none;
 }
-
-
 
 /* MEDIA QUERY */
 

@@ -11,7 +11,7 @@ if (isset($_GET["class"])) {
 }
 
 $connection = openConnection("registro");
-$sql = "SELECT data,materia,argomento FROM argomenti WHERE classe='$class'";
+$sql = "SELECT data,materia,argomento FROM argomenti WHERE classe='$class' ORDER BY data ASC";
 $data = eseguiQuery($connection, $sql);
 
 http_response_code(200);

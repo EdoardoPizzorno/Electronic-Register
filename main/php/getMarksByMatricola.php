@@ -11,7 +11,7 @@ if (isset($_GET["user"])) {
 }
 
 $connection = openConnection("registro");
-$sql = "SELECT materia,data,voto,docente from voti WHERE matricola='$user'";
+$sql = "SELECT materia,data,voto,docente from voti WHERE matricola='$user' ORDER BY data DESC";
 $data = eseguiQuery($connection, $sql);
 
 http_response_code(200);
