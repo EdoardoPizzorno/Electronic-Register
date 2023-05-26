@@ -47,8 +47,9 @@ window.onload = function () {
                 classes.push(_class["nome"])
                 $("<a>").addClass("dropdown-item").text(_class["nome"]).appendTo($("div.dropdown-menu.classes").eq(0)).on("click", function () {
                     let current_class = $(this).text()
-                    // Change button text
+                    // Change buttons text
                     $("a.dropdown-toggle.class").eq(0).text(current_class)
+                    $("#currentClass").text(current_class)
                     // Get all subjects of the current class
                     let btnSubject = $("a.dropdown-toggle.subject").eq(0)
                     btnSubject.show() // Enable subjects' button

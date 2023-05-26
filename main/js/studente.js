@@ -102,93 +102,19 @@ window.onload = function () {
                     $("<p>").appendTo(li).text(message["testo"]) // Message text
 
                     let time = message["orario"].split(".")[0]
-                    $("<p>").appendTo(li).addClass("text-muted").css("float", "right").text(`${time}`) // Message date
+                    $("<p>").appendTo(li).addClass("text-muted").css("font-size", "10pt").text(`${time}`) // Message date
                     $("<hr>").appendTo(messagesList)
                 }
             }
         })
     }
 
-    /*function loadRegister(user_data) {
-        let table = $("div.student-register table.table").eq(0)
-        sendRequest("GET", "php/getRegister.php", { "class": user_data["classe"] }).catch(error).then(function (response) {
-            let topics = response["data"]
-            let days = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica"]
-            let month_days = [31, 30, 31, 30]
-            let calendar_days = []
-            let days_index = 0
-            let week_days = []
-            // Start at 01/03/23
-            for (let i = 0; i < month_days.length; i++) { // months' names
-                for (let j = 5; j < month_days[i]; j++) { // days number
-                    let date = ""
-                    if (i < 9 && j < 9) {
-                        date = `2023-0${(i + 3)}-0${j + 1}`
-                    } else if (i < 9 && j >= 9) {
-                        date = `2023-0${(i + 3)}-${j + 1}`
-                    } else if (i > 9 && j < 9)
-                        date = `2023-${(i + 3)}-0${j + 1}`
-                    else date = `2023-${(i + 3)}-${j + 1}`
-                    calendar_days.push(date)
-                    week_days.push(days[days_index])
-                    if (days_index == 6)
-                        days_index = 0
-                    else days_index++
-                }
-            }
-            // Load table
-            days_index = 0
-            for (let i = 0; i < calendar_days.length; i++) {
-                let tr = $("<tr>").appendTo(table.children("tbody")).prop("id", calendar_days[i]).addClass("tr-topics") // Row
-                $("<td>").appendTo(tr).addClass("regDate").html(`${calendar_days[i]}<br><span>${week_days[days_index]}</span>`) // Date
-                $("<td>").appendTo(tr).addClass("td-subject").html("") // Subject
-                $("<td>").appendTo(tr).addClass("td-topic").html("") // Topic
-                $("<td>").appendTo(tr) // Notes
-                $("<td>").appendTo(tr) // Absences
-                // Manage days' index
-                if (days_index == 6)
-                    days_index = 0
-                else days_index++
-            }
-            // Load lessons on the register
-            let trTopics = $(".tr-topics")
-            let tdSubjects = $(".td-subject")
-            let tdTopics = $(".td-topic")
-
-            let j = 0
-            for (let i = 0; i < topics.length; i++) {
-                let row_date = trTopics.eq(i).prop("id")
-                if (j < topics.length - 3) {
-                    while (topics[j]["data"] == row_date) {
-                        let lesson_topic = topics[j]["argomento"]
-                        sendRequest("GET", "php/getSubjectById.php", { "subjectId": topics[j]["materia"] }).catch(error).then(function (response) {
-                            let subject = response["data"]["materia"]
-                            let prevSubjHtml = tdSubjects.eq(i).html()
-                            let prevTopHtml = tdTopics.eq(i).html()
-                            let newSubjHtml = `${prevSubjHtml}<br><b>${subject}</b>`
-                            let newTopHtml = `${prevTopHtml}<br>${lesson_topic}`
-                            if (prevSubjHtml == "" && prevTopHtml == "") {
-                                newSubjHtml = `<span class='line-span'><b>${subject.toUpperCase()}</b></span>`
-                                newTopHtml = `<span class='line-span'>${lesson_topic}</span>`
-                            } else {
-                                newSubjHtml = `${prevSubjHtml}<br><br><span class='line-span'><b>${subject.toUpperCase()}</b></span>`
-                                newTopHtml = `${prevTopHtml}<br><br><span class='line-span'>${lesson_topic}</span>`
-                            }
-                            tdSubjects.eq(i).html(newSubjHtml)
-                            tdTopics.eq(i).html(newTopHtml)
-                        })
-                        j++
-                    }
-                }
-            }
-            //table.DataTable()
-        })
-    }*/
-
     function loadMarks(user_data) {
         let table = $("div.student-marks table.table").eq(0)
         sendRequest("GET", "php/getMarksByMatricola.php", { "user": user_data["matricola"] }).catch(error).then(function (marks) {
             marks = marks["data"]
+            let sum = 0
+
             if (marks.length == 0) {
                 $("<span>").appendTo(table.children("tbody")).text("Non ci sono voti da visualizzare").addClass("text-muted")
             } else {
@@ -198,6 +124,7 @@ window.onload = function () {
                     // Load arrays
                     all_dates.push(mark["data"])
                     all_marks.push(mark["voto"])
+                    sum += parseFloat(mark["voto"])
                     // Get subject by Id
                     sendRequest("GET", "php/getSubjectById.php", { "subjectId": mark["materia"] }).catch(error).then(function (subjects) {
                         let subject = subjects["data"]["materia"]
@@ -217,6 +144,8 @@ window.onload = function () {
                         })
                     })
                 }
+                let generalAverage = (sum / all_marks.length).toFixed(2)
+                $("div.student-marks h2").eq(0).html(`Voti <b style='color: ${generalAverage >= 6 ? "#69df69" : "red"}'>[${generalAverage}]</b>`)
                 let marksChartOptions = {
                     type: "line",
                     data: {
@@ -261,7 +190,7 @@ window.onload = function () {
         table.empty()
         sendRequest("GET", "php/getAbsences.php", { "user": user_data["matricola"] }).catch(error).then(function (response) {
             let absences = response["data"]
-            $(".student-absences h2").text(`Assenze: ${absences.length}`)
+            $(".student-absences h2").html(`Assenze: <b>${absences.length}</b>`)
             if (absences.length == 0) {
                 let tr = $("<tr>").appendTo(table)
                 $("<span>").appendTo(tr).text("Nessuna assenza registrata").addClass("text-muted")

@@ -123,7 +123,10 @@ function loadRegister(current_class, table, role = "0", current_subject = "") { 
 			$("<td>").appendTo(tr).addClass("td-subject").html("") // Subject
 			$("<td>").appendTo(tr).addClass("td-topic").html("") // Topic
 			if (role == "1") // That's a teacher
-				$("<td>").appendTo(tr).append($("<button>").addClass("btn btn-light").append($("<i>").addClass("bi bi-plus")).on("click", function () {
+				$("<td>").appendTo(tr).append($("<button>").addClass("btn btn-light").append($("<i>").addClass("bi bi-plus")).css({
+					"border": "1px solid black",
+					"margin-top": "30px"
+				}).on("click", function () {
 					// ADD TOPICS
 					Swal.fire({
 						"showCancelButton": true,

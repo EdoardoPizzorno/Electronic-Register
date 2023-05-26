@@ -2,6 +2,7 @@
   padding: 0;
   margin: 0;
   user-select: none !important;
+  font-family: Montserrat;
 }
 
 /* NAVBAR */
@@ -94,7 +95,8 @@ div.spec-section td {
 
 div.student-messages {
   text-align: center !important;
-  margin-left: 12%;
+  margin-left: 24%;
+  width: 800px;
 }
 
 div.col-md-4.mb-4 {
@@ -166,7 +168,8 @@ span.line-span {
 /* STUDENTS MARKS */
 
 .student-marks {
-  margin-left: 25% !important;
+  width: 1500px !important;
+  margin-left: 16% !important;
 }
 
 td.mark {
@@ -182,6 +185,11 @@ td.subject:hover {
 }
 
 /* STUDENTS ABSENCES */
+
+div.student-absences {
+  width: 1000px;
+  margin-left: 23%;
+}
 
 div.student-absences table.table tbody td,
 div.student-absences table.table tbody tr {
@@ -214,6 +222,10 @@ div.student-absences table.table tbody tr {
 
 /* STUDENTS INTERVIEWS */
 
+div.student-interviews-booking {
+  margin-left: 16%;
+}
+
 a.dropdown-toggle.teachers {
   border: 1px solid black;
   margin: 20px 0 20px 0;
@@ -221,18 +233,24 @@ a.dropdown-toggle.teachers {
 
 /* TEACHERS */
 
+#currentClass {
+  margin: 5px 20px 0 0;
+}
+
 div.teachers {
   margin: 10% 0 0 10%;
 }
 
 .dropdown-menu.classes {
   max-height: 300px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 a.dropdown-toggle.class,
 a.dropdown-toggle.subject {
   border: 1px solid black;
+  padding: 10px;
+  margin: 10px;
 }
 
 /* TEACHER MESSAGES */
@@ -261,7 +279,7 @@ span.msg_time {
 div.dropdown-menu.class-students {
   max-height: 300px;
   width: fit-content;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 /* TEACHER REGISTER */
