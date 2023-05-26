@@ -68,12 +68,15 @@ window.onload = function () {
                                 $("<a>").addClass("dropdown-item").appendTo(dropdownSubjects).text(subject["data"]["materia"]).on("click", function () {
                                     buttonsEnabled(true) // Enable homepage buttons
                                     btnSubject.text($(this).text())
+                                    // Load register
+                                    loadRegister(current_class, $("div.teacher-register table.table").eq(0), user_data["docente"], $(this).text())
                                 })
                             })
                         }
 
                         // LOAD MAIN SECTIONS
-                        loadReceivers(user_data, current_class) // Load all receivers
+                        loadRegister(current_class, $("div.teacher-register table.table").eq(0), user_data["docente"], $("a.dropdown-toggle.subject").eq(0).text())
+                        loadReceivers(user_data, current_class) // Load all receivers available
                         loadMessages(user_data, current_class)
                         loadClassList(user_data, current_class)
                         loadAverages(current_class)

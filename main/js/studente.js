@@ -60,7 +60,7 @@ window.onload = function () {
         navInterviews.on("click", function () { showCurrentSection(studentsInterviewsSection) })
 
         // LOAD MAIN SECTIONS
-        loadRegister(user_data)
+        loadRegister(user_data["classe"], $("div.student-register table.table").eq(0))
         loadMessages(user_data)
         loadMarks(user_data)
         loadAbsences(user_data)
@@ -109,9 +109,9 @@ window.onload = function () {
         })
     }
 
-    function loadRegister(user_data) {
+    /*function loadRegister(user_data) {
         let table = $("div.student-register table.table").eq(0)
-        sendRequest("GET", "php/register.php", { "class": user_data["classe"] }).catch(error).then(function (response) {
+        sendRequest("GET", "php/getRegister.php", { "class": user_data["classe"] }).catch(error).then(function (response) {
             let topics = response["data"]
             let days = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica"]
             let month_days = [31, 30, 31, 30]
@@ -183,7 +183,7 @@ window.onload = function () {
             }
             //table.DataTable()
         })
-    }
+    }*/
 
     function loadMarks(user_data) {
         let table = $("div.student-marks table.table").eq(0)
