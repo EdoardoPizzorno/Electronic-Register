@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 26, 2023 alle 13:15
+-- Creato il: Mag 26, 2023 alle 23:55
 -- Versione del server: 10.4.28-MariaDB
 -- Versione PHP: 8.2.4
 
@@ -55,7 +55,6 @@ INSERT INTO `argomenti` (`id`, `classe`, `data`, `materia`, `argomento`) VALUES
 (13, '1B INF', '2023-03-09', 1, 'Interrogazione per recupero insufficienza del primo quadrimestre. '),
 (14, '1B INF', '2023-03-09', 13, 'verifica scritta di chimica teorica..'),
 (15, '1B INF', '2023-03-10', 4, 'Espressioni con polinomi Problemi risolvibili con polinomi'),
-(16, '1B INF', '2023-03-10', 12, 'Interrogazione'),
 (17, '1B INF', '2023-03-10', 1, 'Interrogazione per il recupero dell\'insufficienza del primo quadrimestre. '),
 (18, '1B INF', '2023-03-10', 2, 'La prima fase della guerra del Peloponneso. '),
 (19, '1B INF', '2023-03-10', 12, 'Le carrucole. Il baricentro e l’equilibrio '),
@@ -69,7 +68,6 @@ INSERT INTO `argomenti` (`id`, `classe`, `data`, `materia`, `argomento`) VALUES
 (27, '1B INF', '2023-03-15', 3, 'review units 5-6 page 82-83 as formative assessment'),
 (28, '1B INF', '2023-03-15', 4, 'Espressioni con polinomi Problemi risolvibili con polinomi'),
 (29, '1B INF', '2023-03-16', 1, 'La narrativa di introspezione; \"Anne si presenta\" dal \"Diario\" di Anne Frank. '),
-(30, '1B INF', '2023-03-16', 12, 'Esp 14: le carrucole.'),
 (31, '1B INF', '2023-03-16', 13, 'Schemi a blocchi utili alla nomenclatura dei composti chimici - Nomenclatura IUPAC dei sali binari - Nomenclatura IUPAC degli Idruri metallici.'),
 (32, '1B INF', '2023-03-16', 4, 'Espressioni con polinomi Problemi risolvibili con polinomi'),
 (33, '1B INF', '2023-03-17', 1, 'La narrativa di formazione. \"Una rondine nel Tevere\" da \"Ragazzi di vita\" di Pier Paolo Pasolini.'),
@@ -83,7 +81,6 @@ INSERT INTO `argomenti` (`id`, `classe`, `data`, `materia`, `argomento`) VALUES
 (41, '1B INF', '2023-03-21', 5, 'Valutazione percorso di ginnastica artistica.'),
 (42, '1B INF', '2023-03-21', 1, 'Indicazioni teoriche per la stesura di un riassunto.'),
 (43, '1B INF', '2023-03-21', 2, 'Introduzione ai Macedoni; Filippo II.'),
-(44, '1B INF', '2023-03-22', 4, 'Espressioni con polinomi Problemi risolvibili con polinomi'),
 (45, '1B INF', '2023-03-23', 1, 'Interrogazione: '),
 (46, '1B INF', '2023-03-23', 12, 'La guidovia a cuscino d’aria'),
 (47, '1B INF', '2023-03-23', 13, 'Consegna della quarta verifica scritta e risposte ai dubbi della classe.'),
@@ -144,13 +141,23 @@ INSERT INTO `argomenti` (`id`, `classe`, `data`, `materia`, `argomento`) VALUES
 (102, '1A INF', '2023-03-06', 5, 'Test di Cooper'),
 (103, '1A INF', '2023-03-06', 1, 'Interrogazioni'),
 (104, '2C INF', '2023-03-06', 1, 'Interrogazioni'),
-(105, '1A INF', '2023-03-06', 14, 'Tavola4'),
 (106, '1A INF', '2023-03-06', 3, 'Listening'),
 (107, '5D INF', '2023-03-06', 21, 'C#'),
 (108, '5E INF', '2023-03-06', 21, 'Car Shop'),
 (109, '4B INF', '2023-05-26', 2, 'Interrogazione storia'),
 (110, '1D INF', '2023-03-08', 4, 'Verifica su funzioni'),
-(112, '3A INF', '2023-03-10', 4, 'Verifica');
+(112, '3A INF', '2023-03-10', 4, 'Verifica'),
+(113, '1A INF', '2023-03-07', 1, 'Ugo Foscolo'),
+(114, '1A INF', '2023-03-12', 1, 'Giacomo Leopardi'),
+(115, '2C INF', '2023-03-07', 1, 'Promessi sposi'),
+(116, '2C INF', '2023-03-11', 1, 'Interrogazioni sui Promessi sposi'),
+(117, '2C INF', '2023-03-07', 6, 'Sostituzione'),
+(118, '1A INF', '2023-03-09', 1, 'Spiegazione \"I sepolcri\"'),
+(119, '1A INF', '2023-03-12', 12, 'I vettori'),
+(120, '1A INF', '2023-03-15', 14, 'Tavola 5'),
+(121, '1A INF', '2023-03-13', 5, 'Baseball'),
+(122, '1A INF', '2023-03-07', 13, 'CO2'),
+(123, '1A INF', '2023-03-17', 3, 'Writing');
 
 -- --------------------------------------------------------
 
@@ -212,7 +219,8 @@ INSERT INTO `assenze` (`id`, `matricola`, `data`, `motivazione`, `firma`) VALUES
 (40, 1004, '2023-04-07', 'Salute', NULL),
 (41, 1005, '2023-04-09', 'Salute', NULL),
 (42, 1005, '2023-04-25', 'Salute', NULL),
-(44, 1001, '2023-05-24', NULL, NULL);
+(44, 1001, '2023-05-24', NULL, NULL),
+(45, 1004, '2023-05-26', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -372,10 +380,11 @@ INSERT INTO `messaggi` (`id`, `oggetto`, `testo`, `orario`, `mittente`, `destina
 (73, 'Nota', 'L\'alunno ha bestemmiato durante la lezione', '2023-05-21 22:32:57.424542', 'mana', 'lazza', 0),
 (74, 'Gita', 'Domani gita ', '2023-05-21 22:34:26.441594', 'mana', '5E INF', 0),
 (77, 'Verifica', 'La verifica di recupero la svolgerai domani', '2023-05-21 22:38:30.705746', 'mana', 'rossi-1001', 1),
-(78, 'Consegna progetto', 'Il progetto sarà da consegnare entro il 30/05', '2023-05-21 22:49:06.774968', 'mana', '1B INF', 0),
+(78, 'Consegna progetto', 'Il progetto sarà da consegnare entro il 30/05', '2023-05-21 22:49:06.774968', 'mana', '1B INF', 1),
 (80, 'Consegna progetto', 'Il progetto sarà da consegnare entro il 30/05', '2023-05-21 22:53:42.232677', 'mana', '4B INF', 1),
 (81, 'Gita', 'Prossima settimana andremo in gita a Roma', '2023-05-22 14:07:21.295769', 'servetti', 'sasso-1008', 0),
-(84, 'Palestra', 'Domani saremo in comunale', '2023-05-23 22:08:25.443525', 'miglio', 'marra-1009', 0);
+(84, 'Palestra', 'Domani saremo in comunale', '2023-05-23 22:08:25.443525', 'miglio', 'marra-1009', 0),
+(85, 'Prove di Matematica', 'Vi comunico che giovedì 7/05 faremo le prove comuni di matematica', '2023-05-26 23:52:55.867088', 'servetti', '4B INF', 0);
 
 -- --------------------------------------------------------
 
@@ -432,7 +441,8 @@ INSERT INTO `studenti` (`matricola`, `cognome`, `nome`, `user`, `pass`, `classe`
 (1079, 'barbero', 'alberto', 'barbero', '5f4dcc3b5aa765d61d8327deb882cf99', '', 'Mondovì', 'indirizzo', 'user.jpg', 1),
 (1080, 'miglio', 'sonia', 'miglio', '5f4dcc3b5aa765d61d8327deb882cf99', '', 'Fossano', 'Via Roma, 13', 'user.jpg', 1),
 (1081, 'garzino', 'davide', 'garzi05', '5f4dcc3b5aa765d61d8327deb882cf99', '5E INF', 'Paesana', 'indirizzo', 'user.jpg', 0),
-(1083, 'vaschetto', 'francesco', 'vaschetto', '5f4dcc3b5aa765d61d8327deb882cf99', '', 'Savigliano', 'indirizzo', 'user.jpg', 1);
+(1083, 'vaschetto', 'francesco', 'vaschetto', '5f4dcc3b5aa765d61d8327deb882cf99', '', 'Savigliano', 'indirizzo', 'user.jpg', 1),
+(1084, 'ponzone', 'luca', 'ponzone', '5f4dcc3b5aa765d61d8327deb882cf99', '1A INF', 'Sommariva Bosco', 'indirizzo', 'user.jpg', 0);
 
 -- --------------------------------------------------------
 
@@ -615,7 +625,11 @@ INSERT INTO `voti` (`id`, `matricola`, `data`, `materia`, `voto`, `docente`) VAL
 (168, 1022, '2023-05-24', 4, 4, 1023),
 (169, 1081, '2023-05-24', 23, 9, 1023),
 (170, 1022, '2023-05-24', 3, 9.5, 1023),
-(171, 1081, '2023-05-24', 5, 6, 1023);
+(171, 1081, '2023-05-24', 5, 6, 1023),
+(172, 1022, '2023-05-26', 1, 4, 1026),
+(173, 1022, '2023-05-26', 1, 5, 1026),
+(174, 1022, '2023-05-26', 1, 3.5, 1026),
+(175, 1012, '2023-05-26', 3, 3, 1078);
 
 --
 -- Indici per le tabelle scaricate
@@ -678,13 +692,13 @@ ALTER TABLE `voti`
 -- AUTO_INCREMENT per la tabella `argomenti`
 --
 ALTER TABLE `argomenti`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
 
 --
 -- AUTO_INCREMENT per la tabella `assenze`
 --
 ALTER TABLE `assenze`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT per la tabella `classi`
@@ -708,19 +722,19 @@ ALTER TABLE `materie`
 -- AUTO_INCREMENT per la tabella `messaggi`
 --
 ALTER TABLE `messaggi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- AUTO_INCREMENT per la tabella `studenti`
 --
 ALTER TABLE `studenti`
-  MODIFY `matricola` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1084;
+  MODIFY `matricola` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1085;
 
 --
 -- AUTO_INCREMENT per la tabella `voti`
 --
 ALTER TABLE `voti`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=172;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=176;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
