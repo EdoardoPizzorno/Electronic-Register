@@ -97,6 +97,13 @@ div.spec-section td {
 
 /* STUDENTS MESSAGES */
 
+#messagesHome {
+  position: absolute;
+  margin-left: -300px;
+  padding: 5px;
+  font-size: 20pt;
+}
+
 div.student-messages {
   text-align: center !important;
   margin-left: 24%;
@@ -178,14 +185,6 @@ span.line-span {
 
 td.mark {
   font-weight: bold;
-}
-
-td.subject {
-  text-decoration: underline;
-}
-
-td.subject:hover {
-  cursor: pointer;
 }
 
 /* STUDENTS ABSENCES */
