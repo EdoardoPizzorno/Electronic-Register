@@ -45,12 +45,19 @@ window.onload = function () {
         let txtConfirmPassword = $("#txtConfermaPassword")
 
         if (txtName.val().length > 3) {
+            ClearFieldError(txtName)
             if (txtSurname.val().length > 3) {
+                ClearFieldError(txtSurname)
                 if (txtUsername.val().length > 5) {
+                    ClearFieldError(txtUsername)
                     if (txtResidence.val().length > 2) {
+                        ClearFieldError(txtResidence)
                         if (txtAddress.val().length > 5) {
+                            ClearFieldError(txtAddress)
                             if (txtPassword.val().length > 7) {
+                                ClearFieldError(txtPassword)
                                 if (txtPassword.val() == txtConfirmPassword.val()) {
+                                    ClearFieldError(txtConfirmPassword)
                                     let password = CryptoJS.MD5(txtPassword.val()).toString() // Crypt the password
                                     if (role == 0) {
                                         sendRequest("POST", "php/insertUser.php", {
