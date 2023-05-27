@@ -43,12 +43,19 @@ function randomNumber(a, b) {
 	return Math.floor((b - a + 1) * Math.random()) + a;
 }
 
+//#region MUTUAL FUNCTIONS
+
 function NavbarManagement() {
 	let aProfile = $(".dropdown-item.profile").eq(0)
+	let aChangePassword = $(".dropdown-item.changePassword").eq(0)
 	let aExit = $(".dropdown-item.exit").eq(0)
 	let personalInformations = $("div.informations").eq(0)
 
 	aProfile.on("click", function () { showCurrentSection(personalInformations) })
+
+	aChangePassword.on("click", function () {
+		window.location.href = "changePassword.html"
+	})
 
 	aExit.on("click", function () {
 		Swal.fire({
@@ -90,8 +97,6 @@ function NavbarManagement() {
 	})
 }
 
-//#region MUTUAL FUNCTIONS
-
 function showCurrentSection(_section) {
 	let specific_sections = $(".spec-section")
 	// Hide all sections
@@ -107,6 +112,13 @@ function FieldError(_param, text = "Parametro troppo corto") {
 	_param.prev().children("i").addClass("red-icon")
 	lblError.children("span").text(text)
 	lblError.show()
+}
+
+function ClearFieldError(_param) {
+	let lblError = $("#lblError")
+	_param.removeClass("is-invalid")
+	_param.prev().children("i").removeClass("red-icon")
+	lblError.hide()
 }
 
 function loadPersonalInformations(user_data) {

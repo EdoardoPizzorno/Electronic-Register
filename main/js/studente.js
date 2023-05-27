@@ -27,7 +27,7 @@ window.onload = function () {
     let subjectDetailsChart = ""
     let marksChart = ""
 
-    sendRequest("GET", "php/user.php").catch(error).then(function (response) {
+    sendRequest("GET", "php/getUser.php").catch(error).then(function (response) {
         let user_data = response["data"]
         console.log(user_data)
         //ClearErrors()
@@ -178,6 +178,8 @@ window.onload = function () {
                         }
                     }
                 }
+                if (marksChart)
+                    marksChart.destroy()
                 marksChart = new Chart($("canvas#marksChart"), marksChartOptions)
             }
             //table.DataTable()

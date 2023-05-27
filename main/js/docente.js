@@ -26,7 +26,7 @@ window.onload = function () {
 
     $(".navbar-brand").eq(0).on("click", function () { showCurrentSection(teachersDefaultView) })
 
-    sendRequest("GET", "php/user.php").catch(error).then(function (response) {
+    sendRequest("GET", "php/getUser.php").catch(error).then(function (response) {
         let user_data = response["data"]
         console.log(user_data)
         //ClearErrors()

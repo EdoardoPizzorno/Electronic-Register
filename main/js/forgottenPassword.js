@@ -22,7 +22,9 @@ window.onload = function () {
                         Swal.fire({
                             "title": "Email inviata correttamente",
                             "text": `Controlla l'email "${receiver}"`,
-                            "icon": "success"
+                            "icon": "success",
+                            "showConfirmButton": false,
+                            "timer": 1000
                         })
                         // Turn to the login page after 2 seconds
                         setInterval(function () { window.location.href = "login.html" }, 1000)

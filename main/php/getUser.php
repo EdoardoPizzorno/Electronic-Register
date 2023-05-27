@@ -8,7 +8,7 @@ if (isset($_SESSION["user"]))
     $user = $_SESSION["user"];
 else {
     http_response_code(403);
-    die("Manca parametro Utente");
+    die("Manca parametro utente");
 }
 
 // Query

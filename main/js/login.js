@@ -49,7 +49,7 @@ $(document).ready(function () {
                 else
                     error(err)
             }).then(function () {
-                sendRequest("GET", "php/user.php").catch(error).then(function (response) {
+                sendRequest("GET", "php/getUser.php").catch(error).then(function (response) {
                     if (response["data"]["docente"] == 0) // student
                         window.location.href = "studente.html"
                     else window.location.href = "docente.html" // teacher
