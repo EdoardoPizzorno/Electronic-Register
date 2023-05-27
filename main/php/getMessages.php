@@ -18,7 +18,7 @@ if(isset($_GET["class"])) {
 }
 
 $connection = openConnection("registro");
-$sql = "SELECT id,oggetto,testo,orario,mittente,visualizzato from messaggi WHERE destinatario='$user' OR destinatario='$class' ORDER BY orario DESC";
+$sql = "SELECT * from messaggi WHERE destinatario='$user' OR destinatario='$class' ORDER BY orario DESC";
 $data = eseguiQuery($connection, $sql);
 
 http_response_code(200);

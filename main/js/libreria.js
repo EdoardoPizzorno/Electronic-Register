@@ -53,11 +53,11 @@ function NavbarManagement() {
 	aExit.on("click", function () {
 		Swal.fire({
 			title: "Sei sicuro di voler uscire?",
-			icon: "warning",
+			icon: "question",
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
-			confirmButtonText: "SI",
+			confirmButtonText: "Conferma",
 			cancelButtonText: "Annulla"
 		}).then((result) => {
 			if (result.isConfirmed) {
@@ -180,7 +180,7 @@ function loadRegister(current_class, table, role = "0", current_subject = "") { 
 		let j = 0
 		for (let i = 0; i < topics.length; i++) {
 			let row_date = trTopics.eq(i).prop("id")
-			console.log(i, j)
+			//console.log(i, j)
 			while (topics[j]["data"] == row_date) {
 				let lesson_topic = topics[j]["argomento"]
 				sendRequest("GET", "php/getSubjectById.php", { "subjectId": topics[j]["materia"] }).catch(error).then(function (response) {

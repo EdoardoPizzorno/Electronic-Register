@@ -80,6 +80,10 @@ window.onload = function () {
             } else {
                 for (let message of messages) {
                     let li = $("<li>").appendTo(messagesList).addClass("list-group-item")
+                    $("<span>").appendTo(li).html(`Inviato a: <i>${message["destinatario"]}</i>&nbsp;${message["destinatario"] == user_data["user"] ? "(Tu)" : "(Classe)"}`).css({
+                        "position": "absolute",
+                        "margin": "8px 0 0 -330px",
+                    })
                     // Bell button
                     if (parseInt(message["visualizzato"]) == 0) {
                         $("<button>").css({
@@ -149,9 +153,9 @@ window.onload = function () {
                 let marksChartOptions = {
                     type: "line",
                     data: {
-                        labels: all_dates,
+                        labels: all_dates.reverse(),
                         datasets: [{
-                            data: all_marks,
+                            data: all_marks.reverse(),
                             backgroundColor: "black",
                             borderColor: "black",
                         }]
