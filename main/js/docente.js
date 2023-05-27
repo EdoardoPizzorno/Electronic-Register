@@ -41,12 +41,12 @@ window.onload = function () {
         // Load interviews (it doesn't need a specific class)
         loadInterviews(user_data)
         // Get all classes
-        sendRequest("GET", "php/classes.php").catch(error).then(function (all_classes) {
+        sendRequest("GET", "php/getClasses.php").catch(error).then(function (all_classes) {
             let classes = []
             for (let _class of all_classes["data"]) {
                 classes.push(_class["nome"])
-                $("<a>").addClass("dropdown-item").text(_class["nome"]).appendTo($("div.dropdown-menu.classes").eq(0)).on("click", function () {
-                    let current_class = $(this).text()
+                $("<a>").addClass("dropdown-item").val(_class["nome"]).html(`${_class["nome"]} <i><b>(${_class["numStudents"]})</b></i>`).appendTo($("div.dropdown-menu.classes").eq(0)).on("click", function () {
+                    let current_class = $(this).val()
                     // Change buttons text
                     $("a.dropdown-toggle.class").eq(0).text(current_class)
                     $("#currentClass").text(current_class)

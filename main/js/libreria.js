@@ -52,7 +52,7 @@ function NavbarManagement() {
 
 	aExit.on("click", function () {
 		Swal.fire({
-			title: "Sei sicuro di voler uscire?",
+			title: "Sei sicuro/a di voler uscire?",
 			icon: "question",
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
