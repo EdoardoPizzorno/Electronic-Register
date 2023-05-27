@@ -58,19 +58,20 @@ window.onload = function () {
                         subjectsIds = subjectsIds["data"]
                         // Manage homepage buttons
                         ManageTeachersButtons()
+                        buttonsEnabled(true) // Enable homepage buttons
                         // Manage subjects dropdown list
-                        let dropdownSubjects = $("div.dropdown-menu.subjects").eq(0)
+                        let dropdownSubjects = $("div.dropdown-menu.subjects").eq(0).empty()
                         let aux = subjectsIds["materie"].split("[")
                         let aux1 = aux[1].split("]")
                         let codes = aux1[0].split(", ")
                         // Now I have all subjects' ids --> get subjects names
                         for (let subjectId of codes) {
                             sendRequest("GET", "php/getSubjectById.php", { subjectId }).catch(error).then(function (subject) {
-                                $("<a>").addClass("dropdown-item").appendTo(dropdownSubjects).text(subject["data"]["materia"]).on("click", function () {
-                                    buttonsEnabled(true) // Enable homepage buttons
+                                $("<a>").val(subjectId).addClass("dropdown-item").appendTo(dropdownSubjects).text(subject["data"]["materia"]).on("click", function () {
                                     btnSubject.text($(this).text())
                                     // Load register
                                     loadRegister(current_class, $("div.teacher-register table.table").eq(0), user_data["docente"], $(this).text())
+                                    loadClassList(user_data, current_class, $(this).text())
                                 })
                             })
                         }
@@ -79,7 +80,7 @@ window.onload = function () {
                         loadRegister(current_class, $("div.teacher-register table.table").eq(0), user_data["docente"], $("a.dropdown-toggle.subject").eq(0).text())
                         loadReceivers(user_data, current_class) // Load all receivers available
                         loadMessages(user_data, current_class)
-                        loadClassList(user_data, current_class)
+                        loadClassList(user_data, current_class, $("a.dropdown-toggle.subject").eq(0).text())
                         loadAverages(current_class)
                     })
                 })
@@ -159,7 +160,7 @@ window.onload = function () {
         })
     }
 
-    function loadClassList(user_data, current_class) {
+    function loadClassList(user_data, current_class, subjectName) {
         let table = $("div.teacher-list table.table tbody").eq(0)
         table.empty()
         sendRequest("GET", "php/getStudentsByClass.php", { "class": current_class }).catch(error).then(function (students) {
@@ -173,99 +174,149 @@ window.onload = function () {
                     $("<td>").appendTo(tr).text(student["nome"].toUpperCase())
                     $("<td>").appendTo(tr).text(student["cognome"].toUpperCase())
                     // Marks
-                    $("<td>").appendTo(tr).append($("<button>").addClass("btn btn-light").append($("<i>").addClass("bi bi-plus")).on("click", function () {
-                        // ADD MARKS
-                        Swal.fire({
-                            "showCancelButton": true,
-                            "html": `
-                            <div>
-                                <div>
-                                    <img src="assets/images/user.jpg" alt="Profilo studente">
-                                </div>
-                                <div style="text-align: center !important">
-                                    <div class="form-group">
-                                        <label for="name">Nome:</label>
-                                        <input class="form-control" type="text" id="name" name="name" value=${student["nome"].toUpperCase()} readonly>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="surname">Cognome:</label>
-                                        <input class="form-control" type="text" id="surname" name="surname" value=${student["cognome"].toUpperCase()} readonly>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="username">Username:</label>
-                                        <input class="form-control" type="text" id="username" name="username" value=${student["user"]} readonly>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="grade">Voto:</label>
-                                        <input class="form-control" type="number" id="grade" name="grade" min="0" max="10" step="0.5" required>
-                                    </div>
-                                </div>
-                            </div>`
-                        }).then(function (value) {
-                            if (value["isConfirmed"]) { // OK button
-                                let mark = $("#grade").val()
-                                if (mark >= 1 && mark <= 10) {
-                                    sendRequest("GET", "php/getSubjectByName.php", { "subjectName": $("a.dropdown-toggle.subject").eq(0).text() }).catch(error).then(function (subject) {
-                                        sendRequest("POST", "php/insertMark.php", { "matricola": student["matricola"], "subject": subject["data"]["id"], mark, "teacher": user_data["matricola"] }).catch(error).then(function () {
+                    sendRequest("GET", "php/getSubjectByName.php", { subjectName }).catch(error).then(function (subjectId) {
+                        subjectId = subjectId["data"]["id"]
+                        sendRequest("GET", "php/getMarksBySubjectAndMatricola.php", { "user": student["matricola"], subjectId }).catch(error).then(function (marks) {
+                            let td = $("<td>").appendTo(tr)
+                            for (let mark of marks["data"]) {
+                                $("<button>").addClass(`btn btn-mark ${parseFloat(mark["voto"]) >= 6 ? "btn-success" : "btn-danger"}`).appendTo(td).text(mark["voto"]).on("click", function () {
+                                    // CHANGE MARK
+                                    Swal.fire({
+                                        "title": "Modifica voto",
+                                        "showCancelButton": true,
+                                        "html": `
+                                        <div>
+                                            <div>
+                                            <div style="text-align: center !important">
+                                                <div class="form-group">
+                                                    <label for="name">Nome:</label>
+                                                    <input class="form-control" type="text" id="name" name="name" value=${student["nome"].toUpperCase()} readonly>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="surname">Cognome:</label>
+                                                    <input class="form-control" type="text" id="surname" name="surname" value=${student["cognome"].toUpperCase()} readonly>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="grade">Voto:</label>
+                                                    <input class="form-control" type="number" id="grade" name="grade" min="0" max="10" step="0.5" value=${$(this).text()}>
+                                                </div>
+                                            </div>
+                                        </div>`
+                                    }).then(function (value) {
+                                        if (value["isConfirmed"]) {
+                                            let markClicked = $("#grade").val()
+                                            if (parseFloat(markClicked) != parseFloat(mark["voto"])) {
+                                                sendRequest("POST", "php/editMark.php", {"newMark": markClicked, "id": mark["id"]}).catch(error).then(function() {
+                                                    Swal.fire({
+                                                        "title": "Voto modificato correttamente!",
+                                                        "icon": "success",
+                                                        "showConfirmButton": false,
+                                                        "timer": 1000
+                                                    })
+                                                    loadClassList(user_data, current_class, subjectName)
+                                                })
+                                            }
+                                        }
+                                    })
+                                })
+                            }
+                            // Add marks
+                            $("<td>").appendTo(tr).append($("<button>").addClass("btn btn-light").append($("<i>").addClass("bi bi-plus")).on("click", function () {
+                                // ADD MARKS
+                                Swal.fire({
+                                    "showCancelButton": true,
+                                    "html": `
+                                        <div>
+                                            <div>
+                                                <img src="assets/images/user.jpg" alt="Profilo studente">
+                                            </div>
+                                            <div style="text-align: center !important">
+                                                <div class="form-group">
+                                                    <label for="name">Nome:</label>
+                                                    <input class="form-control" type="text" id="name" name="name" value=${student["nome"].toUpperCase()} readonly>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="surname">Cognome:</label>
+                                                    <input class="form-control" type="text" id="surname" name="surname" value=${student["cognome"].toUpperCase()} readonly>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="username">Username:</label>
+                                                    <input class="form-control" type="text" id="username" name="username" value=${student["user"]} readonly>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="grade">Voto:</label>
+                                                    <input class="form-control" type="number" id="grade" name="grade" min="0" max="10" step="0.5" required>
+                                                </div>
+                                            </div>
+                                        </div>`
+                                }).then(function (value) {
+                                    if (value["isConfirmed"]) { // OK button
+                                        let mark = $("#grade").val()
+                                        if (mark >= 1 && mark <= 10) {
+                                            sendRequest("GET", "php/getSubjectByName.php", { "subjectName": $("a.dropdown-toggle.subject").eq(0).text() }).catch(error).then(function (subject) {
+                                                sendRequest("POST", "php/insertMark.php", { "matricola": student["matricola"], "subject": subject["data"]["id"], mark, "teacher": user_data["matricola"] }).catch(error).then(function () {
+                                                    Swal.fire({
+                                                        "title": "Voto inserito correttamente!",
+                                                        "icon": "success",
+                                                        "showConfirmButton": false,
+                                                        "timer": 1000
+                                                    })
+                                                    loadAverages(current_class) // Update averages after inserting a new mark
+                                                    loadClassList(user_data, current_class, subjectName)
+                                                })
+                                            })
+                                        } else {
                                             Swal.fire({
-                                                "title": "Voto inserito correttamente!",
+                                                "title": "Inserisci un voto valido!",
+                                                "icon": "error"
+                                            })
+                                        }
+                                    }
+                                })
+                            }))
+                            // Absences
+                            $("<td>").appendTo(tr).append($("<button>").addClass("btn btn-light").append($("<i>").addClass("bi bi-plus")).on("click", function () {
+                                Swal.fire({
+                                    "showCancelButton": true,
+                                    "html": `
+                                <div>
+                                    <div>
+                                        <img src="assets/images/user.jpg" alt="Profilo studente">
+                                    </div>
+                                    <div style="text-align: center !important">
+                                        <div class="form-group">
+                                            <label for="name">Nome:</label>
+                                            <input class="form-control" type="text" id="name" name="name" value=${student["nome"].toUpperCase()} readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="surname">Cognome:</label>
+                                            <input class="form-control" type="text" id="surname" name="surname" value=${student["cognome"].toUpperCase()} readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="username">Username:</label>
+                                            <input class="form-control" type="text" id="username" name="username" value=${student["user"]} readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="username">Username:</label>
+                                            <input class="form-control" type="text" id="username" name="username" value=${(new Date()).toLocaleDateString()} readonly>
+                                        </div>
+                                    </div>
+                                </div>`
+                                }).then(function (value) {
+                                    if (value["isConfirmed"]) {
+                                        sendRequest("POST", "php/insertAbsence.php", { "student": student["matricola"] }).catch(error).then(function () {
+                                            Swal.fire({
+                                                "title": "Assenza inserita con successo!",
                                                 "icon": "success",
                                                 "showConfirmButton": false,
                                                 "timer": 1000
                                             })
-                                            loadAverages(current_class) // Update averages after inserting a new mark
                                         })
-                                    })
-                                } else {
-                                    Swal.fire({
-                                        "title": "Inserisci un voto valido!",
-                                        "icon": "error"
-                                    })
-                                }
-                            }
-                        })
-                    }))
-                    // Absences
-                    $("<td>").appendTo(tr).append($("<button>").addClass("btn btn-light").append($("<i>").addClass("bi bi-plus")).on("click", function () {
-                        Swal.fire({
-                            "showCancelButton": true,
-                            "html": `
-                            <div>
-                                <div>
-                                    <img src="assets/images/user.jpg" alt="Profilo studente">
-                                </div>
-                                <div style="text-align: center !important">
-                                    <div class="form-group">
-                                        <label for="name">Nome:</label>
-                                        <input class="form-control" type="text" id="name" name="name" value=${student["nome"].toUpperCase()} readonly>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="surname">Cognome:</label>
-                                        <input class="form-control" type="text" id="surname" name="surname" value=${student["cognome"].toUpperCase()} readonly>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="username">Username:</label>
-                                        <input class="form-control" type="text" id="username" name="username" value=${student["user"]} readonly>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="username">Username:</label>
-                                        <input class="form-control" type="text" id="username" name="username" value=${(new Date()).toLocaleDateString()} readonly>
-                                    </div>
-                                </div>
-                            </div>`
-                        }).then(function (value) {
-                            if (value["isConfirmed"]) {
-                                sendRequest("POST", "php/insertAbsence.php", { "student": student["matricola"] }).catch(error).then(function () {
-                                    Swal.fire({
-                                        "title": "Assenza inserita con successo!",
-                                        "icon": "success",
-                                        "showConfirmButton": false,
-                                        "timer": 1000
-                                    })
+                                    }
                                 })
-                            }
+                            }))
                         })
-                    }))
+                    })
                 }
             }
         })

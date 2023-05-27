@@ -22,9 +22,7 @@ window.onload = function () {
                 let txtOldPassword = $("#txtOldPassword")
                 let txtNewPassword = $("#txtPassword1")
                 let txtConfirmPassword = $("#txtPassword2")
-                console.log(txtOldPassword.val())
-                console.log(txtNewPassword.val())
-                console.log(txtConfirmPassword.val())
+                
                 let pass = CryptoJS.MD5(txtOldPassword.val()).toString()
                 if (pass == oldPassword) {
                     ClearFieldError(txtOldPassword)

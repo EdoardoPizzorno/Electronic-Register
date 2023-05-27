@@ -309,6 +309,12 @@ th {
   user-select: none;
 }
 
+/* TEACHER MARKS */
+
+button.btn-mark {
+  margin: 5px !important;
+}
+
 /* MEDIA QUERY */
 
 @media screen and (max-width: 992px) {

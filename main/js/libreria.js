@@ -219,7 +219,6 @@ function loadRegister(current_class, table, role = "0", current_subject = "") { 
 		let tdSubjects = $(".td-subject")
 		let tdTopics = $(".td-topic")
 
-		console.log(topics)
 		let j = 0
 		for (let i = 0; i < topics.length; i++) {
 			let row_date = trTopics.eq(i).prop("id")
