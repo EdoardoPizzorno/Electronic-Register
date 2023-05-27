@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 26, 2023 alle 23:55
+-- Creato il: Mag 27, 2023 alle 22:47
 -- Versione del server: 10.4.28-MariaDB
 -- Versione PHP: 8.2.4
 
@@ -157,7 +157,19 @@ INSERT INTO `argomenti` (`id`, `classe`, `data`, `materia`, `argomento`) VALUES
 (120, '1A INF', '2023-03-15', 14, 'Tavola 5'),
 (121, '1A INF', '2023-03-13', 5, 'Baseball'),
 (122, '1A INF', '2023-03-07', 13, 'CO2'),
-(123, '1A INF', '2023-03-17', 3, 'Writing');
+(123, '1A INF', '2023-03-17', 3, 'Writing'),
+(124, '4B INF', '2023-04-12', 2, 'Carlo Magno'),
+(125, '4B INF', '2023-05-26', 2, 'Interrogazione unità 2 e 3'),
+(126, '1A INF', '2023-03-15', 5, '1000m'),
+(127, '1C INF', '2023-03-06', 2, 'Spiegazione unità 4'),
+(128, '1C INF', '2023-03-17', 2, 'Interrogazione Carlo Magno'),
+(129, '1C INF', '2023-03-24', 2, 'Spiegazione unità 5'),
+(130, '1C INF', '2023-03-24', 3, 'Listening'),
+(131, '1C INF', '2023-03-31', 3, 'Oral test'),
+(132, '1C INF', '2023-05-26', 3, 'Verifica unità 7-8'),
+(133, '1B INF', '2023-06-09', 1, 'Interrogazione finale'),
+(134, '5E INF', '2023-03-30', 23, 'Verifica Geolocation'),
+(135, '5E INF', '2023-03-30', 22, 'Sostituzione: lavoro individuale');
 
 -- --------------------------------------------------------
 
@@ -193,7 +205,7 @@ INSERT INTO `assenze` (`id`, `matricola`, `data`, `motivazione`, `firma`) VALUES
 (13, 1005, '2023-02-11', 'Salute', NULL),
 (14, 1005, '2023-02-12', 'Salute', NULL),
 (15, 1001, '2023-03-10', 'Altro', NULL),
-(16, 1001, '2023-03-16', 'Famiglia', NULL),
+(16, 1001, '2023-03-16', 'Salute', NULL),
 (17, 1001, '2023-03-29', 'Famiglia', NULL),
 (18, 1002, '2023-03-17', 'Famiglia', NULL),
 (19, 1002, '2023-03-18', 'Salute', NULL),
@@ -293,7 +305,8 @@ INSERT INTO `colloqui` (`id`, `nome`, `cognome`, `matricola`, `ora`, `docente`) 
 (1024, 'mario', 'rossi', 1001, '2023-06-10 10:10:00.000000', 'debora servetti'),
 (1025, 'davide', 'garzino', 1081, '2023-06-15 16:00:00.000000', 'sonia miglio'),
 (1026, 'simone', 'verdi', 1006, '2023-05-25 12:40:00.000000', 'roberto mana'),
-(1028, 'mario', 'rossi', 1001, '2023-06-09 15:50:00.000000', 'francesco vaschetto');
+(1028, 'mario', 'rossi', 1001, '2023-06-09 15:50:00.000000', 'francesco vaschetto'),
+(1029, 'edoardo', 'pizzorno', 1022, '2023-05-29 12:50:00.000000', 'francesco vaschetto');
 
 -- --------------------------------------------------------
 
@@ -384,7 +397,10 @@ INSERT INTO `messaggi` (`id`, `oggetto`, `testo`, `orario`, `mittente`, `destina
 (80, 'Consegna progetto', 'Il progetto sarà da consegnare entro il 30/05', '2023-05-21 22:53:42.232677', 'mana', '4B INF', 1),
 (81, 'Gita', 'Prossima settimana andremo in gita a Roma', '2023-05-22 14:07:21.295769', 'servetti', 'sasso-1008', 0),
 (84, 'Palestra', 'Domani saremo in comunale', '2023-05-23 22:08:25.443525', 'miglio', 'marra-1009', 0),
-(85, 'Prove di Matematica', 'Vi comunico che giovedì 7/05 faremo le prove comuni di matematica', '2023-05-26 23:52:55.867088', 'servetti', '4B INF', 0);
+(85, 'Prove di Matematica', 'Vi comunico che giovedì 7/05 faremo le prove comuni di matematica', '2023-05-26 23:52:55.867088', 'servetti', '4B INF', 0),
+(86, 'Interrogazione di domani', 'Ti confermo che domani ti interrogherò sull\'ultimo argomento', '2023-05-27 10:14:50.387311', 'servetti', 'rossi-1001', 1),
+(87, 'Gita ', 'Prossima settimana saremo in gita alle carceri di Fossano', '2023-05-27 10:38:21.505499', 'boaglio', '4B INF', 0),
+(88, 'Palestra', 'Domani saremo al palazzetto', '2023-05-27 22:15:30.511593', 'docente', 'rossi-1001', 0);
 
 -- --------------------------------------------------------
 
@@ -411,7 +427,7 @@ CREATE TABLE `studenti` (
 
 INSERT INTO `studenti` (`matricola`, `cognome`, `nome`, `user`, `pass`, `classe`, `residenza`, `indrizzo`, `immagine`, `docente`) VALUES
 (1000, 'docente', 'docente', 'docente', '5f4dcc3b5aa765d61d8327deb882cf99', '', 'Fossano', 'Via Roma, 13', 'user.jpg', 1),
-(1001, 'rossi', 'mario', 'rossi-1001', '5f4dcc3b5aa765d61d8327deb882cf99', '1B INF', 'Fossano', 'Via Roma, 13', 'user.jpg', 0),
+(1001, 'rossi', 'mario', 'rossi-1001', '5f4dcc3b5aa765d61d8327deb882cf99', '1B INF', 'Torino', 'Via Roma, 14', 'user.jpg', 0),
 (1002, 'rossi', 'manlio', 'rossi-1002', '5f4dcc3b5aa765d61d8327deb882cf99', '2B INF', 'Fossano', 'Via Roma, 13', 'user.jpg', 0),
 (1003, 'rossi', 'sergio', 'rossi-1003', '5f4dcc3b5aa765d61d8327deb882cf99', '3B INF', 'Fossano', 'Via Roma, 13', 'user.jpg', 0),
 (1004, 'rossi', 'stella', 'rossi-1004', '5f4dcc3b5aa765d61d8327deb882cf99', '4B INF', 'Fossano', 'Via Roma, 13', 'user.jpg', 0),
@@ -432,7 +448,7 @@ INSERT INTO `studenti` (`matricola`, `cognome`, `nome`, `user`, `pass`, `classe`
 (1019, 'racca', 'elena', 'racca-1019', '5f4dcc3b5aa765d61d8327deb882cf99', '4B INF', 'Fossano', 'Via Roma, 13', 'user.jpg', 0),
 (1020, 'russo', 'flavio', 'russo-1020', '5f4dcc3b5aa765d61d8327deb882cf99', '4B INF', 'Fossano', 'Via Roma, 13', 'user.jpg', 0),
 (1022, 'pizzorno', 'edoardo', 'edopiz', '5f4dcc3b5aa765d61d8327deb882cf99', '4B INF', 'Santa Vittoria d\'Alba', 'indirizzo', 'user.jpg', 0),
-(1023, 'mana', 'roberto', 'mana', '5f4dcc3b5aa765d61d8327deb882cf99', '', 'Fossano', 'indirizzo', 'user.jpg', 1),
+(1023, 'mana', 'roberto', 'mana', '5f4dcc3b5aa765d61d8327deb882cf99', '', 'Firenze', 'Via Carlo, 19', 'user.jpg', 1),
 (1024, 'cambieri', 'oscar', 'cambieri', '5f4dcc3b5aa765d61d8327deb882cf99', '', 'Fossano', 'indirizzo', 'user.jpg', 1),
 (1025, 'migori', 'andrea', 'migo', '5f4dcc3b5aa765d61d8327deb882cf99', '2C INF', 'Sommariva Bosco', 'indirizzo', 'user.jpg', 0),
 (1026, 'boaglio', 'nicoletta', 'boaglio', '5f4dcc3b5aa765d61d8327deb882cf99', '', 'Fossano', 'indirizzo', 'user.jpg', 1),
@@ -442,7 +458,8 @@ INSERT INTO `studenti` (`matricola`, `cognome`, `nome`, `user`, `pass`, `classe`
 (1080, 'miglio', 'sonia', 'miglio', '5f4dcc3b5aa765d61d8327deb882cf99', '', 'Fossano', 'Via Roma, 13', 'user.jpg', 1),
 (1081, 'garzino', 'davide', 'garzi05', '5f4dcc3b5aa765d61d8327deb882cf99', '5E INF', 'Paesana', 'indirizzo', 'user.jpg', 0),
 (1083, 'vaschetto', 'francesco', 'vaschetto', '5f4dcc3b5aa765d61d8327deb882cf99', '', 'Savigliano', 'indirizzo', 'user.jpg', 1),
-(1084, 'ponzone', 'luca', 'ponzone', '5f4dcc3b5aa765d61d8327deb882cf99', '1A INF', 'Sommariva Bosco', 'indirizzo', 'user.jpg', 0);
+(1084, 'ponzone', 'luca', 'ponzone', '5f4dcc3b5aa765d61d8327deb882cf99', '1A INF', 'Sommariva Bosco', 'indirizzo', 'user.jpg', 0),
+(1085, 'paschetta', 'marco', 'paschetta', '5b2a6a7e67638c3dd99fc3c44112136e', '', 'Bari', 'indirizzo', 'user.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -628,8 +645,19 @@ INSERT INTO `voti` (`id`, `matricola`, `data`, `materia`, `voto`, `docente`) VAL
 (171, 1081, '2023-05-24', 5, 6, 1023),
 (172, 1022, '2023-05-26', 1, 4, 1026),
 (173, 1022, '2023-05-26', 1, 5, 1026),
-(174, 1022, '2023-05-26', 1, 3.5, 1026),
-(175, 1012, '2023-05-26', 3, 3, 1078);
+(174, 1022, '2023-05-26', 1, 4.5, 1026),
+(175, 1012, '2023-05-26', 3, 3, 1078),
+(176, 1022, '2023-05-27', 1, 7, 1026),
+(177, 1022, '2023-05-27', 1, 7, 1026),
+(178, 1022, '2023-05-27', 1, 6, 1026),
+(179, 1084, '2023-05-27', 1, 7, 1026),
+(180, 1084, '2023-05-27', 1, 5, 1026),
+(181, 1084, '2023-05-27', 1, 9, 1026),
+(182, 1007, '2023-05-27', 1, 6, 1026),
+(183, 1084, '2023-05-27', 11, 7.5, 1026),
+(184, 1081, '2023-05-27', 22, 6.5, 1023),
+(185, 1081, '2023-05-27', 22, 9, 1023),
+(186, 1081, '2023-05-27', 22, 4, 1023);
 
 --
 -- Indici per le tabelle scaricate
@@ -692,7 +720,7 @@ ALTER TABLE `voti`
 -- AUTO_INCREMENT per la tabella `argomenti`
 --
 ALTER TABLE `argomenti`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=136;
 
 --
 -- AUTO_INCREMENT per la tabella `assenze`
@@ -710,7 +738,7 @@ ALTER TABLE `classi`
 -- AUTO_INCREMENT per la tabella `colloqui`
 --
 ALTER TABLE `colloqui`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1029;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1030;
 
 --
 -- AUTO_INCREMENT per la tabella `materie`
@@ -722,19 +750,19 @@ ALTER TABLE `materie`
 -- AUTO_INCREMENT per la tabella `messaggi`
 --
 ALTER TABLE `messaggi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 
 --
 -- AUTO_INCREMENT per la tabella `studenti`
 --
 ALTER TABLE `studenti`
-  MODIFY `matricola` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1085;
+  MODIFY `matricola` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1086;
 
 --
 -- AUTO_INCREMENT per la tabella `voti`
 --
 ALTER TABLE `voti`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=176;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=187;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
