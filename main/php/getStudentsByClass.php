@@ -10,7 +10,7 @@ if (isset($_GET["class"])) {
     die("Manca parametro classe");
 }
 
-$connection = openConnection("registro");
+$connection = openConnection();
 $sql = "SELECT matricola,immagine,user,cognome,nome from studenti WHERE classe='$class'";
 $data = eseguiQuery($connection, $sql);
 

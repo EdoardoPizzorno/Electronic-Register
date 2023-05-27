@@ -17,7 +17,7 @@ if (isset($_GET["current_receiver"])) {
     die("Manca parametro destinatario");
 }
 
-$connection = openConnection("registro");
+$connection = openConnection();
 $sql = "SELECT destinatario,mittente,oggetto,orario,testo from messaggi WHERE mittente='$user' AND destinatario='$current_receiver'";
 $data = eseguiQuery($connection, $sql);
 

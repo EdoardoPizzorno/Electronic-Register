@@ -10,7 +10,7 @@ if (isset($_GET["teacher"])) {
     die("Manca parametro docente");
 }
 
-$connection = openConnection("registro");
+$connection = openConnection();
 $sql = "SELECT * from colloqui WHERE docente='$teacher' ORDER BY ora DESC";
 $data = eseguiQuery($connection, $sql);
 

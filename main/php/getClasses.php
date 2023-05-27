@@ -3,7 +3,7 @@
 header("content-type:application/json; charset=utf-8");
 require("MySQLi.php");
 
-$connection = openConnection("registro");
+$connection = openConnection();
 $sql = "SELECT nome from classi";
 $data = eseguiQuery($connection, $sql);
 

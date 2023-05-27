@@ -3,7 +3,7 @@
 header("content-type:application/json; charset=utf-8");
 require("MySQLi.php");
 
-$connection = openConnection("registro");
+$connection = openConnection();
 
 if (isset($_REQUEST["receiver"])) {
     $receiver = $connection->real_escape_string($_REQUEST["receiver"]);

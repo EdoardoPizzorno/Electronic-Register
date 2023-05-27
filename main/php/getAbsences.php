@@ -10,7 +10,7 @@ if (isset($_GET["user"])) {
     die("Manca parametro utente");
 }
 
-$connection = openConnection("registro");
+$connection = openConnection();
 $sql = "SELECT id,data,motivazione from assenze WHERE matricola='$user' ORDER BY data DESC";
 $data = eseguiQuery($connection, $sql);
 

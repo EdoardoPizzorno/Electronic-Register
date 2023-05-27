@@ -10,7 +10,7 @@ if (isset($_GET["current_class"])) {
     die("Manca parametro classe");
 }
 
-$connection = openConnection("registro");
+$connection = openConnection();
 $sql = "SELECT materie FROM classi WHERE nome='$current_class'";
 $data = eseguiQuery($connection, $sql);
 

@@ -10,7 +10,7 @@ if (isset($_GET["class"])) {
     die("Manca parametro classe");
 }
 
-$connection = openConnection("registro");
+$connection = openConnection();
 $sql = "SELECT data,materia,argomento FROM argomenti WHERE classe='$class' ORDER BY data ASC";
 $data = eseguiQuery($connection, $sql);
 

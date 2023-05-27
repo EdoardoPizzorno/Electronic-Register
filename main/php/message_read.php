@@ -10,7 +10,7 @@ if (isset($_REQUEST["messageId"])) {
     die("Manca parametro id");
 }
 
-$connection = openConnection("registro");
+$connection = openConnection();
 $sql = "UPDATE messaggi SET visualizzato=1 WHERE id=$messageId";
 $data = eseguiQuery($connection, $sql);
 

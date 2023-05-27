@@ -2,8 +2,10 @@
 
 define("TIMEOUT", 600); # 10min Timeout
 
-function openConnection($db_name)
+function openConnection()
 {
+	
+	define("DB_NAME", "registro");
 	define("DB_HOST", "localhost");
 	define("DB_USER", "root");
 	define("DB_PASSWORD", "");
@@ -12,7 +14,7 @@ function openConnection($db_name)
 	mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 	try {
-		$connection = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, $db_name);
+		$connection = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 		// Fa si che eventuali caratteri speciali vengano gestiti correttamente
 		$connection->set_charset("utf8");
 		return $connection;

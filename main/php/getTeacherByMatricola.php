@@ -10,7 +10,7 @@ if (isset($_GET["teacher"])) {
     die("Manca parametro professore");
 }
 
-$connection = openConnection("registro");
+$connection = openConnection();
 $sql = "SELECT cognome,nome from studenti WHERE matricola='$teacher'";
 $data = eseguiQuery($connection, $sql);
 

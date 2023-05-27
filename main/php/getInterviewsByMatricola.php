@@ -10,7 +10,7 @@ if (isset($_GET["user"])) {
     die("Manca parametro utente");
 }
 
-$connection = openConnection("registro");
+$connection = openConnection();
 $sql = "SELECT * from colloqui WHERE matricola='$user'";
 $data = eseguiQuery($connection, $sql);
 

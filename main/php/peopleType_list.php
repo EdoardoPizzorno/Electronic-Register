@@ -10,7 +10,7 @@ if (isset($_GET["type"])) {
     die("Manca parametro utente");
 }
 
-$connection = openConnection("registro");
+$connection = openConnection();
 $sql = "SELECT cognome,nome,matricola,user,docente from studenti WHERE docente='$type'";
 $data = eseguiQuery($connection, $sql);
 

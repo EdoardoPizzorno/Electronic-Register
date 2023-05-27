@@ -10,7 +10,7 @@ if (isset($_GET["subjectId"])) {
     die("Manca parametro materia");
 }
 
-$connection = openConnection("registro");
+$connection = openConnection();
 $sql = "SELECT materia FROM materie WHERE id='$subjectId'";
 $data = eseguiQuery($connection, $sql);
 

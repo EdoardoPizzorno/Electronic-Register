@@ -67,7 +67,7 @@ function NavbarManagement() {
 			confirmButtonText: "Conferma",
 			cancelButtonText: "Annulla"
 		}).then((result) => {
-			if (result.isConfirmed) {
+			if (result["isConfirmed"]) {
 				sendRequest("POST", "php/logout.php").catch(error).then(function () {
 					window.location.href = "login.html"
 				})

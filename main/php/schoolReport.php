@@ -16,7 +16,7 @@ if (isset($_GET["subjectId"])) {
     die("Manca parametro materia");
 }
 
-$connection = openConnection("registro");
+$connection = openConnection();
 $sql = "SELECT voto from voti WHERE matricola='$user' AND materia='$subject'";
 $data = eseguiQuery($connection, $sql);
 

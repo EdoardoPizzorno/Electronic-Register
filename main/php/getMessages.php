@@ -17,7 +17,7 @@ if(isset($_GET["class"])) {
     die("Manca parametro classe");
 }
 
-$connection = openConnection("registro");
+$connection = openConnection();
 $sql = "SELECT * from messaggi WHERE destinatario='$user' OR destinatario='$class' ORDER BY orario DESC";
 $data = eseguiQuery($connection, $sql);
 

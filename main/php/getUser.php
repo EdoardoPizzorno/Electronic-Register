@@ -12,7 +12,7 @@ else {
 }
 
 // Query
-$connection = openConnection("registro");
+$connection = openConnection();
 
 $sql = "SELECT * from studenti where user='$user'";
 $data = eseguiQuery($connection, $sql);
