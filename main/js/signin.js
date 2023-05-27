@@ -26,7 +26,7 @@ window.onload = function () {
             checkSignIn()
     })
     // Load available classes
-    sendRequest("GET", "php/classes.php").catch(error).then(function (response) {
+    sendRequest("GET", "php/getClasses.php").catch(error).then(function (response) {
         for (let _class of response["data"])
             $("<option>").appendTo(lstClass).text(_class["nome"])
     })
@@ -47,7 +47,7 @@ window.onload = function () {
         if (txtName.val().length > 3) {
             if (txtSurname.val().length > 3) {
                 if (txtUsername.val().length > 5) {
-                    if (txtResidence.val().length > 5) {
+                    if (txtResidence.val().length > 2) {
                         if (txtAddress.val().length > 5) {
                             if (txtPassword.val().length > 7) {
                                 if (txtPassword.val() == txtConfirmPassword.val()) {
