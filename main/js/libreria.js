@@ -131,9 +131,9 @@ function loadPersonalInformations(user_data) {
 		$("input#classroom").val(user_data["classe"])
 }
 
-function loadRegister(current_class, table, role = "0", current_subject = "") { // The default role is student
+async function loadRegister(current_class, table, role = "0", current_subject = "") { // The default role is student
 	table.children("tbody").empty() // Use children(tbody) because in case I want to use table.DataTable() I won't have problems
-	sendRequest("GET", "php/getRegister.php", { "class": current_class }).catch(error).then(function (response) {
+	sendRequest("GET", "php/getRegister.php", { "class": current_class }).catch(error).then(async function (response) {
 		let topics = response["data"]
 		let days = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica"]
 		let month_days = [31, 30, 31, 30]
@@ -219,42 +219,14 @@ function loadRegister(current_class, table, role = "0", current_subject = "") { 
 		let tdSubjects = $(".td-subject")
 		let tdTopics = $(".td-topic")
 
-		let j = 0
-		for (let i = 0; i < topics.length; i++) {
-			let row_date = trTopics.eq(i).prop("id")
-			//console.log(i, j)
-			while (topics[j]["data"] == row_date) {
-				let lesson_topic = topics[j]["argomento"]
-				sendRequest("GET", "php/getSubjectById.php", { "subjectId": topics[j]["materia"] }).catch(error).then(function (response) {
-					let subject = response["data"]["materia"]
-					let prevSubjHtml = tdSubjects.eq(i).html()
-					let prevTopHtml = tdTopics.eq(i).html()
-					let newSubjHtml = `${prevSubjHtml}<br><b>${subject}</b>`
-					let newTopHtml = `${prevTopHtml}<br>${lesson_topic}`
-					if (prevSubjHtml == "" && prevTopHtml == "") {
-						newSubjHtml = `<span class='line-span'><b>${subject.toUpperCase()}</b></span>`
-						newTopHtml = `<span class='line-span'>${lesson_topic}</span>`
-					} else {
-						newSubjHtml = `${prevSubjHtml}<br><br><span class='line-span'><b>${subject.toUpperCase()}</b></span>`
-						newTopHtml = `${prevTopHtml}<br><br><span class='line-span'>${lesson_topic}</span>`
-					}
-					tdSubjects.eq(i).html(newSubjHtml)
-					tdTopics.eq(i).html(newTopHtml)
-				})
-				j++
-			}
-		}
-		/*let topicIndex = 0
+		let topicIndex = 0
 		let rowTable = 0
-		for (let i = 0; i < topics.length; i++) {
+		while (topics[topicIndex] != undefined) {
 			let row_date = trTopics.eq(rowTable).prop("id")
-			console.log(topics[topicIndex])
-			console.log(row_date, topics[topicIndex]["data"], rowTable, topicIndex)
 			while (topics[topicIndex]["data"] == row_date) {
 				let lesson_topic = topics[topicIndex]["argomento"]
-				sendRequest("GET", "php/getSubjectById.php", { "subjectId": topics[topicIndex]["materia"] }).catch(error).then(function (subject) {
+				await sendRequest("GET", "php/getSubjectById.php", { "subjectId": topics[topicIndex]["materia"] }).catch(error).then(async function (subject) {
 					subject = subject["data"]["materia"]
-
 					let prevSubjHtml = tdSubjects.eq(rowTable).html()
 					let prevTopHtml = tdTopics.eq(rowTable).html()
 					let newSubjHtml = `${prevSubjHtml}<br><b>${subject}</b>`
@@ -270,12 +242,11 @@ function loadRegister(current_class, table, role = "0", current_subject = "") { 
 
 					tdSubjects.eq(rowTable).html(newSubjHtml)
 					tdTopics.eq(rowTable).html(newTopHtml)
-					console.log("ciao")
 				})
 				topicIndex++
 			}
 			rowTable = trTopics.filter(`[id="${topics[topicIndex]["data"]}"]`).index()
-		}*/
+		}
 		//table.DataTable()
 	})
 }
