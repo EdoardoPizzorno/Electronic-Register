@@ -30,10 +30,11 @@ window.onload = function () {
         let user_data = response["data"]
         console.log(user_data)
         //ClearErrors()
-        let nominative = `${user_data["nome"].toUpperCase()} ${user_data["cognome"].toUpperCase()}`
         // 'btnProfile' management
-        btnProfile.html(`<img src=assets/images/${user_data["immagine"]} class="user-profile">&nbsp;&nbsp;${nominative}`)
+        btnProfile.html(`<img src=assets/images/${user_data["immagine"]} class="user-profile">&nbsp;&nbsp;${user_data["nome"].toUpperCase()} ${user_data["cognome"].toUpperCase()}`)
         NavbarManagement()
+        // Personal informations
+        loadPersonalInformations(user_data)
         // Show default homepage
         teachersDefaultView.show()
         // Disable teachers buttons
@@ -92,8 +93,10 @@ window.onload = function () {
                         let receiver = btnDestinatario.text()
                         sendRequest("POST", "php/sendMessage.php", { receiver, "sender": user_data["user"], "oggetto": txtOggetto.val(), "text": txtMessage.val() }).catch(error).then(function () {
                             Swal.fire({
-                                "text": "Messaggio inviato correttamente!",
-                                "icon": "success"
+                                "title": "Messaggio inviato correttamente!",
+                                "icon": "success",
+                                "showConfirmButton": false,
+                                "timer": 1000
                             })
                             loadMessages(user_data, receiver)
                             txtOggetto.val("")
@@ -102,11 +105,6 @@ window.onload = function () {
                     } else FieldError(txtMessage)
                 } else FieldError(txtOggetto)
             })
-            // Personal informations
-            $("#nominative").text(nominative)
-            $("#residence").text(`${user_data["residenza"]} (${user_data["indrizzo"]})`)
-            $("#classroom").text(classes)
-            $("span#matricola").text(user_data["matricola"])
         })
     })
 
@@ -210,15 +208,17 @@ window.onload = function () {
                                     sendRequest("GET", "php/getSubjectByName.php", { "subjectName": $("a.dropdown-toggle.subject").eq(0).text() }).catch(error).then(function (subject) {
                                         sendRequest("POST", "php/insertMark.php", { "matricola": student["matricola"], "subject": subject["data"]["id"], mark, "teacher": user_data["matricola"] }).catch(error).then(function () {
                                             Swal.fire({
-                                                "text": "Voto inserito correttamente!",
-                                                "icon": "success"
+                                                "title": "Voto inserito correttamente!",
+                                                "icon": "success",
+                                                "showConfirmButton": false,
+                                                "timer": 1000
                                             })
                                             loadAverages(current_class) // Update averages after inserting a new mark
                                         })
                                     })
                                 } else {
                                     Swal.fire({
-                                        "text": "Inserisci un voto valido!",
+                                        "title": "Inserisci un voto valido!",
                                         "icon": "error"
                                     })
                                 }
@@ -257,8 +257,10 @@ window.onload = function () {
                             if (value["isConfirmed"]) {
                                 sendRequest("POST", "php/insertAbsence.php", { "student": student["matricola"] }).catch(error).then(function () {
                                     Swal.fire({
-                                        "text": "Assenza inserita con successo!",
-                                        "icon": "success"
+                                        "title": "Assenza inserita con successo!",
+                                        "icon": "success",
+                                        "showConfirmButton": false,
+                                        "timer": 1000
                                     })
                                 })
                             }

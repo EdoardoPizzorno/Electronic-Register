@@ -31,16 +31,11 @@ window.onload = function () {
         let user_data = response["data"]
         console.log(user_data)
         //ClearErrors()
-        let nominative = `${user_data["nome"].toUpperCase()} ${user_data["cognome"].toUpperCase()}`
         // 'btnProfile' management
-        btnProfile.html(`<img src=assets/images/${user_data["immagine"]} class="user-profile">&nbsp;&nbsp;${nominative}`)
+        btnProfile.html(`<img src=assets/images/${user_data["immagine"]} class="user-profile">&nbsp;&nbsp;${user_data["nome"].toUpperCase()} ${user_data["cognome"].toUpperCase()}`)
         NavbarManagement()
         // Personal informations
-        $("#nominative").text(nominative)
-        $("#matricola").text(user_data["matricola"])
-        $("#residence").text(`${user_data["residenza"]} (${user_data["indrizzo"]})`)
-        $("#classroom").text(user_data["classe"])
-        $("span#matricola").text(user_data["matricola"])
+        loadPersonalInformations(user_data)
         // Show default homepage
         studentsDefaultView.show()
         // Manage homepage buttons
@@ -228,8 +223,10 @@ window.onload = function () {
                                 if (value["isConfirmed"] && reason.trim() != absence["motivazione"].trim()) { // if button 'OK' is pressed AND the previous reason is different to the new
                                     sendRequest("POST", "php/editAbsence.php", { "id": absence["id"], reason }).catch(error).then(function () {
                                         Swal.fire({
-                                            "text": "Assenza modificata con successo!",
-                                            "icon": "success"
+                                            "title": "Assenza modificata con successo!",
+                                            "icon": "success",
+                                            "showConfirmButton": false,
+                                            "timer": 1000
                                         })
                                         loadAbsences(user_data)
                                     })
@@ -289,8 +286,10 @@ window.onload = function () {
                                         sendRequest("POST", "php/justifyAbsence.php", { id, reason, sign }).catch(error).then(function () {
                                             loadAbsences(user_data)
                                             Swal.fire({
-                                                "text": "Assenza giustificata con successo!",
-                                                "icon": "success"
+                                                "title": "Assenza giustificata con successo!",
+                                                "icon": "success",
+                                                "showConfirmButton": false,
+                                                "timer": 1000
                                             })
                                         })
                                     }
@@ -468,8 +467,10 @@ window.onload = function () {
             sendRequest("POST", "php/insertInterview.php", { nome, cognome, matricola, data, "docente": current_teacher }).catch(error).then(function () {
                 getInterviews(user_data["matricola"])
                 Swal.fire({
-                    "text": "Colloquio prenotato con successo!",
-                    "icon": "success"
+                    "title": "Colloquio prenotato con successo!",
+                    "icon": "success",
+                    "showConfirmButton": false,
+                    "timer": 1000
                 })
             })
         })

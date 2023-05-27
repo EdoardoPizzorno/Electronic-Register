@@ -318,19 +318,23 @@
     <div class="col-md-4 informations container spec-section">
         <div class="card">
             <div class="card-header bg-info text-white">
-                Informazioni personali
+                Informazioni personali <button class="btn btn-primary" id="btnEditPersonalInfos" style="float: right;"><i
+                        class="bi bi-pencil-square"></i></button>
             </div>
             <div class="card-body">
-                <h5 class="card-title" id="nominative">Nome Cognome</h5>
+                <h3 class="card-title" id="nominative">Nome Cognome</h3>
                 <p class="card-text">
-                    <strong>Ruolo: </strong><span id="role">Studente</span><br>
-                    <strong>Classe: </strong><span id="classroom">1A</span><br>
-                    <strong>Matricola: </strong><span id="matricola">1</span><br>
-                    <strong>Indirizzo: </strong>Informatica<br>
-                    <strong>Residenza: </strong><span id="residence">Fossano</span><br>
-                    <strong>Anno Scolastico: </strong>2022/2023<br>
+                    <strong>Ruolo: </strong><input class="form-control" id="role" value="Studente" readonly><br>
+                    <strong>Classe: </strong><input class="form-control" id="classroom" value="1A" readonly><br>
+                    <strong>Matricola: </strong><input class="form-control" id="matricola" value="1" readonly><br>
+                    <strong>Specializzazione: </strong><input class="form-control" value="Informatica" readonly><br>
+                    <strong>Residenza: </strong><input class="form-control" id="residence" value="Fossano" readonly><br>
+                    <strong>Indirizzo: </strong><input class="form-control" id="address" value="Via Roma, 13"
+                        readonly><br>
+                    <strong>Anno Scolastico: </strong><input class="form-control" value="2022/2023" readonly><br>
                 </p>
             </div>
+            <button class="btn btn-success" id="btnSaveInfos" style="display: none;">Salva</button>
         </div>
     </div>
 

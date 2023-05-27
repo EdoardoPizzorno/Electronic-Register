@@ -64,6 +64,10 @@ nav {
   margin-bottom: 2px;
 }
 
+h3#nominative {
+  padding: 5px;
+}
+
 /* LOGIN FORM */
 #frmLogin {
   margin: 10% 0 0 40%;

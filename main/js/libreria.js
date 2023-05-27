@@ -55,7 +55,7 @@ function NavbarManagement() {
 			title: "Sei sicuro/a di voler uscire?",
 			icon: "question",
 			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
+			confirmButtonColor: '13085d6',
 			cancelButtonColor: '#d33',
 			confirmButtonText: "Conferma",
 			cancelButtonText: "Annulla"
@@ -65,6 +65,27 @@ function NavbarManagement() {
 					window.location.href = "login.html"
 				})
 			}
+		})
+	})
+
+	$("#btnEditPersonalInfos").on("click", function () {
+		let matricola = $("input#matricola").val()
+		let inputResidence = $("input#residence")
+		let inputAddress = $("input#address")
+		inputResidence.prop("readonly", false)
+		inputAddress.prop("readonly", false)
+		$("#btnSaveInfos").show(400).on("click", function () {
+			sendRequest("POST", "php/editPersonalInformations.php", { matricola, "residence": inputResidence.val(), "address": inputAddress.val() }).catch(error).then(function () {
+				Swal.fire({
+					"title": "Informazioni salvate con successo!",
+					"icon": "success",
+					"showConfirmButton": false,
+					"timer": 1000
+				})
+				inputResidence.prop("readonly", true)
+				inputAddress.prop("readonly", true)
+				$("#btnSaveInfos").hide(400)
+			})
 		})
 	})
 }
@@ -86,6 +107,16 @@ function FieldError(_param, text = "Parametro troppo corto") {
 	_param.prev().children("i").addClass("red-icon")
 	lblError.children("span").text(text)
 	lblError.show()
+}
+
+function loadPersonalInformations(user_data) {
+	let nominative = `${user_data["nome"].toUpperCase()} ${user_data["cognome"].toUpperCase()}`
+	$("#nominative").text(nominative)
+	$("input#residence").val(`${user_data["residenza"]}`)
+	$("input#address").val(`${user_data["indrizzo"]}`)
+	$("input#matricola").val(user_data["matricola"])
+	if (user_data["docente"] == 0) // Only for students
+		$("input#classroom").val(user_data["classe"])
 }
 
 function loadRegister(current_class, table, role = "0", current_subject = "") { // The default role is student
