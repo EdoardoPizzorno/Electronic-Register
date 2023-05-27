@@ -171,14 +171,16 @@ window.onload = function () {
             } else {
                 for (let student of students) {
                     let tr = $("<tr>").appendTo(table)
-                    $("<td>").appendTo(tr).text(student["nome"].toUpperCase())
                     $("<td>").appendTo(tr).text(student["cognome"].toUpperCase())
+                    $("<td>").appendTo(tr).text(student["nome"].toUpperCase())
                     // Marks
                     sendRequest("GET", "php/getSubjectByName.php", { subjectName }).catch(error).then(function (subjectId) {
                         subjectId = subjectId["data"]["id"]
                         sendRequest("GET", "php/getMarksBySubjectAndMatricola.php", { "user": student["matricola"], subjectId }).catch(error).then(function (marks) {
+                            let sum = 0
                             let td = $("<td>").appendTo(tr)
                             for (let mark of marks["data"]) {
+                                sum += parseFloat(mark["voto"])
                                 $("<button>").addClass(`btn btn-mark ${parseFloat(mark["voto"]) >= 6 ? "btn-success" : "btn-danger"}`).appendTo(td).text(mark["voto"]).on("click", function () {
                                     // CHANGE MARK
                                     Swal.fire({
@@ -197,6 +199,10 @@ window.onload = function () {
                                                     <input class="form-control" type="text" id="surname" name="surname" value=${student["cognome"].toUpperCase()} readonly>
                                                 </div>
                                                 <div class="form-group">
+                                                    <label for="date">Data:</label>
+                                                    <input class="form-control" type="date" id="date" name="date" value=${mark["data"]} readonly>
+                                                </div>
+                                                <div class="form-group">
                                                     <label for="grade">Voto:</label>
                                                     <input class="form-control" type="number" id="grade" name="grade" min="0" max="10" step="0.5" value=${$(this).text()}>
                                                 </div>
@@ -206,7 +212,7 @@ window.onload = function () {
                                         if (value["isConfirmed"]) {
                                             let markClicked = $("#grade").val()
                                             if (parseFloat(markClicked) != parseFloat(mark["voto"])) {
-                                                sendRequest("POST", "php/editMark.php", {"newMark": markClicked, "id": mark["id"]}).catch(error).then(function() {
+                                                sendRequest("POST", "php/editMark.php", { "newMark": markClicked, "id": mark["id"] }).catch(error).then(function () {
                                                     Swal.fire({
                                                         "title": "Voto modificato correttamente!",
                                                         "icon": "success",
@@ -220,6 +226,9 @@ window.onload = function () {
                                     })
                                 })
                             }
+                            // Average
+                            let average = (sum / marks["data"].length).toFixed(2)
+                            $("<td>").appendTo(tr).append($("<button>").addClass(`btn ${average >= 6 ? "btn-success" : "btn-danger"}`).prop("disabled", true).html(isNaN(average) ? 0 : average))
                             // Add marks
                             $("<td>").appendTo(tr).append($("<button>").addClass("btn btn-light").append($("<i>").addClass("bi bi-plus")).on("click", function () {
                                 // ADD MARKS
@@ -245,7 +254,7 @@ window.onload = function () {
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="grade">Voto:</label>
-                                                    <input class="form-control" type="number" id="grade" name="grade" min="0" max="10" step="0.5" required>
+                                                    <input class="form-control" type="number" id="grade" name="grade" min="1" max="10" step="0.5" required>
                                                 </div>
                                             </div>
                                         </div>`

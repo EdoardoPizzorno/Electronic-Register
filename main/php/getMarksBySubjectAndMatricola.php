@@ -18,7 +18,7 @@ if (isset($_GET["subjectId"])) {
 }
 
 $connection = openConnection();
-$sql = "SELECT id,voto from voti WHERE matricola='$user' AND materia=$subjectId ORDER BY data ASC";
+$sql = "SELECT id,voto,data from voti WHERE matricola='$user' AND materia=$subjectId ORDER BY data ASC";
 $data = eseguiQuery($connection, $sql);
 
 http_response_code(200);
