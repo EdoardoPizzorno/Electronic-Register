@@ -284,7 +284,9 @@ window.onload = function () {
                                 })
                             }))
                             // Absences
-                            loadAbsencesList(student, tr)
+                            let tdAbsences = $("<td>").appendTo(tr)
+                            let tdAddAbsence = $("<td>").appendTo(tr)
+                            loadAbsencesList(student, tdAbsences, tdAddAbsence)
                         })
                     })
                 }
@@ -292,7 +294,7 @@ window.onload = function () {
         })
     }
 
-    function loadAbsencesList(student, tr) {
+    function loadAbsencesList(student, tdAbsences, tdAddAbsence) {
         sendRequest("GET", "php/getAbsences.php", { "user": student["matricola"] }).catch(error).then(function (absences) {
             absences = absences["data"]
             let html = ""
@@ -315,7 +317,7 @@ window.onload = function () {
                     `
                 }
             }
-            $("<td>").appendTo(tr).append($("<button>").addClass("btn btn-light").append($("<i>").addClass("bi bi-card-list")).on("click", function () {
+            tdAbsences.empty().append($("<button>").addClass("btn btn-light").append($("<i>").addClass("bi bi-card-list")).on("click", function () {
                 Swal.fire({
                     "showCancelButton": true,
                     "width": "760px",
@@ -323,9 +325,9 @@ window.onload = function () {
                     "showConfirmButton": false,
                     "html": `
                 <div>
-                    <!--<div>
-                        <img src="php/uploads/${user_data["immagine"]}" alt="Profilo studente">
-                    </div>-->
+                    <div>
+                        <img src="php/uploads/${student["immagine"]}" alt="Profilo studente">
+                    </div>
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -344,14 +346,14 @@ window.onload = function () {
                 LoadCanvasSign(absences)
             }))
             // Add absence
-            $("<td>").appendTo(tr).append($("<button>").addClass("btn btn-light").append($("<i>").addClass("bi bi-plus")).on("click", function () {
+            tdAddAbsence.empty().append($("<button>").addClass("btn btn-light").append($("<i>").addClass("bi bi-plus")).on("click", function () {
                 Swal.fire({
                     "showCancelButton": true,
                     "html": `
                     <div>
-                        <div>
-                            <img src="php/uploads/${user_data["immagine"]}" alt="Profilo studente">
-                        </div>
+                        <!--<div>
+                            <img src="php/uploads/${student["immagine"]}" alt="Profilo studente">
+                        </div>-->
                         <div style="text-align: center !important">
                             <div class="form-group">
                                 <label for="name">Nome:</label>
@@ -394,7 +396,7 @@ window.onload = function () {
                                     "showConfirmButton": false,
                                     "timer": 1000
                                 })
-                                loadAbsencesList(student)
+                                loadAbsencesList(student, tdAbsences, tdAddAbsence)
                             })
                         })
                     }

@@ -83,7 +83,8 @@
     <div class="row container teacher-options spec-section">
         <div class="dropdown-container container row">
             <div class="dropdown row">
-                <a class="btn dropdown-toggle class" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Seleziona classe</a>
+                <a class="btn dropdown-toggle class" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">Seleziona classe</a>
                 <div class="dropdown-menu classes">
                     <!-- classes -->
                 </div>
@@ -308,18 +309,20 @@
                 Informazioni personali <button class="btn btn-primary" id="btnEditPersonalInfos"
                     style="float: right;"><i class="bi bi-pencil-square"></i></button>
             </div>
+            <img id="img-profile" class="rounded mx-auto d-block" alt="Immagine profilo"><br>
             <div class="card-body">
                 <h3 class="card-title text-center" id="nominative">Nome Cognome</h3>
                 <p class="card-text">
-                    <strong>Immagine profilo: </strong><input class="form-control" type="file" id="formFile"><br>
-                    <strong>Ruolo: </strong><input class="form-control" id="role" value="Docente" readonly><br>
-                    <strong>Classe: </strong><input class="form-control" id="classroom" value="Tutte" readonly><br>
-                    <strong>Matricola: </strong><input class="form-control" id="matricola" value="1" readonly><br>
-                    <strong>Specializzazione: </strong><input class="form-control" value="Informatica" readonly><br>
-                    <strong>Residenza: </strong><input class="form-control" id="residence" value="Fossano" readonly><br>
-                    <strong>Indirizzo: </strong><input class="form-control" id="address" value="Via Roma, 13"
-                        readonly><br>
-                    <strong>Anno Scolastico: </strong><input class="form-control" value="2022/2023" readonly><br>
+                <div id="formFile">
+                    <strong>Immagine profilo: </strong><input class="form-control" type="file"><br>
+                </div>
+                <strong>Ruolo: </strong><input class="form-control" id="role" value="Docente" readonly><br>
+                <strong>Classe: </strong><input class="form-control" id="classroom" value="Tutte" readonly><br>
+                <strong>Matricola: </strong><input class="form-control" id="matricola" value="1" readonly><br>
+                <strong>Specializzazione: </strong><input class="form-control" value="Informatica" readonly><br>
+                <strong>Residenza: </strong><input class="form-control" id="residence" value="Fossano" readonly><br>
+                <strong>Indirizzo: </strong><input class="form-control" id="address" value="Via Roma, 13" readonly><br>
+                <strong>Anno Scolastico: </strong><input class="form-control" value="2022/2023" readonly><br>
                 </p>
             </div>
             <button class="btn btn-success" id="btnSaveInfos" style="display: none;">Salva</button>

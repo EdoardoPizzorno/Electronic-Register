@@ -460,7 +460,7 @@ window.onload = function () {
         let li = $("<li>").appendTo(messagesList).addClass("list-group-item")
         $("<span>").appendTo(li).html(`Inviato a: <i>${message["destinatario"]}</i>&nbsp;${message["destinatario"] == user_data["user"] ? "(Tu)" : "(Classe)"}`).css({
             "position": "absolute",
-            "margin": "8px 0 0 -330px",
+            "margin": "8px 0 0 -480px",
         })
         // Bell button
         if (parseInt(message["visualizzato"]) == 0) {
@@ -474,24 +474,27 @@ window.onload = function () {
             })
         }
 
-        $("<img>").appendTo(li).prop("src", `php/uploads/${user_data["immagine"]}`).css({
-            "height": "52px",
-            "padding": "6px"
-        })
-        $("<h2>").appendTo(li).addClass("list-group-item-heading").append($("<a>").addClass("link-dark").prop("href", "#").text(message["mittente"].toUpperCase()).append($("<br>")).on("click", async function () {
-            $("#messagesHome").on("click", function () { loadMessages(user_data) })
-            messagesList.empty()
-            await sendRequest("GET", "php/getMessagesBySender.php", { "sender": message["mittente"], "class": user_data["classe"], "user": user_data["user"] }).catch(error).then(async function (messages) {
-                for (let specific_message of messages["data"])
-                    await buildMessages(user_data, specific_message, messagesList)
+        await sendRequest("GET", "php/getUserProfilePicture.php", { "user": message["mittente"] }).catch(error).then(function (picture) {
+            picture = picture["data"]
+            $("<img>").appendTo(li).prop("src", `php/uploads/${picture["immagine"]}`).css({
+                "height": "52px",
+                "padding": "6px"
             })
-        })) // Message object
-        $("<h4>").appendTo(li).addClass("list-group-item-heading").text(message["oggetto"]) // Message object
-        $("<p>").appendTo(li).text(message["testo"]) // Message text
+            $("<h2>").appendTo(li).addClass("list-group-item-heading").append($("<a>").addClass("link-dark").prop("href", "#").text(message["mittente"].toUpperCase()).append($("<br>")).on("click", async function () {
+                $("#messagesHome").on("click", function () { loadMessages(user_data) })
+                messagesList.empty()
+                await sendRequest("GET", "php/getMessagesBySender.php", { "sender": message["mittente"], "class": user_data["classe"], "user": user_data["user"] }).catch(error).then(async function (messages) {
+                    for (let specific_message of messages["data"])
+                        await buildMessages(user_data, specific_message, messagesList)
+                })
+            })) // Message object
+            $("<h4>").appendTo(li).addClass("list-group-item-heading").text(message["oggetto"]) // Message object
+            $("<p>").appendTo(li).text(message["testo"]) // Message text
 
-        let time = message["orario"].split(".")[0]
-        $("<p>").appendTo(li).addClass("text-muted").css("font-size", "10pt").text(`${time}`) // Message date
-        $("<hr>").appendTo(messagesList)
+            let time = message["orario"].split(".")[0]
+            $("<p>").appendTo(li).addClass("text-muted").css("font-size", "10pt").text(`${time}`) // Message date
+            //$("<hr>").appendTo(messagesList)
+        })
     }
 
     function getInterviews(matricola) {
