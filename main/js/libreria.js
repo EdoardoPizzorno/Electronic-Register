@@ -85,6 +85,7 @@ function NavbarManagement(user_data) {
 		formFile.show(400)
 		inputResidence.prop("readonly", false)
 		inputAddress.prop("readonly", false)
+		
 		$("#btnSaveInfos").show(400).on("click", function () {
 			let files = formFile.children("input").prop("files")
 			let formData = new FormData()
