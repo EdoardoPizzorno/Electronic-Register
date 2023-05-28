@@ -299,7 +299,7 @@ window.onload = function () {
             marks = marks["data"]
             // Create JSON with all marks for each subject
             if (marks.length == 0) {
-                $("<tr>").appendTo(table).text("Non ci sono voti da visualizzare").addClass("text-muted")
+                $("<p>").appendTo(table).text("Non ci sono voti da visualizzare").addClass("text-muted")
             } else {
                 for (let mark of marks) {
                     let request = sendRequest("GET", "php/getSubjectById.php", { "subjectId": mark["materia"] }).catch(error).then(function (subjects) {

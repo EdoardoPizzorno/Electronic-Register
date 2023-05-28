@@ -284,106 +284,122 @@ window.onload = function () {
                                 })
                             }))
                             // Absences
-                            sendRequest("GET", "php/getAbsences.php", { "user": student["matricola"] }).catch(error).then(function (absences) {
-                                absences = absences["data"]
-                                let html = ""
-                                for (let absence of absences) {
-                                    html += `
-                                    <div class="form-group">
-                                        <label for="justification-reason">Motivazione assenza</label>
-                                        <input id="justification-reason" class="form-control" name="justification-reason" rows="4" value='${absence["motivazione"]}' readonly>
-                                    </div><br>
-                                    <div class="form-group">
-                                        <label for="date">Data</label>
-                                        <input id="date" class="form-control" name="date" rows="4" value='${absence["data"]}' readonly>
-                                    </div><br>
-                                    <div class="form-group">
-                                        <label for="sign">Firma</label>
-                                        <canvas id='${absence["id"]}' width="700" height="300" style="border:1px solid black;"></canvas>
-                                    </div><br><hr>
-                                    `
-                                }
-
-                                $("<td>").appendTo(tr).append($("<button>").addClass("btn btn-light").append($("<i>").addClass("bi bi-card-list")).on("click", function () {
-                                    Swal.fire({
-                                        "showCancelButton": true,
-                                        "showConfirmButton": false,
-                                        "width": "760px",
-                                        "cancelButtonText": "Chiudi",
-                                        "html": `
-                                    <div>
-                                        <div>
-                                            <img src="assets/images/user.jpg" alt="Profilo studente">
-                                        </div>
-                                        <div style="text-align: center !important">
-                                            ${html}
-                                        </div>
-                                    </div>`
-                                    })
-                                    // Load the sign image
-                                    LoadCanvasSign(absences)
-                                }))
-                                // Add absence
-                                $("<td>").appendTo(tr).append($("<button>").addClass("btn btn-light").append($("<i>").addClass("bi bi-plus")).on("click", function () {
-                                    Swal.fire({
-                                        "showCancelButton": true,
-                                        "html": `
-                                        <div>
-                                            <div>
-                                                <img src="assets/images/user.jpg" alt="Profilo studente">
-                                            </div>
-                                            <div style="text-align: center !important">
-                                                <div class="form-group">
-                                                    <label for="name">Nome:</label>
-                                                    <input class="form-control" type="text" id="name" name="name" value=${student["nome"].toUpperCase()} readonly>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="surname">Cognome:</label>
-                                                    <input class="form-control" type="text" id="surname" name="surname" value=${student["cognome"].toUpperCase()} readonly>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="username">Username:</label>
-                                                    <input class="form-control" type="text" id="username" name="username" value=${student["user"]} readonly>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="date">Data:</label>
-                                                    <input class="form-control" type="text" id="date" name="date" value=${(new Date()).toLocaleDateString()} readonly>
-                                                </div>
-                                            </div>
-                                        </div>`
-                                    }).then(function (value) {
-                                        if (value["isConfirmed"]) {
-                                            let today = new Date()
-                                            let year = today.getFullYear()
-                                            let month = (today.getMonth() + 1).toString().length == 1 ? `0${(today.getMonth() + 1)}` : (today.getMonth() + 1)
-                                            let day = today.getDate().toString().length == 1 ? `0${today.getDate()}` : today.getDate()
-                                            today = `${year}-${month}-${day}`
-                                            sendRequest("GET", "php/getAbsenceByDay.php", { today, "student": student["matricola"] }).catch(function (err) {
-                                                if (err["response"]["status"] == 408) {
-                                                    Swal.fire({
-                                                        "title": "L'alunno è già stato segnato assente",
-                                                        "icon": "error"
-                                                    })
-                                                } else error(err)
-                                            }).then(function (absence) {
-                                                console.log(absence["data"])
-                                                sendRequest("POST", "php/insertAbsence.php", { "student": student["matricola"] }).catch(error).then(function () {
-                                                    Swal.fire({
-                                                        "title": "Assenza inserita con successo!",
-                                                        "icon": "success",
-                                                        "showConfirmButton": false,
-                                                        "timer": 1000
-                                                    })
-                                                })
-                                            })
-                                        }
-                                    })
-                                }))
-                            })
+                            loadAbsencesList(student, tr)
                         })
                     })
                 }
             }
+        })
+    }
+
+    function loadAbsencesList(student, tr) {
+        sendRequest("GET", "php/getAbsences.php", { "user": student["matricola"] }).catch(error).then(function (absences) {
+            absences = absences["data"]
+            let html = ""
+            for (let absence of absences) {
+                if (absence["motivazione"] != null) {
+                    html += `
+                        <tr>
+                            <td>${absence["data"]}</td>
+                            <td>Assenza giustificata</td>
+                            <td><button class="btn btn-light" id='${absence["id"]}'><i class="bi bi-info"></i></button></td>
+                        </tr>
+                        `
+                } else {
+                    html += `
+                    <tr style="color: red; background-color: rgba(255, 0, 0, 0.1)">
+                        <td>${absence["data"]}</td>
+                        <td>Assenza NON giustificata</td>
+                        <td><button class="btn btn-light" id='${absence["id"]}'><i class="bi bi-info"></i></button></td>
+                    </tr>
+                    `
+                }
+            }
+            $("<td>").appendTo(tr).append($("<button>").addClass("btn btn-light").append($("<i>").addClass("bi bi-card-list")).on("click", function () {
+                Swal.fire({
+                    "showCancelButton": true,
+                    "width": "760px",
+                    "cancelButtonText": "Chiudi",
+                    "showConfirmButton": false,
+                    "html": `
+                <div>
+                    <div>
+                        <img src="assets/images/user.jpg" alt="Profilo studente">
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <td>Data</td>
+                                <td>Giustificata</td>
+                                <td>Informazioni</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${html}
+                        </tbody>
+                    </table>
+                </div>`
+                })
+                // Load the sign image AND the specific absence informations
+                LoadCanvasSign(absences)
+            }))
+            // Add absence
+            $("<td>").appendTo(tr).append($("<button>").addClass("btn btn-light").append($("<i>").addClass("bi bi-plus")).on("click", function () {
+                Swal.fire({
+                    "showCancelButton": true,
+                    "html": `
+                    <div>
+                        <div>
+                            <img src="assets/images/user.jpg" alt="Profilo studente">
+                        </div>
+                        <div style="text-align: center !important">
+                            <div class="form-group">
+                                <label for="name">Nome:</label>
+                                <input class="form-control" type="text" id="name" name="name" value=${student["nome"].toUpperCase()} readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="surname">Cognome:</label>
+                                <input class="form-control" type="text" id="surname" name="surname" value=${student["cognome"].toUpperCase()} readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="username">Username:</label>
+                                <input class="form-control" type="text" id="username" name="username" value=${student["user"]} readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="date">Data:</label>
+                                <input class="form-control" type="text" id="date" name="date" value=${(new Date()).toLocaleDateString()} readonly>
+                            </div>
+                        </div>
+                    </div>`
+                }).then(function (value) {
+                    if (value["isConfirmed"]) {
+                        let today = new Date()
+                        let year = today.getFullYear()
+                        let month = (today.getMonth() + 1).toString().length == 1 ? `0${(today.getMonth() + 1)}` : (today.getMonth() + 1)
+                        let day = today.getDate().toString().length == 1 ? `0${today.getDate()}` : today.getDate()
+                        today = `${year}-${month}-${day}`
+                        sendRequest("GET", "php/getAbsenceByDay.php", { today, "student": student["matricola"] }).catch(function (err) {
+                            if (err["response"]["status"] == 408) {
+                                Swal.fire({
+                                    "title": "L'alunno è già stato segnato assente",
+                                    "icon": "error"
+                                })
+                            } else error(err)
+                        }).then(function (absence) {
+                            console.log(absence["data"])
+                            sendRequest("POST", "php/insertAbsence.php", { "student": student["matricola"] }).catch(error).then(function () {
+                                Swal.fire({
+                                    "title": "Assenza inserita con successo!",
+                                    "icon": "success",
+                                    "showConfirmButton": false,
+                                    "timer": 1000
+                                })
+                                loadAbsencesList(student)
+                            })
+                        })
+                    }
+                })
+            }))
         })
     }
 
@@ -418,7 +434,7 @@ window.onload = function () {
         sendRequest("GET", "php/getStudentsByClass.php", { "class": current_class }).catch(error).then(function (students) {
             students = students["data"]
             if (students.length == 0) {
-
+                $("<p>").appendTo(table).html(`<br>Non ci sono studenti nella classe ${current_class}`).addClass("text-muted")
             } else {
                 let all_sums = 0
                 for (let student of students) {
@@ -446,15 +462,34 @@ window.onload = function () {
 
     function LoadCanvasSign(absences) {
         for (let absence of absences) {
-            let canvas = document.getElementById(absence["id"])
-            if (canvas) {
-                let context = canvas.getContext('2d')
-                let image = new Image()
-                image.src = absence["firma"]
-                image.onload = function () {
-                    context.drawImage(image, 0, 0)
+            $(`button#${absence["id"]}`).on("click", function () {
+                Swal.fire({
+                    "width": "760px",
+                    "showCancelButton": true,
+                    "cancelButtonText": "Chiudi",
+                    "showConfirmButton": false,
+                    "html": `
+                        <div id="absenceJustify">
+                            <div class="form-group">
+                                <label for="justification-reason">Motivazione assenza</label>
+                                <input id="justification-reason" class="form-control" name="justification-reason" readonly value='${absence["motivazione"]}'>
+                            </div><br>
+                            <div class="form-group">
+                                <label for="sign">Firma</label>
+                                <canvas id='${absence["id"]}' width="700" height="300" style="border:1px solid black;"></canvas>
+                            </div>
+                        </div>`
+                })
+                let canvas = document.getElementById(absence["id"])
+                if (canvas) {
+                    let context = canvas.getContext('2d')
+                    let image = new Image()
+                    image.src = absence["firma"]
+                    image.onload = function () {
+                        context.drawImage(image, 0, 0)
+                    }
                 }
-            }
+            })
         }
     }
 
