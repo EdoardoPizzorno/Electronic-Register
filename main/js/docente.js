@@ -326,7 +326,7 @@ window.onload = function () {
                     "html": `
                 <div>
                     <div>
-                        <img src="php/uploads/${student["immagine"]}" alt="Profilo studente">
+                        <img id='img-profile' style='margin-bottom: 20px' src="php/uploads/${student["immagine"]}" alt="Profilo studente">
                     </div>
                     <table class="table table-striped">
                         <thead>

@@ -233,7 +233,7 @@ window.onload = function () {
                                     </div><br>-->
                                     <div class="form-group">
                                         <label for="justification-reason">Motivazione assenza</label>
-                                        <input id="justification-reason" class="form-control" name="justification-reason" rows="4" required placeholder="Inserisci la motivazione...">
+                                        <input id="justification-reason" class="form-control" name="justification-reason" rows="4" required placeholder="Salute">
                                     </div><br>
                                     <div class="form-group" style="overflow-x: auto; margin-bottom: 20px">
                                         <label for="canvasDraw">Inserisci la firma</label>
