@@ -32,8 +32,8 @@ window.onload = function () {
         console.log(user_data)
         //ClearErrors()
         // 'btnProfile' management
-        btnProfile.html(`<img src=assets/images/${user_data["immagine"]} class="user-profile">&nbsp;&nbsp;${user_data["nome"].toUpperCase()} ${user_data["cognome"].toUpperCase()}`)
-        NavbarManagement()
+        btnProfile.html(`<img src=php/uploads/${user_data["immagine"]} class="user-profile">&nbsp;&nbsp;${user_data["nome"].toUpperCase()} ${user_data["cognome"].toUpperCase()}`)
+        NavbarManagement(user_data)
         // Personal informations
         loadPersonalInformations(user_data)
         // Show default homepage
@@ -474,7 +474,7 @@ window.onload = function () {
             })
         }
 
-        $("<img>").appendTo(li).prop("src", "assets/images/user.jpg").css({
+        $("<img>").appendTo(li).prop("src", `php/uploads/${user_data["immagine"]}`).css({
             "height": "52px",
             "padding": "6px"
         })

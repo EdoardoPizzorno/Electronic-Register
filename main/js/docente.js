@@ -31,8 +31,8 @@ window.onload = function () {
         console.log(user_data)
         //ClearErrors()
         // 'btnProfile' management
-        btnProfile.html(`<img src=assets/images/${user_data["immagine"]} class="user-profile">&nbsp;&nbsp;${user_data["nome"].toUpperCase()} ${user_data["cognome"].toUpperCase()}`)
-        NavbarManagement()
+        btnProfile.html(`<img src=php/uploads/${user_data["immagine"]} class="user-profile">&nbsp;&nbsp;${user_data["nome"].toUpperCase()} ${user_data["cognome"].toUpperCase()}`)
+        NavbarManagement(user_data)
         // Personal informations
         loadPersonalInformations(user_data)
         // Show default homepage
@@ -142,7 +142,7 @@ window.onload = function () {
                 for (let message of messages) {
                     let messageDiv = $("<div>").appendTo(messagesWrapper).addClass("d-flex justify-content-start mb-4 message")
                     let imageDiv = $("<div>").appendTo(messageDiv).addClass("img_cont_msg")
-                    $("<img>").appendTo(imageDiv).prop("src", "assets/images/user.jpg").css({
+                    $("<img>").appendTo(imageDiv).prop("src", `php/uploads/${user_data["immagine"]}`).css({
                         "height": "26px",
                         "padding": "3px"
                     })
@@ -236,9 +236,9 @@ window.onload = function () {
                                     "showCancelButton": true,
                                     "html": `
                                         <div>
-                                            <div>
-                                                <img src="assets/images/user.jpg" alt="Profilo studente">
-                                            </div>
+                                            <!--<div>
+                                                <img src="php/uploads/${user_data["immagine"]}" alt="Profilo studente">
+                                            </div>-->
                                             <div style="text-align: center !important">
                                                 <div class="form-group">
                                                     <label for="name">Nome:</label>
@@ -323,9 +323,9 @@ window.onload = function () {
                     "showConfirmButton": false,
                     "html": `
                 <div>
-                    <div>
-                        <img src="assets/images/user.jpg" alt="Profilo studente">
-                    </div>
+                    <!--<div>
+                        <img src="php/uploads/${user_data["immagine"]}" alt="Profilo studente">
+                    </div>-->
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -350,7 +350,7 @@ window.onload = function () {
                     "html": `
                     <div>
                         <div>
-                            <img src="assets/images/user.jpg" alt="Profilo studente">
+                            <img src="php/uploads/${user_data["immagine"]}" alt="Profilo studente">
                         </div>
                         <div style="text-align: center !important">
                             <div class="form-group">

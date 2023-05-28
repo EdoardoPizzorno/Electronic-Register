@@ -45,11 +45,13 @@ function randomNumber(a, b) {
 
 //#region MUTUAL FUNCTIONS
 
-function NavbarManagement() {
+function NavbarManagement(user_data) {
 	let aProfile = $(".dropdown-item.profile").eq(0)
 	let aChangePassword = $(".dropdown-item.changePassword").eq(0)
 	let aExit = $(".dropdown-item.exit").eq(0)
 	let personalInformations = $("div.informations").eq(0)
+
+	$("#img-profile").prop("src", `php/uploads/${user_data["immagine"]}`)
 
 	aProfile.on("click", function () { showCurrentSection(personalInformations) })
 
@@ -76,22 +78,35 @@ function NavbarManagement() {
 	})
 
 	$("#btnEditPersonalInfos").on("click", function () {
+		let formFile = $("#formFile")
 		let matricola = $("input#matricola").val()
 		let inputResidence = $("input#residence")
 		let inputAddress = $("input#address")
+		formFile.show(400)
 		inputResidence.prop("readonly", false)
 		inputAddress.prop("readonly", false)
 		$("#btnSaveInfos").show(400).on("click", function () {
-			sendRequest("POST", "php/editPersonalInformations.php", { matricola, "residence": inputResidence.val(), "address": inputAddress.val() }).catch(error).then(function () {
-				Swal.fire({
-					"title": "Informazioni salvate con successo!",
-					"icon": "success",
-					"showConfirmButton": false,
-					"timer": 1000
+			let files = formFile.children("input").prop("files")
+			let formData = new FormData()
+
+			formData.append("user", user_data["matricola"])
+			for (let file of files)
+				formData.append("txtFiles[]", file)
+
+			sendRequest("POST", "php/uploadImage.php", formData).catch(error).then(function () {
+				sendRequest("POST", "php/editPersonalInformations.php", { matricola, "residence": inputResidence.val(), "address": inputAddress.val() }).catch(error).then(function (response) {
+					Swal.fire({
+						"title": "Informazioni salvate con successo!",
+						"icon": "success",
+						"showConfirmButton": false,
+						"timer": 1000
+					})
+					inputResidence.prop("readonly", true)
+					inputAddress.prop("readonly", true)
+					$("#btnSaveInfos").hide(400)
+
+					window.location.href = ""
 				})
-				inputResidence.prop("readonly", true)
-				inputAddress.prop("readonly", true)
-				$("#btnSaveInfos").hide(400)
 			})
 		})
 	})
@@ -123,6 +138,7 @@ function ClearFieldError(_param) {
 
 function loadPersonalInformations(user_data) {
 	let nominative = `${user_data["nome"].toUpperCase()} ${user_data["cognome"].toUpperCase()}`
+	//console.log($("#formFile").val())
 	$("#nominative").text(nominative)
 	$("input#residence").val(`${user_data["residenza"]}`)
 	$("input#address").val(`${user_data["indrizzo"]}`)

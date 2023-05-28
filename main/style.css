@@ -59,8 +59,9 @@ nav {
 }
 
 .user-profile {
+  width: 20px;
   height: 20px;
-  border-radius: 5px;
+  border-radius: 50%;
   margin-bottom: 2px;
 }
 
@@ -187,6 +188,18 @@ td.mark {
   font-weight: bold;
 }
 
+#img-profile {
+  width: 100px !important;
+  height: 100px;
+  margin-top: 15px;
+  margin-bottom: -10px;
+  border-radius: 50% !important;
+}
+
+#formFile {
+  display: none;
+}
+
 /* STUDENTS ABSENCES */
 
 div.student-absences table.table tbody td,
@@ -213,10 +226,6 @@ div.student-absences table.table tbody tr {
 }
 
 /* STUDENTS SCHOOL REPORT */
-
-.chart {
-  margin-left: 20%;
-}
 
 /* STUDENTS INTERVIEWS */
 
