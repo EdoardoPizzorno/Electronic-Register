@@ -161,8 +161,8 @@ window.onload = function () {
     function loadAbsences(user_data) {
         let table = $("div.student-absences table.table tbody").eq(0)
         table.empty()
-        sendRequest("GET", "php/getAbsences.php", { "user": user_data["matricola"] }).catch(error).then(function (response) {
-            let absences = response["data"]
+        sendRequest("GET", "php/getAbsences.php", { "user": user_data["matricola"] }).catch(error).then(function (absences) {
+            absences = absences["data"]
             $(".student-absences h2").html(`Assenze: <b>${absences.length}</b>`)
             if (absences.length == 0) {
                 let tr = $("<tr>").appendTo(table)
@@ -252,11 +252,13 @@ window.onload = function () {
                                     // Check fields
                                     //if ($("#customSwitches").prop("checked")) {
                                     let sign = $("#canvasDraw").get(0).toDataURL()
+                                    console.log(sign)
                                     if (sign.length > 5826) { // An all white canvas has a string length of 5826
                                         let reason = $("#justification-reason").val()
                                         if (reason.trim() == "")
                                             reason = "Salute"
-                                        // Justify the absence
+                                        // Justify the absence (At first upload image, then update the database)
+                                        //sendRequest("POST/php/uploads/uploadImage.php", formData).catch(error).then(function () {
                                         sendRequest("POST", "php/justifyAbsence.php", { id, reason, sign }).catch(error).then(function () {
                                             loadAbsences(user_data)
                                             Swal.fire({
@@ -266,6 +268,7 @@ window.onload = function () {
                                                 "timer": 1000
                                             })
                                         })
+                                        //})
                                     }
                                     //}
                                 }

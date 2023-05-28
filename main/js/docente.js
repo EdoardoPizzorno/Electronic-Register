@@ -306,19 +306,34 @@ window.onload = function () {
                                             <input class="form-control" type="text" id="username" name="username" value=${student["user"]} readonly>
                                         </div>
                                         <div class="form-group">
-                                            <label for="username">Username:</label>
-                                            <input class="form-control" type="text" id="username" name="username" value=${(new Date()).toLocaleDateString()} readonly>
+                                            <label for="date">Data:</label>
+                                            <input class="form-control" type="text" id="date" name="date" value=${(new Date()).toLocaleDateString()} readonly>
                                         </div>
                                     </div>
                                 </div>`
                                 }).then(function (value) {
                                     if (value["isConfirmed"]) {
-                                        sendRequest("POST", "php/insertAbsence.php", { "student": student["matricola"] }).catch(error).then(function () {
-                                            Swal.fire({
-                                                "title": "Assenza inserita con successo!",
-                                                "icon": "success",
-                                                "showConfirmButton": false,
-                                                "timer": 1000
+                                        let today = new Date()
+                                        let year = today.getFullYear()
+                                        let month = (today.getMonth() + 1).toString().length == 1 ? `0${(today.getMonth() + 1)}` : (today.getMonth() + 1)
+                                        let day = today.getDate().toString().length == 1 ? `0${today.getDate()}` : today.getDate()
+                                        today = `${year}-${month}-${day}`
+                                        sendRequest("GET", "php/getAbsenceByDay.php", { today, "student": student["matricola"] }).catch(function (err) {
+                                            if (err["response"]["status"] == 408) {
+                                                Swal.fire({
+                                                    "title": "L'alunno è già stato segnato assente",
+                                                    "icon": "error"
+                                                })
+                                            } else error(err)
+                                        }).then(function (absence) {
+                                            console.log(absence["data"])
+                                            sendRequest("POST", "php/insertAbsence.php", { "student": student["matricola"] }).catch(error).then(function () {
+                                                Swal.fire({
+                                                    "title": "Assenza inserita con successo!",
+                                                    "icon": "success",
+                                                    "showConfirmButton": false,
+                                                    "timer": 1000
+                                                })
                                             })
                                         })
                                     }

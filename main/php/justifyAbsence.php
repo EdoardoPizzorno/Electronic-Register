@@ -3,31 +3,30 @@
 header("content-type:application/json; charset=utf-8");
 require("MySQLi.php");
 
+$connection = openConnection();
+
 if (isset($_REQUEST["id"])) {
-    $id = $_REQUEST["id"];
+    $id = $connection->real_escape_string($_REQUEST["id"]);
 } else {
     http_response_code(400);
     die("Manca parametro id");
 }
 
 if (isset($_REQUEST["reason"])) {
-    $reason = $_REQUEST["reason"];
+    $reason = $connection->real_escape_string($_REQUEST["reason"]);
 } else {
     http_response_code(400);
     die("Manca parametro motivazione");
 }
 
 if (isset($_REQUEST["sign"])) {
-    $sign = $_REQUEST["sign"];
+    $sign = $connection->real_escape_string($_REQUEST["sign"]);
 } else {
     http_response_code(400);
     die("Manca parametro firma");
 }
 
-$binary_data = base64_decode($sign);
-
-$connection = openConnection();
-$sql = "UPDATE assenze SET motivazione='$reason',firma='$binary_data' WHERE id=$id";
+$sql = "UPDATE assenze SET motivazione='$reason',firma='$sign' WHERE id=$id";
 $data = eseguiQuery($connection, $sql);
 
 http_response_code(200);
