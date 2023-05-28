@@ -70,8 +70,8 @@ h3#nominative {
 
 /* LOGIN FORM */
 #frmLogin {
-  margin: 10% 0 0 40%;
-  width: 410px;
+  margin: 10% 0 30% 30%;
+  width: 40%;
 }
 
 .red-icon {
@@ -81,7 +81,8 @@ h3#nominative {
 /* STUDENTS */
 
 div.spec-section {
-  margin: 7% 10% 12% 12%;
+  margin: 7% 10% 15% 15%;
+  width: 70% !important;
   display: none;
 }
 
@@ -106,7 +107,6 @@ div.spec-section td {
 
 div.student-messages {
   text-align: center !important;
-  margin-left: 24%;
   width: 800px;
 }
 
@@ -188,11 +188,6 @@ td.mark {
 }
 
 /* STUDENTS ABSENCES */
-
-div.student-absences {
-  width: 1000px;
-  margin-left: 23%;
-}
 
 div.student-absences table.table tbody td,
 div.student-absences table.table tbody tr {
@@ -316,7 +311,24 @@ button.btn-mark {
 
 /* MEDIA QUERY */
 
+@media screen and (max-width: 1600px) {
+  div.spec-section {
+    margin: 7% 10% 10% 10%;
+    width: 80% !important;
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  div.spec-section {
+    margin-top: 8%;
+  }
+}
+
 @media screen and (max-width: 992px) {
+  div.spec-section {
+    margin-top: 10%;
+  }
+
   .nav-link {
     margin-right: 90%;
     margin-right: 15px;
