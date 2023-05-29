@@ -303,6 +303,10 @@ div.teacher-register {
   border-collapse: collapse;
 }
 
+div.teacher-list table.table tbody td {
+  line-height: 55px;
+}
+
 th,
 td {
   border: 1px solid black;

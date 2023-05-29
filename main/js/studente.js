@@ -465,7 +465,7 @@ window.onload = function () {
         let li = $("<li>").appendTo(messagesList).addClass("list-group-item")
         $("<span>").appendTo(li).html(`Inviato a: <i>${message["destinatario"]}</i>&nbsp;${message["destinatario"] == user_data["user"] ? "(Tu)" : "(Classe)"}`).css({
             "position": "absolute",
-            "margin": "8px 0 0 -480px",
+            "margin": "8px 0 0 -43%",
         })
         // Bell button
         if (parseInt(message["visualizzato"]) == 0) {
@@ -483,7 +483,7 @@ window.onload = function () {
             picture = picture["data"]
             $("<img>").appendTo(li).prop("src", `php/uploads/${picture["immagine"]}`).css({
                 "height": "52px",
-                "padding": "6px"
+                "border-radius": "50%"
             })
             $("<h2>").appendTo(li).addClass("list-group-item-heading").append($("<a>").addClass("link-dark").prop("href", "#").text(message["mittente"].toUpperCase()).append($("<br>")).on("click", async function () {
                 $("#messagesHome").on("click", function () { loadMessages(user_data) })
