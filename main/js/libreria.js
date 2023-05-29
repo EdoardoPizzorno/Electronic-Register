@@ -85,7 +85,7 @@ function NavbarManagement(user_data) {
 		formFile.show(400)
 		inputResidence.prop("readonly", false)
 		inputAddress.prop("readonly", false)
-		
+
 		$("#btnSaveInfos").show(400).on("click", function () {
 			let files = formFile.children("input").prop("files")
 			let formData = new FormData()
@@ -139,7 +139,6 @@ function ClearFieldError(_param) {
 
 function loadPersonalInformations(user_data) {
 	let nominative = `${user_data["nome"].toUpperCase()} ${user_data["cognome"].toUpperCase()}`
-	//console.log($("#formFile").val())
 	$("#nominative").text(nominative)
 	$("input#residence").val(`${user_data["residenza"]}`)
 	$("input#address").val(`${user_data["indrizzo"]}`)
@@ -149,88 +148,107 @@ function loadPersonalInformations(user_data) {
 }
 
 async function loadRegister(current_class, table, role = "0", current_subject = "") { // The default role is student
-	table.children("tbody").empty() // Use children(tbody) because in case I want to use table.DataTable() I won't have problems
-	sendRequest("GET", "php/getRegister.php", { "class": current_class }).catch(error).then(async function (response) {
-		let topics = response["data"]
-		let days = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica"]
-		let month_days = [31, 30, 31, 30]
-		let calendar_days = []
-		let days_index = 0
-		let week_days = []
-		// Start at 01/03/23
-		for (let i = 0; i < month_days.length; i++) { // months' names
-			for (let j = 5; j < month_days[i]; j++) { // days number
-				let date = ""
-				if (i < 9 && j < 9) {
-					date = `2023-0${(i + 3)}-0${j + 1}`
-				} else if (i < 9 && j >= 9) {
-					date = `2023-0${(i + 3)}-${j + 1}`
-				} else if (i > 9 && j < 9)
-					date = `2023-${(i + 3)}-0${j + 1}`
-				else date = `2023-${(i + 3)}-${j + 1}`
-				calendar_days.push(date)
-				week_days.push(days[days_index])
-				if (days_index == 6)
-					days_index = 0
-				else days_index++
-			}
-		}
-		// Load table
-		days_index = 0
-		for (let i = 0; i < calendar_days.length; i++) {
-			let tr = $("<tr>").appendTo(table.children("tbody")).prop("id", calendar_days[i]).addClass("tr-topics") // Row
-			$("<td>").appendTo(tr).addClass("regDate").html(`${calendar_days[i]}<br><span>${week_days[days_index]}</span>`) // Date
-			$("<td>").appendTo(tr).addClass("td-subject").html("") // Subject
-			$("<td>").appendTo(tr).addClass("td-topic").html("") // Topic
-			if (role == "1") // That's a teacher
-				$("<td>").appendTo(tr).append($("<button>").addClass("btn btn-light").append($("<i>").addClass("bi bi-plus")).css({
-					"border": "1px solid black",
-					"margin-top": "30px"
-				}).on("click", function () {
-					// ADD TOPICS
-					Swal.fire({
-						"showCancelButton": true,
-						"html": `
+	table.empty() // Use children(tbody) because in case I want to use table.DataTable() I won't have problems
+
+	// Default register page
+	$("#week").val((new Date()).toLocaleDateString())
+	generateWeekTable(getCurrentWeek(), current_class, table, role, current_subject)
+}
+
+function nextWeek(table, current_class, role, current_subject) {
+	const currentDate = getCurrentWeek(7)
+	generateWeekTable(currentDate, current_class, table, role, current_subject)
+}
+
+function prevWeek(table, current_class, role, current_subject) {
+	const currentDate = getCurrentWeek(-7)
+	generateWeekTable(currentDate, current_class, table, role, current_subject)
+}
+
+
+function getCurrentWeek(n = 0) {
+	let currentDate = $("#week").val()
+	// From LocalDateString to original format data (new Date())
+	const datas = currentDate.split('/')
+	const day = datas[0];
+	const month = datas[1] - 1; // Sottrai 1 al mese poiché i mesi nell'oggetto Date sono basati su zero (gennaio = 0)
+	const year = datas[2]
+	currentDate = new Date(year, month, day)
+	console.log(currentDate)
+	// Set start and end of the week
+	const startOfWeek = new Date(currentDate.setDate(currentDate.getDate() - currentDate.getDay() + n))
+	const endOfWeek = new Date(currentDate.setDate(currentDate.getDate() - currentDate.getDay() + 6))
+	return { start: startOfWeek, end: endOfWeek }
+}
+
+function generateWeekTable(currentWeek, current_class, table, role = "0", current_subject = "") {
+	let days = ["Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"]
+
+	table.empty()
+	// Set input value
+	$("#week").val(currentWeek["start"].toLocaleDateString())
+	// Load table
+	for (let i = 0; i < 7; i++) {
+		const currentDate = new Date(currentWeek.start)
+		currentDate.setDate(currentDate.getDate() + i)
+
+		let date = currentDate.toLocaleDateString().split("/")
+		let finalDate = `${date[2]}-${date[1].padStart(2, '0')}-${date[0].padStart(2, '0')}`
+		let tr = $('<tr>').appendTo(table).prop("id", finalDate).addClass("tr-topics")
+		$('<td>').appendTo(tr).addClass("regDate").html(`${currentDate.toLocaleDateString()}<br><span>${days[i]}</span>`) // Date
+		$("<td>").appendTo(tr).addClass("td-subject").html("") // Subject
+		$("<td>").appendTo(tr).addClass("td-topic").html("") // Topic
+		if (role == "1" && i != 0 && i != 6) {
+			$("<td>").appendTo(tr).append($("<button>").addClass("btn btn-light").append($("<i>").addClass("bi bi-plus")).css({
+				"border": "1px solid black",
+				"margin-top": "30px"
+			}).on("click", function () {
+				// ADD TOPICS
+				Swal.fire({
+					"showCancelButton": true,
+					"html": `
+					<div>
+						<h1>Inserisci lezione</h1>
 						<div>
-							<h1>Inserisci lezione</h1>
-							<div>
-								<div>
-									<label for="subject">Materia</label>
-									<input class="form-control" type="text" id="subject" name="subject" value=${current_subject} readonly>
-								</div>
-								<div>
-									<label for="date">Data</label>
-									<input class="form-control" type="date" id="date" name="date" value=${calendar_days[i]} readonly>
-								</div>
-								<div>
-									<label for="description">Descrizione</label>
-									<input class="form-control" id="description" name="description" required>
-								</div>
+							<div class="form-group">
+								<label for="subject">Materia</label>
+								<input class="form-control" type="text" id="subject" name="subject" value=${current_subject} readonly>
+							</div>
+							<div class="form-group">
+								<label for="date">Data</label>
+								<input class="form-control" type="text" id="date" name="date" value=${currentDate.toLocaleDateString()} readonly>
+							</div>
+							<div class="form-group">
+								<label for="description">Descrizione</label>
+								<input class="form-control" id="description" name="description" required>
 							</div>
 						</div>
-						`
-					}).then(function (value) {
-						if (value["isConfirmed"]) {
-							let topic = $("input#description")
-							if (topic.val().length != 0) {
-								sendRequest("GET", "php/getSubjectByName.php", { "subjectName": current_subject }).catch(error).then(function (subject) {
-									sendRequest("POST", "php/insertLesson.php", { "topic": topic.val(), "date": $("input#date").val(), "class": current_class, "subject": subject["data"]["id"] }).catch(error).then(function () {
-										Swal.fire({
-											"text": "Lezione inserita correttamente!",
-											"icon": "success"
-										})
-										loadRegister(current_class, table, role, current_subject)
+					</div>
+					`
+				}).then(function (value) {
+					if (value["isConfirmed"]) {
+						let topic = $("input#description")
+						if (topic.val().length != 0) {
+							sendRequest("GET", "php/getSubjectByName.php", { "subjectName": current_subject }).catch(error).then(function (subject) {
+								sendRequest("POST", "php/insertLesson.php", { "topic": topic.val(), "date": finalDate, "class": current_class, "subject": subject["data"]["id"] }).catch(error).then(function () {
+									Swal.fire({
+										"title": "Lezione inserita correttamente!",
+										"showConfirmButton": false,
+										"icon": "success",
+										"timer": 1000,
 									})
+									loadRegister(current_class, table, role, current_subject)
 								})
-							} else FieldError(topic)
-						}
-					})
-				}))
-			// Manage days' index
-			if (days_index == 6)
-				days_index = 0
-			else days_index++
+							})
+						} else FieldError(topic)
+					}
+				})
+			}))
 		}
+	}
+	// Get lessons
+	sendRequest("GET", "php/getRegister.php", { "class": current_class, "sunday": currentWeek.start, "saturday": currentWeek.end }).catch(error).then(async function (lessons) {
+		lessons = lessons["data"]
 		// Load lessons on the register
 		let trTopics = $(".tr-topics")
 		let tdSubjects = $(".td-subject")
@@ -238,11 +256,12 @@ async function loadRegister(current_class, table, role = "0", current_subject = 
 
 		let topicIndex = 0
 		let rowTable = 0
-		while (topics[topicIndex] != undefined) {
+		while (lessons[topicIndex] != undefined) {
+			rowTable = trTopics.filter(`[id="${lessons[topicIndex]["data"]}"]`).index()
 			let row_date = trTopics.eq(rowTable).prop("id")
-			while (topics[topicIndex]["data"] == row_date) {
-				let lesson_topic = topics[topicIndex]["argomento"]
-				await sendRequest("GET", "php/getSubjectById.php", { "subjectId": topics[topicIndex]["materia"] }).catch(error).then(async function (subject) {
+			while (lessons[topicIndex]["data"] == row_date) {
+				let lesson_topic = lessons[topicIndex]["argomento"]
+				await sendRequest("GET", "php/getSubjectById.php", { "subjectId": lessons[topicIndex]["materia"] }).catch(error).then(async function (subject) {
 					subject = subject["data"]["materia"]
 					let prevSubjHtml = tdSubjects.eq(rowTable).html()
 					let prevTopHtml = tdTopics.eq(rowTable).html()
@@ -262,8 +281,6 @@ async function loadRegister(current_class, table, role = "0", current_subject = 
 				})
 				topicIndex++
 			}
-			rowTable = trTopics.filter(`[id="${topics[topicIndex]["data"]}"]`).index()
 		}
-		//table.DataTable()
 	})
 }

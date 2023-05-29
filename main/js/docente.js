@@ -8,11 +8,11 @@ window.onload = function () {
     let teachersDefaultView = $("div.teacher-options").eq(0)
     let teachersMessagesSection = $("div.teacher-messages").eq(0)
     let teachersRegisterSection = $("div.teacher-register").eq(0)
-    //let teachersMarksSection = $("div.teacher-marks").eq(0)
-    //let teachersAbsencesSection = $("div.teacher-absences").eq(0)
     let teachersClassListSection = $("div.teacher-list").eq(0)
     let teachersAveragesSection = $("div.teacher-averages").eq(0)
     let teachersInterviewsSection = $("div.teacher-interviews").eq(0)
+
+    let teachersRegisterTable = $("div.teacher-register table.table tbody").eq(0)
 
     let navMessages = $(".nav-link").eq(0)
     let navRegister = $(".nav-link").eq(1)
@@ -70,18 +70,21 @@ window.onload = function () {
                                 $("<a>").val(subjectId).addClass("dropdown-item").appendTo(dropdownSubjects).text(subject["data"]["materia"]).on("click", function () {
                                     btnSubject.text($(this).text())
                                     // Load register
-                                    loadRegister(current_class, $("div.teacher-register table.table").eq(0), user_data["docente"], $(this).text())
+                                    loadRegister(current_class, teachersRegisterTable, user_data["docente"], $(this).text())
                                     loadClassList(user_data, current_class, $(this).text())
                                 })
                             })
                         }
 
                         // LOAD MAIN SECTIONS
-                        loadRegister(current_class, $("div.teacher-register table.table").eq(0), user_data["docente"], $("a.dropdown-toggle.subject").eq(0).text())
+                        loadRegister(current_class, teachersRegisterTable, user_data["docente"], btnSubject.text())
                         loadReceivers(user_data, current_class) // Load all receivers available
                         loadMessages(user_data, current_class)
-                        loadClassList(user_data, current_class, $("a.dropdown-toggle.subject").eq(0).text())
+                        loadClassList(user_data, current_class, btnSubject.text())
                         loadAverages(current_class)
+                        // Manage next and previous button of the register
+                        $("#prev-week").on("click", function() { prevWeek(teachersRegisterTable, current_class, user_data["docente"], btnSubject.text()) })
+                        $("#foll-week").on("click", function() { nextWeek(teachersRegisterTable, current_class, user_data["docente"], btnSubject.text()) })
                     })
                 })
             }

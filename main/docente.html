@@ -197,19 +197,32 @@
 
     <!-- TEACHERS REGISTER -->
     <div class="row container teacher-register spec-section">
-        <h1>Registro elettronico</h1>
+        <h2>Registro elettronico</h2>
+        <div class="input-group">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-primary" id="prev-week" data-others="-7" title="Settimana precedente">
+                    <span class="fa fa-fw fa-angle-double-left"></span>
+                </button>
+            </div>
+            <input class="form-control text-center" type="text" name="week" id="week" style="cursor: pointer; font-weight: 600;" required readonly>
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-primary" id="foll-week" data-others="+7" title="Settimana successiva">
+                    <span class="fa fa-fw fa-angle-double-right"></span>
+                </button>
+            </div>
+        </div>
         <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>DATA</th>
-                    <th>LEZIONE</th>
+                    <th>MATERIA</th>
                     <th>ARGOMENTO</th>
                     <th>NUOVO</th>
                 </tr>
             </thead>
 
             <tbody>
-
+                
             </tbody>
         </table>
     </div>
@@ -330,7 +343,7 @@
     </div>
 
     <!-- FOOTER -->
-    <footer class="bg-dark text-white py-4">
+    <footer class="bg-dark text-white py-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-4">

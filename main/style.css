@@ -148,6 +148,14 @@ h5.card-title {
 
 /* STUDENTS REGISTER */
 
+#prev-week {
+  height: 38px;
+}
+
+#foll-week {
+  height: 38px;
+}
+
 td.regDate {
   width: 150px !important;
   line-height: 40px;

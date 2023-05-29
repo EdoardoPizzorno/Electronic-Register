@@ -1,9 +1,11 @@
 <?php
-	header("content-type:application/json; charset=utf-8");
+header("content-type:application/json; charset=utf-8");
 
-	session_start();
-	session_unset();
-	session_destroy();
+session_start();
+session_unset();
+if (isset($_COOKIE[session_name()]))
+	setcookie(session_name(), '', time() - 42000, '/');
+session_destroy();
 
-	http_response_code(200);
+http_response_code(200);
 ?>

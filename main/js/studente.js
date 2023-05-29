@@ -14,6 +14,8 @@ window.onload = function () {
     let studentsInterviewsSection = $("div.student-interviews-booking").eq(0)
     let subjectDetails = $("div.subject-details").eq(0)
 
+    let studentsRegisterTable = $("div.student-register table.table tbody").eq(0)
+
     let navMessages = $(".nav-link").eq(0)
     let navRegister = $(".nav-link").eq(1)
     let navMarks = $(".nav-link").eq(2)
@@ -56,12 +58,15 @@ window.onload = function () {
         navInterviews.on("click", function () { showCurrentSection(studentsInterviewsSection) })
 
         // LOAD MAIN SECTIONS
-        loadRegister(user_data["classe"], $("div.student-register table.table").eq(0))
+        loadRegister(user_data["classe"], $("div.student-register table.table tbody").eq(0))
         loadMessages(user_data)
         loadMarks(user_data)
         loadAbsences(user_data)
         loadSchoolReport(user_data)
         loadInterviews(user_data)
+        // Manage next and previous button of the register
+        $("#prev-week").on("click", function () { prevWeek(studentsRegisterTable, user_data["classe"], user_data["docente"]) })
+        $("#foll-week").on("click", function () { nextWeek(studentsRegisterTable, user_data["classe"], user_data["docente"]) })
     })
 
     //#region MAIN FUNCTIONS
