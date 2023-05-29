@@ -11,7 +11,7 @@ if (isset($_GET["user"])) {
 }
 
 $connection = openConnection();
-$sql = "SELECT * from colloqui WHERE matricola='$user'";
+$sql = "SELECT * from colloqui WHERE matricola='$user' ORDER BY ora ASC";
 $data = eseguiQuery($connection, $sql);
 
 http_response_code(200);

@@ -11,7 +11,7 @@ if (isset($_GET["teacher"])) {
 }
 
 $connection = openConnection();
-$sql = "SELECT * from colloqui WHERE docente='$teacher' ORDER BY ora DESC";
+$sql = "SELECT * from colloqui WHERE docente='$teacher' ORDER BY ora ASC";
 $data = eseguiQuery($connection, $sql);
 
 http_response_code(200);

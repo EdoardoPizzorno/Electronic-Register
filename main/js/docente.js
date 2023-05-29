@@ -386,7 +386,7 @@ window.onload = function () {
                         sendRequest("GET", "php/getAbsenceByDay.php", { today, "student": student["matricola"] }).catch(function (err) {
                             if (err["response"]["status"] == 408) {
                                 Swal.fire({
-                                    "title": "L'alunno è già stato segnato assente",
+                                    "title": "L'alunno è già stato segnato assente in data odierna",
                                     "icon": "error"
                                 })
                             } else error(err)
