@@ -1,5 +1,9 @@
 # REGISTRO ELETTRONICO by [Edoardo Pizzorno](https://github.com/EdoardoPizzorno)
 
+## PAGINA DI LOGIN
+
+![image](https://github.com/EdoardoPizzorno/Electronic-Register/assets/92369419/a8e17deb-61a6-4e6d-ae4d-4fac71e77c90)
+
 ## INTERFACCIA STUDENTE
 ![image](https://github.com/EdoardoPizzorno/Electronic-Register/assets/92369419/c74ad574-0f5e-445e-a0b1-a0ff16f16e7f)
 
@@ -31,8 +35,15 @@ Il docente ha varie sezioni nella sua interfaccia:
 - Sezione per inviare le **comunicazioni** (che possono essere inviate al singolo studente della classe selezionata oppure all'intera classe)
 ![image](https://github.com/EdoardoPizzorno/Electronic-Register/assets/92369419/996f9c29-004c-4536-9418-566aec262ddf)
 - Sezione per inserire gli **argomenti** svolti, **verifiche** e **compiti**
+![image](https://github.com/EdoardoPizzorno/Electronic-Register/assets/92369419/a18314ef-0005-41b8-83e4-569b78177b5e)
 - Sezione per visualizzare l'**elenco** della classe selezionata
+![image](https://github.com/EdoardoPizzorno/Electronic-Register/assets/92369419/fba9f400-ab75-4bb1-9b7c-d7cc85dd4c48)
 - In questa sezione il docente può inserire **voti** e **assenze** agli studenti
+![image](https://github.com/EdoardoPizzorno/Electronic-Register/assets/92369419/396fcf87-d5fa-4f52-b040-dd09a3164a9c)
+![image](https://github.com/EdoardoPizzorno/Electronic-Register/assets/92369419/9b8a7b4d-11ba-4ac4-87a6-7e09d056e52a)
 - Sezione per visualizzare l'**anagrafica** del docente
+![image](https://github.com/EdoardoPizzorno/Electronic-Register/assets/92369419/b09d57ad-295d-4083-aa0b-b92992bd27ad)
 - Sezione per visualizzare i **colloqui** prenotati dagli alunni
+![image](https://github.com/EdoardoPizzorno/Electronic-Register/assets/92369419/3f6c3546-b17b-4f12-a7e7-bd57decc8ba3)
 - Sezione per visualizzare la **media** di ogni singolo studente della classe selezionata
+![image](https://github.com/EdoardoPizzorno/Electronic-Register/assets/92369419/78f70fc5-9839-472f-90a6-40fe8be9c107)
