@@ -340,4 +340,4 @@ ASALocalRun/
 healthchecksdb
 
 # Chiavi personali
-environment.js
+environment.*
