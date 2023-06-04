@@ -61,9 +61,8 @@ window.onload = function () {
                         buttonsEnabled(true) // Enable homepage buttons
                         // Manage subjects dropdown list
                         let dropdownSubjects = $("div.dropdown-menu.subjects").eq(0).empty()
-                        let aux = subjectsIds["materie"].split("[")
-                        let aux1 = aux[1].split("]")
-                        let codes = aux1[0].split(", ")
+                        let codes = JSON.parse(subjectsIds["materie"])
+                        console.log(codes)
                         // Now I have all subjects' ids --> get subjects names
                         for (let subjectId of codes) {
                             sendRequest("GET", "php/getSubjectById.php", { subjectId }).catch(error).then(function (subject) {
@@ -315,7 +314,7 @@ window.onload = function () {
                     <tr style="color: red; background-color: rgba(255, 0, 0, 0.1)">
                         <td>${absence["data"]}</td>
                         <td>Assenza NON giustificata</td>
-                        <td><button class="btn btn-light" id='${absence["id"]}'><i class="bi bi-info"></i></button></td>
+                        <td><button class="btn btn-light" disabled id='${absence["id"]}'><i class="bi bi-info"></i></button></td>
                     </tr>
                     `
                 }
